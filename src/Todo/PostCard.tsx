@@ -34,7 +34,13 @@ export default function RecipeReviewCard({ title, subheader, image, content }: p
     }
 
     return (
-        <Card elevation={3} sx={{ maxWidth: 345, margin: 'auto',borderRadius:'0.9em' }}>
+        <Card elevation={3} sx={{
+            maxWidth: 345, margin: 'auto', borderRadius: '0.9em', boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+            transition: "0.3s",
+            "&:hover": {
+                boxShadow: "0 8px 16px rgba(0,0,0,0.2)",
+            }
+        }}>
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">

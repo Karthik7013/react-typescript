@@ -7,9 +7,11 @@ import ScienceIcon from '@mui/icons-material/Science';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LightbulbCircleIcon from '@mui/icons-material/LightbulbCircle';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
+import Header from './Header';
 const PostDetails = () => {
     return (
         <Box>
+ 
             <Stack>
                 <CardHeader
                     avatar={

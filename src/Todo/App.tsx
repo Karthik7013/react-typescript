@@ -64,6 +64,7 @@ const App = () => {
                 <Grid item xs={0} md={2}>right</Grid>
             </Grid>
             <Box bgcolor='#f5f5f5'>
+                <Header />
                 <Container maxWidth={'lg'} sx={{ py: 4, mt: 10 }} >
                     <PostDetails />
                 </Container>
