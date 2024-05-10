@@ -20,32 +20,22 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
 }
+interface props {
+    title: string,
+    subheader: string,
+    image: string,
+    content: string
+}
+export default function RecipeReviewCard({ title, subheader, image, content }: props) {
 
-const ExpandMore = styled((props: ExpandMoreProps) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-    }),
-}));
 
-export default function RecipeReviewCard() {
-    const [expanded, setExpanded] = React.useState(false);
+    const cardStyles = {
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
+    }
 
     return (
-        <Card sx={{ maxWidth: 345, margin: 'auto' }}>
+        <Card elevation={3} sx={{ maxWidth: 345, margin: 'auto',borderRadius:'0.9em' }}>
             <CardHeader
-                sx={{
-                    textWrap: 'nowrap',
-                    overflow: 'hidden',
-                }}
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
                         R
@@ -56,20 +46,18 @@ export default function RecipeReviewCard() {
                         <BookmarkBorderIcon />
                     </IconButton>
                 }
-                title="Shrimp and Chorizo Paella"
-                subheader="September 14, 2016"
+                title={title}
+                subheader={subheader}
             />
             <CardMedia
                 component="img"
                 height="100"
-                image="https://www.eatingwell.com/thmb/m5xUzIOmhWSoXZnY-oZcO9SdArQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/article_291139_the-top-10-healthiest-foods-for-kids_-02-4b745e57928c4786a61b47d8ba920058.jpg"
+                image={image}
                 alt="Paella dish"
             />
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                    This impressive paella is a perfect party dish and a fun meal to cook
-                    together with your guests. Add 1 cup of frozen peas along with the mussels,
-                    if you like.
+                    {content}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
