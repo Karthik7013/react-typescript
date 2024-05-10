@@ -16,10 +16,11 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import TemporaryDrawer from './SideDrawer';
-
+import { Avatar, useMediaQuery } from '@mui/material';
+import { deepOrange, deepPurple } from '@mui/material/colors';
+import logo from "../assets/logo.png"
+import { Link } from 'react-router-dom';
 const Search = styled('div')(({ theme }) => ({
-    flexGrow:1,
-    maxWidth:'1000px',
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -60,6 +61,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+    const isSmallScreen = useMediaQuery('md');
+
     const [drawerOpen, setDrawerOpen] = React.useState(false)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -165,28 +168,27 @@ export default function Header() {
 
     return (
         <Box sx={{ flexGrow: 1, position: 'sticky', top: 0, zIndex: 999, width: '100%' }}>
-            <AppBar position="relative">
-                <Toolbar>
-                    <IconButton
+            <AppBar position="relative" sx={{ bgcolor: "#373737" }}>
+                <Toolbar >
+
+                    {<IconButton
+                        sx={{ display: { xs: 'block', sm: 'none', mr: 2 } }}
                         onClick={toggleDrawer(true)}
                         size="large"
                         edge="start"
                         color="inherit"
                         aria-label="open drawer"
-                        sx={{ mr: 2 }}
+
                     >
                         <MenuIcon />
 
-                    </IconButton>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}
-                    >
-                        MUI
-                    </Typography>
-                    <Box sx={{ flexGrow: 1,display:"flex",justifyContent:"center" }}>
+                    </IconButton>}
+                    <a href='/' >
+                        <Avatar alt="Remy Sharp" src={logo} sx={{ display: { xs: 'none', sm: 'block' } }} />
+                    </a>
+
+                    <Box sx={{ flexGrow: 1 }} />
+                    <Box>
                         <Search>
                             <SearchIconWrapper>
                                 <SearchIcon />
@@ -200,12 +202,13 @@ export default function Header() {
 
 
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                        <IconButton size="large" href='/messages' aria-label="show 4 new mails" color="inherit">
                             <Badge badgeContent={4} color="error">
                                 <MailIcon />
                             </Badge>
                         </IconButton>
                         <IconButton
+                            href='/notifications'
                             size="large"
                             aria-label="show 17 new notifications"
                             color="inherit"

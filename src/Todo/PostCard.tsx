@@ -35,10 +35,12 @@ export default function RecipeReviewCard({ title, subheader, image, content }: p
 
     return (
         <Card elevation={3} sx={{
+            width: '100%',
             maxWidth: 345, margin: 'auto', borderRadius: '0.9em', boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
             transition: "0.3s",
             "&:hover": {
                 boxShadow: "0 8px 16px rgba(0,0,0,0.2)",
+                scale: "1.05"
             }
         }}>
             <CardHeader
