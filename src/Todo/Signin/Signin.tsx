@@ -13,7 +13,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Card } from '@mui/material';
-
+import axios from 'axios';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -31,13 +33,30 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const navigate = useNavigate()
+    const [remember, setRemeber] = useState(false)
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
+        let userSignInData = {
             email: data.get('email'),
             password: data.get('password'),
-        });
+            remember
+        };
+        console.log(userSignInData);
+        try {
+            let res = await axios.post('https://blog-post-api-dsam.onrender.com/api/v1/user/login', userSignInData)
+            if (res.status === 200) {
+                if(res.data?.token){
+                    localStorage.setItem('token',res.data?.token)
+                    navigate('/')
+                }
+                console.log('user authenticated')
+            }
+        } catch (error) {
+            console.log('failed to authenticated')
+        }
+
     };
 
     return (
@@ -79,7 +98,7 @@ export default function SignIn() {
                         autoComplete="current-password"
                     />
                     <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
+                        control={<Checkbox onChange={() => { setRemeber((prev) => !prev) }} value={remember} color="primary" />}
                         label="Remember me"
                     />
                     <Button

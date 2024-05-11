@@ -12,7 +12,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -30,13 +31,27 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const navigate = useNavigate()
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
+        let userRegisterData = {
+            userName: data.get('firstName'),
+            name: data.get('lastName'),
             email: data.get('email'),
             password: data.get('password'),
-        });
+        }
+        try {
+            let res = await axios.post('https://blog-post-api-dsam.onrender.com/api/v1/user/register', userRegisterData)
+            console.log(res.status)
+            if (res.status === 201) {
+                navigate('/signin')
+            }
+        } catch (error) {
+            console.log({ message: error })
+        }
+
+
     };
 
     return (
@@ -65,7 +80,7 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="firstName"
-                                label="First Name"
+                                label="User Name"
                                 autoFocus
                             />
                         </Grid>
@@ -74,7 +89,7 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="lastName"
-                                label="Last Name"
+                                label="Name"
                                 name="lastName"
                                 autoComplete="family-name"
                             />

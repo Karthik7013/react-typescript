@@ -9,7 +9,7 @@ import PostDetails from './Todo/PostDetails';
 import Header from './Todo/Header';
 import SignUp from './Todo/Signup/Signup';
 import MessageBox from './Todo/MessageBox/MessageBox';
-
+import NotificationBox from './Todo/NotificationBox/NotificationBox'
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -23,11 +23,11 @@ root.render(
         <Route index element={<App />}></Route>
         <Route path='postdetails' element={<PostDetails />}></Route>
         <Route path='messages' element={<MessageBox />}></Route>
-        <Route path='notifications' element={<MessageBox />}></Route>
+        <Route path='notifications' element={<NotificationBox />}></Route>
       </Route>
       <Route path='/signin' element={<SignIn />}></Route>
       <Route path='/signup' element={<SignUp />}></Route>
-      <Route path="/dashboard" element={<>Dashboard</>}></Route>
+      <Route path="/dashboard" element={<DashboardHome />}></Route>
     </Routes>
   </BrowserRouter>
 );

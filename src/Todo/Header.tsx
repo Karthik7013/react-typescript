@@ -16,10 +16,15 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import TemporaryDrawer from './SideDrawer';
-import { Avatar, useMediaQuery } from '@mui/material';
-import { deepOrange, deepPurple } from '@mui/material/colors';
+import { Avatar, Button, Stack, useMediaQuery } from '@mui/material';
+import { deepOrange, deepPurple, purple, brown } from '@mui/material/colors';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { ButtonProps } from '@mui/material/Button';
+import PageviewIcon from '@mui/icons-material/Pageview';
+
 import logo from "../assets/logo.png"
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -61,8 +66,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
-    const isSmallScreen = useMediaQuery('md');
-
+    const navigate = useNavigate();
+    const [authenticate, setAuthenticate] = React.useState(!false)
     const [drawerOpen, setDrawerOpen] = React.useState(false)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -109,8 +114,8 @@ export default function Header() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={()=>{navigate('/dashboard')}}>Dashboard</MenuItem>
+            <MenuItem onClick={() => { localStorage.removeItem('token'); handleMenuClose() }}>Logout</MenuItem>
         </Menu>
     );
 
@@ -131,7 +136,7 @@ export default function Header() {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
+            <MenuItem href='/messages'>
                 <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                     <Badge badgeContent={4} color="error">
                         <MailIcon />
@@ -139,7 +144,7 @@ export default function Header() {
                 </IconButton>
                 <p>Messages</p>
             </MenuItem>
-            <MenuItem>
+            <MenuItem href='/notifications'>
                 <IconButton
                     size="large"
                     aria-label="show 17 new notifications"
@@ -151,20 +156,13 @@ export default function Header() {
                 </IconButton>
                 <p>Notifications</p>
             </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>Profile</p>
-            </MenuItem>
+            <MenuItem onClick={()=>{navigate('/dashboard')}}>Dashboard</MenuItem>
+            <MenuItem onClick={() => { localStorage.removeItem('token'); handleMenuClose() }}>Logout</MenuItem>
         </Menu>
     );
+
+
+
 
     return (
         <Box sx={{ flexGrow: 1, position: 'sticky', top: 0, zIndex: 999, width: '100%' }}>
@@ -201,7 +199,7 @@ export default function Header() {
                     </Box>
 
 
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    {authenticate ? <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton size="large" href='/messages' aria-label="show 4 new mails" color="inherit">
                             <Badge badgeContent={4} color="error">
                                 <MailIcon />
@@ -228,8 +226,20 @@ export default function Header() {
                         >
                             <AccountCircle />
                         </IconButton>
-                    </Box>
-                    <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                    </Box> :
+                        <Stack direction='row' spacing={2}>
+                            <a href="/signin">
+                                <IconButton >
+                                    <Avatar sx={{ bgcolor: "#ffffff14" }}>
+                                        <AccountCircleIcon />
+                                    </Avatar>
+                                </IconButton>
+                            </a>
+
+
+                        </Stack>
+                    }
+                    {authenticate && <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
                             aria-label="show more"
@@ -240,7 +250,7 @@ export default function Header() {
                         >
                             <MoreIcon />
                         </IconButton>
-                    </Box>
+                    </Box>}
                 </Toolbar>
             </AppBar>
             {renderMobileMenu}
