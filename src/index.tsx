@@ -10,6 +10,7 @@ import Header from './Todo/Header';
 import SignUp from './Todo/Signup/Signup';
 import MessageBox from './Todo/MessageBox/MessageBox';
 import NotificationBox from './Todo/NotificationBox/NotificationBox'
+import Main from './Dashboard/Pages/Main';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -28,14 +29,13 @@ root.render(
       <Route path='/signin' element={<SignIn />}></Route>
       <Route path='/signup' element={<SignUp />}></Route>
       <Route path="dashboard" element={<DashboardHome />} >
-        <Route index element={<>main dashboard</>}></Route>
+        <Route index element={<Main />}></Route>
         <Route path='post' element={<>Post dashboard</>}></Route>
         <Route path='profile' element={<>Profile dashboard</>}></Route>
         <Route path='save' element={<>save dashboard</>}></Route>
         <Route path='like' element={<>like dashboard</>}></Route>
         <Route path='analytics' element={<>analytics dashboard</>}></Route>
         <Route path='settings' element={<>settings dashboard</>}></Route>
-
       </Route>
     </Routes>
   </BrowserRouter>
