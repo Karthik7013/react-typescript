@@ -27,7 +27,16 @@ root.render(
       </Route>
       <Route path='/signin' element={<SignIn />}></Route>
       <Route path='/signup' element={<SignUp />}></Route>
-      <Route path="/dashboard" element={<DashboardHome />}></Route>
+      <Route path="dashboard" element={<DashboardHome />} >
+        <Route index element={<>main dashboard</>}></Route>
+        <Route path='post' element={<>Post dashboard</>}></Route>
+        <Route path='profile' element={<>Profile dashboard</>}></Route>
+        <Route path='save' element={<>save dashboard</>}></Route>
+        <Route path='like' element={<>like dashboard</>}></Route>
+        <Route path='analytics' element={<>analytics dashboard</>}></Route>
+        <Route path='settings' element={<>settings dashboard</>}></Route>
+
+      </Route>
     </Routes>
   </BrowserRouter>
 );
