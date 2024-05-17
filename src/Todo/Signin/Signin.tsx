@@ -11,11 +11,12 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Card } from '@mui/material';
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { CircularProgress } from '@mui/material';
+
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -29,12 +30,12 @@ function Copyright(props: any) {
     );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
-
 export default function SignIn() {
+    const loading = useSelector((e:any)=>e.loading)
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [remember, setRemeber] = useState(false)
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -43,20 +44,18 @@ export default function SignIn() {
             password: data.get('password'),
             remember
         };
-        console.log(userSignInData);
         try {
+            dispatch({type:'LOADING',payload:true})
             let res = await axios.post('https://blog-post-api-dsam.onrender.com/api/v1/user/login', userSignInData)
             if (res.status === 200) {
                 if(res.data?.token){
                     localStorage.setItem('token',res.data?.token)
                     navigate('/')
                 }
-                console.log('user authenticated')
             }
         } catch (error) {
             console.log('failed to authenticated')
         }
-
     };
 
     return (
@@ -104,10 +103,11 @@ export default function SignIn() {
                     <Button
                         type="submit"
                         fullWidth
+                        disabled={loading}
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Sign In
+                       {loading ? <CircularProgress size="30px" /> : 'Sign In'}
                     </Button>
                     <Grid container>
                         <Grid item xs>
@@ -125,6 +125,5 @@ export default function SignIn() {
             </Box>
             <Copyright sx={{ mt: 8, mb: 4 }} />
         </Container>
-
     );
 }

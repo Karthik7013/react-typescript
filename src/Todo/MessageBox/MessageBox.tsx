@@ -1,9 +1,15 @@
-import { Box } from '@mui/material'
+import { Box, Container, Typography } from '@mui/material'
 import React from 'react'
 
 const MessageBox = () => {
     return (
-        <Box>MessageBox</Box>
+        <Box>
+            <Container maxWidth="lg">
+                <Typography>
+                MessageBox
+                </Typography>
+            </Container>
+        </Box>
     )
 }
 

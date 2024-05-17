@@ -148,7 +148,6 @@ export default function Home() {
 
     return (
         <Box sx={{ display: 'flex' }}>
-          
             <CssBaseline />
             <AppBar position="fixed" open={open}>
                 <Toolbar sx={{ bgcolor: "#373737" }}>
@@ -208,7 +207,6 @@ export default function Home() {
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
                 <Outlet />
-                
             </Box>
         </Box>
     );

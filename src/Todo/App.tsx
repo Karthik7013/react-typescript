@@ -1,11 +1,10 @@
-import { Box, Button, Chip, Container, Grid, Link, Stack, Typography } from '@mui/material'
+import { Box,  Chip, Grid, Modal, Pagination, Stack, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
-import { Outlet, Route, Routes } from 'react-router-dom'
-import Header from './Header'
-import TemporaryDrawer from './SideDrawer'
+
+
 import RecipeReviewCard from './PostCard';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import PostDetails from './PostDetails';
+
+
 import ScienceIcon from '@mui/icons-material/Science';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LightbulbCircleIcon from '@mui/icons-material/LightbulbCircle';
@@ -14,7 +13,15 @@ import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux';
+
 const App = () => {
+    const dispatch = useDispatch();
+    const loading = useSelector((e: any) => e.loading);
+    const auth = useSelector((e: any) => e.auth);
+    const isLoggedIn = auth.status;
+    const user = auth.data;
+    console.log(isLoggedIn, user);
 
     const getProfile = async (authToken: string) => {
         const headers = {
@@ -22,25 +29,29 @@ const App = () => {
             'Content-Type': 'application/json',
             'x-auth-token': authToken
         };
+
         try {
+            dispatch({ type: 'LOADING', payload: true })
             let res = await axios.get('https://blog-post-api-dsam.onrender.com/api/v1/user/profile', { headers })
             if (res.status === 200) {
-                console.log(res.data);
+                dispatch({ type: 'LOGIN', payload: res.data.user })
             } else {
                 console.log('invalid/expired login')
             };
         } catch (error) {
             console.log(error)
         }
-
+        finally {
+            dispatch({ type: 'LOADING', payload: false })
+        }
     }
+
     useEffect(() => {
         let authToken = localStorage.getItem('token');
-        if (authToken) {
+        if (authToken)
             getProfile(authToken)
-        } else {
+        else
             console.log('login again')
-        }
     }, [])
 
 
@@ -54,6 +65,13 @@ const App = () => {
         together with your guests. Add 1 cup of frozen peas along with the mussels,
         if you like.' title='Shrimp and Chorizo Paella' subheader='September 14, 2016' />
     }
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+    };
+
     return (
         <Box sx={{ maxHeight: '100dvh' }}>
             <Grid container >
@@ -108,8 +126,8 @@ const App = () => {
                         <Grid item xs={12} md={4}>
                             <Temp />
                         </Grid>
-                        <Grid item xs={12} component={Stack} justifyContent='center'>
-                            <Button size='small' disableFocusRipple disableRipple variant='text' endIcon={<ArrowDropDownIcon />}>show more</Button>
+                        <Grid item xs={12} component={Stack} justifyContent='center' mt={2}>
+                            <Pagination count={10} variant="outlined" shape="rounded" />
                         </Grid>
                     </Grid>
                 </Grid>
@@ -120,7 +138,14 @@ const App = () => {
                     }
                 }}>right</Grid>
             </Grid>
-
+            <Modal
+                open={loading}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box>
+                </Box>
+            </Modal>
         </Box>
     )
 }

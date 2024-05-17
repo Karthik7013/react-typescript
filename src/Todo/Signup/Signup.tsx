@@ -11,9 +11,12 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { CircularProgress, IconButton, InputAdornment } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { useDispatch, useSelector } from 'react-redux';
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -27,10 +30,12 @@ function Copyright(props: any) {
     );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
+
 
 export default function SignUp() {
+    const dispatch = useDispatch();
+    let loading = useSelector((e:any)=>e.loading);
+    const [show, setShow] = React.useState(false)
     const navigate = useNavigate()
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -42,6 +47,7 @@ export default function SignUp() {
             password: data.get('password'),
         }
         try {
+            dispatch({type:'LOADING',payload:true})
             let res = await axios.post('https://blog-post-api-dsam.onrender.com/api/v1/user/register', userRegisterData)
             console.log(res.status)
             if (res.status === 201) {
@@ -49,10 +55,11 @@ export default function SignUp() {
             }
         } catch (error) {
             console.log({ message: error })
+        }finally{
+            dispatch({type:'LOADING',payload:false})
         }
-
-
     };
+    const showToggle = () => setShow((prev) => !prev)
 
     return (
         <Container component="main" maxWidth="xs">
@@ -110,9 +117,19 @@ export default function SignUp() {
                                 fullWidth
                                 name="password"
                                 label="Password"
-                                type="password"
+                                type={show ? 'text' : 'password'}
                                 id="password"
                                 autoComplete="new-password"
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="start">
+                                        {show ?
+                                            <IconButton onClick={showToggle}><VisibilityIcon /></IconButton> :
+                                            <IconButton onClick={showToggle}>
+                                                <VisibilityOffIcon />
+                                            </IconButton>
+                                        }
+                                    </InputAdornment>,
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -127,8 +144,9 @@ export default function SignUp() {
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
+                        disabled={loading}
                     >
-                        Sign Up
+                        {loading ? <CircularProgress size='30px' />:"Sign Up"}
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
