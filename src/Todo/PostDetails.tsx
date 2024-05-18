@@ -1,8 +1,8 @@
-import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, IconButton, Stack, Typography } from '@mui/material'
+import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, IconButton, Stack, Typography, Button, TextField } from '@mui/material'
 
 import { red } from '@mui/material/colors';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-
+import SendIcon from '@mui/icons-material/Send';
 import ScienceIcon from '@mui/icons-material/Science';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LightbulbCircleIcon from '@mui/icons-material/LightbulbCircle';
@@ -72,6 +72,24 @@ const PostDetails = () => {
                                 <Wrapper />
                             </Grid>
                         </Grid>
+                        <Divider />
+                        <Stack my={2} spacing={2}>
+                            <Box component={Stack} direction='row' spacing={2}>
+                                <Avatar alt="Remy Sharp" src="https://mui.com/static/images/avatar/1.jpg" />
+                                <Typography variant='h6' color="GrayText" fontWeight={500}>Add a comment</Typography>
+                            </Box>
+                            <Box>
+                                <TextField
+                                placeholder='Comment'
+                                    multiline
+                                    rows={6}
+                                    fullWidth></TextField>
+                            </Box>
+                            <Stack justifyContent='flex-end' direction='row' columnGap={3}>
+                                <Button variant='outlined'>clear</Button>
+                                <Button variant='contained' color='success' endIcon={<SendIcon />}>Submit</Button>
+                            </Stack>
+                        </Stack>
                     </Stack>
                 </Box>
             </Container>
