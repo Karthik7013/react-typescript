@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box,  Chip, Grid, Modal, Pagination, Stack, Typography } from '@mui/material'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 
 import RecipeReviewCard from './PostCard';
@@ -65,12 +66,6 @@ const App = () => {
         together with your guests. Add 1 cup of frozen peas along with the mussels,
         if you like.' title='Shrimp and Chorizo Paella' subheader='September 14, 2016' />
     }
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-    };
 
     return (
         <Box sx={{ maxHeight: '100dvh' }}>

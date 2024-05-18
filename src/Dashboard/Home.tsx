@@ -18,11 +18,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import { Link, Outlet, Route, Routes } from 'react-router-dom';
-import { Icon } from '@mui/material';
-import EmailIcon from '@mui/icons-material/Email';
-import FaceIcon from '@mui/icons-material/Face';
-import BookmarksIcon from '@mui/icons-material/Bookmarks';
+import { Link, Outlet} from 'react-router-dom';
+
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({

@@ -1,13 +1,12 @@
-import { Avatar, Box, Card, CardHeader, CardMedia, Chip, Container, Divider, Grid, IconButton, Stack, Typography } from '@mui/material'
-import React from 'react';
+import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, IconButton, Stack, Typography } from '@mui/material'
+
 import { red } from '@mui/material/colors';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import { ExpandCircleDownOutlined } from '@mui/icons-material';
+
 import ScienceIcon from '@mui/icons-material/Science';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LightbulbCircleIcon from '@mui/icons-material/LightbulbCircle';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
-import Header from './Header';
 import RecipeReviewCard from './PostCard';
 const PostDetails = () => {
     const Wrapper = () => {
