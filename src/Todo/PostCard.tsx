@@ -30,8 +30,10 @@ export default function RecipeReviewCard({ title, subheader, image, content }: p
             maxWidth: 345, margin: 'auto', borderRadius: '0.9em', boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
             transition: "0.3s",
             "&:hover": {
-                boxShadow: "0 8px 16px rgba(0,0,0,0.2)",
-                scale: "1.05"
+                md: {
+                    boxShadow: "0 8px 16px rgba(0,0,0,0.2)",
+                    scale: "1.05"
+                }
             }
         }}>
             <CardHeader
