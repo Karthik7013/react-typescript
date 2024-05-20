@@ -76,7 +76,7 @@ const App = () => {
 
 
     const getPosts = async () => {
-        let res = await axios.get('http://localhost:8000/api/v1/admin/post/all');
+        let res = await axios.get('https://blog-post-api-dsam.onrender.com/api/v1/admin/post/all');
         dispatch({ type: 'FETCH_POST', payload: res.data })
     }
     useEffect(() => {
