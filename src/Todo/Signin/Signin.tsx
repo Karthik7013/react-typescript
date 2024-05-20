@@ -15,14 +15,14 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Snackbar, Alert } from '@mui/material';
 
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
+            <Link color="inherit" href="/">
+                Bloger Blogs
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -31,7 +31,9 @@ function Copyright(props: any) {
 }
 
 export default function SignIn() {
-    const loading = useSelector((e:any)=>e.loading)
+    const [err, setErr] = useState(false);
+    // const [success,setSuccess] = useState(false)
+    const loading = useSelector((e: any) => e.loading)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [remember, setRemeber] = useState(false)
@@ -45,15 +47,17 @@ export default function SignIn() {
             remember
         };
         try {
-            dispatch({type:'LOADING',payload:true})
+            dispatch({ type: 'LOADING', payload: true })
             let res = await axios.post('https://blog-post-api-dsam.onrender.com/api/v1/user/login', userSignInData)
             if (res.status === 200) {
-                if(res.data?.token){
-                    localStorage.setItem('token',res.data?.token)
+                if (res.data?.token) {
+                    localStorage.setItem('token', res.data?.token)
                     navigate('/')
                 }
             }
         } catch (error) {
+            setErr(true)
+            dispatch({ type: 'LOADING', payload: false })
             console.log('failed to authenticated')
         }
     };
@@ -107,7 +111,7 @@ export default function SignIn() {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                       {loading ? <CircularProgress size="30px" /> : 'Sign In'}
+                        {loading ? <CircularProgress size="30px" /> : 'Sign In'}
                     </Button>
                     <Grid container>
                         <Grid item xs>
@@ -124,6 +128,13 @@ export default function SignIn() {
                 </Box>
             </Box>
             <Copyright sx={{ mt: 8, mb: 4 }} />
+            <Snackbar
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                open={err}
+                autoHideDuration={2000}
+                onClose={() => { setErr(false) }}
+            ><Alert  sx={{width:'100%'}} variant='filled' severity='error'>Invalid Login Details</Alert>
+            </Snackbar>
         </Container>
     );
 }

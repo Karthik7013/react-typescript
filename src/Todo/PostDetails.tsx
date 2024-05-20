@@ -1,4 +1,4 @@
-import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, IconButton, Stack, Typography, Button, TextField } from '@mui/material'
+import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, IconButton, Stack, Typography, Button, TextField, List, ListItem, ListItemAvatar, ListItemText } from '@mui/material'
 
 import { red } from '@mui/material/colors';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
@@ -8,19 +8,21 @@ import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LightbulbCircleIcon from '@mui/icons-material/LightbulbCircle';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import RecipeReviewCard from './PostCard';
+import React from 'react';
 const PostDetails = () => {
     const Wrapper = () => {
         return <RecipeReviewCard image='https://www.eatingwell.com/thmb/m5xUzIOmhWSoXZnY-oZcO9SdArQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/article_291139_the-top-10-healthiest-foods-for-kids_-02-4b745e57928c4786a61b47d8ba920058.jpg' content='This impressive paella is a perfect party dish and a fun meal to cook
         together with your guests. Add 1 cup of frozen peas along with the mussels,
-        if you like.' title='Shrimp and Chorizo Paella' subheader='September 14, 2016' />
+        if you like.' id='' title='Shrimp and Chorizo Paella' subheader='September 14, 2016' />
 
     }
     return (
-        <Box bgcolor=''>
-            <Container maxWidth={'lg'} sx={{ py: 4 }} >
+        <Box>
+            <Container maxWidth={'lg'}>
                 <Box>
                     <Stack>
                         <CardHeader
+                            sx={{ px: 0 }}
                             avatar={
                                 <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
                                     M
@@ -72,15 +74,51 @@ const PostDetails = () => {
                                 <Wrapper />
                             </Grid>
                         </Grid>
+
+
                         <Divider />
                         <Stack my={2} spacing={2}>
+                            <Typography variant='h6' color="GrayText">Comments</Typography>
+                            <ListItem alignItems="flex-start" sx={{ p: 0 }}>
+                                <ListItemAvatar>
+                                    <Avatar alt="Remy Sharp" src="https://mui.com/static/images/avatar/4.jpg" />
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary="Arun Sing"
+                                    secondary={
+                                        <React.Fragment>
+                                            <Typography noWrap variant='caption'>
+                                                I'll be in your neighborhood doing errands this
+                                            </Typography>
+                                            <Typography variant='subtitle2'>sep 10 2024</Typography>
+                                        </React.Fragment>
+                                    }
+                                />
+                            </ListItem>
+                            <ListItem alignItems="flex-start" sx={{ p: 0 }}>
+                                <ListItemAvatar>
+                                    <Avatar alt="Remy Sharp" src="https://mui.com/static/images/avatar/3.jpg" />
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary="Arun Sing"
+                                    secondary={
+                                        <React.Fragment>
+                                            <Typography noWrap variant='caption'>
+                                                I'll be in your neighborhood doing errands this
+                                            </Typography>
+                                            <Typography variant='subtitle2'>sep 10 2024</Typography>
+                                        </React.Fragment>
+                                    }
+                                />
+                            </ListItem>
+
                             <Box component={Stack} direction='row' spacing={2}>
                                 <Avatar alt="Remy Sharp" src="https://mui.com/static/images/avatar/1.jpg" />
                                 <Typography variant='h6' color="GrayText" fontWeight={500}>Add a comment</Typography>
                             </Box>
                             <Box>
                                 <TextField
-                                placeholder='Comment'
+                                    placeholder='Comment'
                                     multiline
                                     rows={6}
                                     fullWidth></TextField>

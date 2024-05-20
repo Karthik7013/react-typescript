@@ -3,39 +3,50 @@ import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
-
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 interface props {
+    id: string
     title: string,
     subheader: string,
     image: string,
     content: string
 }
-export default function RecipeReviewCard({ title, subheader, image, content }: props) {
 
-
+const dateFormatter = (date: string): string => {
+    const newDate = new Date(date);
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    const year = newDate.getFullYear();
+    const month = months[newDate.getMonth()];
+    const day = newDate.getDate();
+    return `${month} ${day}, ${year}`;;
+}
+export default function RecipeReviewCard({ title, subheader, image, content, id }: props) {
 
 
     return (
-        <Card elevation={3} sx={{
-            width: '100%',
-            maxWidth: 345, margin: 'auto', borderRadius: '0.9em', boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-            transition: "0.3s",
-            "&:hover": {
-                md: {
-                    boxShadow: "0 8px 16px rgba(0,0,0,0.2)",
-                    scale: "1.05"
+        <Card
+            onClick={() => { console.log(id) }}
+            elevation={3} sx={{
+                width: '100%',
+                maxWidth: { md: 345 }, margin: 'auto', borderRadius: '0.9em', boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+                transition: "0.3s",
+                "&:hover": {
+                    md: {
+                        boxShadow: "0 8px 16px rgba(0,0,0,0.2)",
+                        scale: "1.05"
+                    }
                 }
-            }
-        }}>
+            }}>
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -48,7 +59,7 @@ export default function RecipeReviewCard({ title, subheader, image, content }: p
                     </IconButton>
                 }
                 title={title}
-                subheader={subheader}
+                subheader={dateFormatter(subheader)}
             />
             <CardMedia
                 component="img"
