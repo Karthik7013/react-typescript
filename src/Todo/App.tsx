@@ -48,7 +48,7 @@ const App = () => {
             getProfile(authToken)
         else
             console.log('login again')
-    }, [])
+    })
 
 
     const style = {
@@ -72,7 +72,7 @@ const App = () => {
     }
     useEffect(() => {
         getPosts()
-    }, [])
+    })
 
 
     return (
