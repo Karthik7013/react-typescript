@@ -1,8 +1,8 @@
 import { Autocomplete, Button, IconButton, Stack, TextField, Typography } from '@mui/material'
 import axios from 'axios';
-import React from 'react'
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useSelector } from 'react-redux';
+
 const CreatePost = () => {
     const category = [
         { label: 'Scientific', year: 1994 },
@@ -14,10 +14,6 @@ const CreatePost = () => {
         { label: 'Information', year: 1994 },
     ];
     let user = useSelector((e: any) => e.auth.data);
-
-
-
-
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         let data = {

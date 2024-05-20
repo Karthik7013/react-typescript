@@ -1,4 +1,4 @@
-import {  Box, Chip, Grid, Modal, Pagination, Stack, Typography } from '@mui/material'
+import { Box, Chip, Grid, Modal, Pagination, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import RecipeReviewCard from './PostCard';
 import ScienceIcon from '@mui/icons-material/Science';
@@ -10,16 +10,12 @@ import NewspaperIcon from '@mui/icons-material/Newspaper';
 import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
-
 import CreatePost from './CreatePost/CreatePost';
+
 const App = () => {
     const topRatedPosts = useSelector((e: any) => e.posts);
-    console.log(topRatedPosts)
     const dispatch = useDispatch();
     const loading = useSelector((e: any) => e.loading);
-    // const auth = useSelector((e: any) => e.auth);
-    // const isLoggedIn = auth.status;
-    // const user = auth.data;
     const [openModal, setOpenModal] = useState(!false)
     const getProfile = async (authToken: string) => {
         const headers = {
@@ -43,7 +39,6 @@ const App = () => {
             dispatch({ type: 'LOADING', payload: false })
         }
     }
-    // const handleModal = () => setOpenModal(!openModal)
 
     useEffect(() => {
         setOpenModal(true)
@@ -75,7 +70,7 @@ const App = () => {
         dispatch({ type: 'FETCH_POST', payload: res.data })
     }
     useEffect(() => {
-            getPosts()
+        getPosts()
     }, [])
 
 
@@ -126,7 +121,9 @@ const App = () => {
                         md: 'block',
                         xs: 'none'
                     }
-                }}>right</Grid>
+                }}>
+                    right
+                </Grid>
             </Grid>
             <Modal
                 open={loading}
