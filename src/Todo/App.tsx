@@ -1,3 +1,4 @@
+// eslint-disable-next-line react-hooks/exhaustive-deps
 import { Box, Chip, Grid, Modal, Pagination, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import RecipeReviewCard from './PostCard';
