@@ -1,11 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { Autocomplete, Box, Button, Chip, Grid, IconButton, Modal, Pagination, Stack, TextField, Typography } from '@mui/material'
+import {  Box, Chip, Grid, Modal, Pagination, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-
-
 import RecipeReviewCard from './PostCard';
-
-
 import ScienceIcon from '@mui/icons-material/Science';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LightbulbCircleIcon from '@mui/icons-material/LightbulbCircle';
@@ -80,7 +75,6 @@ const App = () => {
         dispatch({ type: 'FETCH_POST', payload: res.data })
     }
     useEffect(() => {
-
             getPosts()
     }, [])
 

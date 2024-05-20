@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, IconButton, Stack, TextField, Typography } from '@mui/material'
+import { Autocomplete, Button, IconButton, Stack, TextField, Typography } from '@mui/material'
 import axios from 'axios';
 import React from 'react'
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -13,7 +13,7 @@ const CreatePost = () => {
         { label: "Music", year: 1993 },
         { label: 'Information', year: 1994 },
     ];
-    let user = useSelector((e:any)=>e.auth.data);
+    let user = useSelector((e: any) => e.auth.data);
 
 
 
@@ -37,12 +37,12 @@ const CreatePost = () => {
         }
         if (token) {
             try {
-                let res = await axios.post("http://localhost:8000/api/v1/admin/createpost",data, { headers })
+                let res = await axios.post("http://localhost:8000/api/v1/admin/createpost", data, { headers })
                 console.log(res.data)
             } catch (error) {
-console.log('failed to create')
+                console.log('failed to create')
             }
-        }else{
+        } else {
             console.log('token not found login again')
         }
     }
