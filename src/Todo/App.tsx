@@ -17,9 +17,9 @@ const App = () => {
     console.log(topRatedPosts)
     const dispatch = useDispatch();
     const loading = useSelector((e: any) => e.loading);
-    const auth = useSelector((e: any) => e.auth);
-    const isLoggedIn = auth.status;
-    const user = auth.data;
+    // const auth = useSelector((e: any) => e.auth);
+    // const isLoggedIn = auth.status;
+    // const user = auth.data;
     const [openModal, setOpenModal] = useState(!false)
     const getProfile = async (authToken: string) => {
         const headers = {
@@ -43,7 +43,7 @@ const App = () => {
             dispatch({ type: 'LOADING', payload: false })
         }
     }
-    const handleModal = () => setOpenModal(!openModal)
+    // const handleModal = () => setOpenModal(!openModal)
 
     useEffect(() => {
         setOpenModal(true)
