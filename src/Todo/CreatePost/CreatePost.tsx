@@ -1,23 +1,22 @@
-import { Autocomplete, Button, CircularProgress, FormControlLabel, IconButton, Stack, Switch, TextField, Tooltip, Typography } from '@mui/material'
+import { Autocomplete, Button, CircularProgress, FormControlLabel, IconButton, Stack, Switch, TextField, Typography } from '@mui/material'
 import axios from 'axios';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useDispatch, useSelector } from 'react-redux';
 import BASE_URL_ from '../../config';
-import InfoIcon from '@mui/icons-material/Info';
 type CreatePostProps = {
     toggle: (value: boolean) => void;
 };
 const CreatePost = (props: CreatePostProps) => {
-    let loading = useSelector((e: any) => e.loading);
+    let loading: boolean = useSelector((e: any) => e.loading);
     const dispatch = useDispatch()
     const category = [
-        { label: 'Scientific', year: 1994 },
-        { label: 'Food', year: 1972 },
-        { label: 'Travel', year: 1974 },
-        { label: 'News', year: 2008 },
-        { label: 'Movies', year: 1957 },
-        { label: "Music", year: 1993 },
-        { label: 'Information', year: 1994 },
+        { label: 'Scientific', icon: 'science' },
+        { label: 'Food', icon: 'fastFood' },
+        { label: 'Travel', icon: 'flight' },
+        { label: 'News', icon: 'newspaper' },
+        { label: 'Movies', icon: 'theaterComedy' },
+        { label: "Music", icon: 'audioTrack' },
+        { label: 'Information', icon: 'lightBulbCircle' },
     ];
     let user = useSelector((e: any) => e.auth.data);
     const handleSubmit = async (e: any) => {
