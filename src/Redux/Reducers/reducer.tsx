@@ -22,6 +22,8 @@ export default function reducer(state = initialState, action: any) {
             return { ...state, auth: { data: null, status: false } }
         case 'FETCH_POST':
             return {...state,posts:payload}
+        case 'ADD_POST':
+            return {...state,posts:[...state.posts,payload]}
         default:
             return state
     }

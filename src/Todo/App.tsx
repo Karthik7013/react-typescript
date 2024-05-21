@@ -1,6 +1,6 @@
-import { Box, Chip, Grid, Modal, Pagination, Stack, Typography } from '@mui/material'
-import { useEffect } from 'react'
-import RecipeReviewCard from './PostCard';
+import { Avatar, Box, Chip, Divider, Grid, IconButton, Modal, Pagination, Stack, Tooltip, Typography } from '@mui/material'
+import { useEffect, useState } from 'react'
+import RecipeReviewCard from './PostCard/PostCard';
 import ScienceIcon from '@mui/icons-material/Science';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LightbulbCircleIcon from '@mui/icons-material/LightbulbCircle';
@@ -12,13 +12,15 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
 import CreatePost from './CreatePost/CreatePost';
 import BASE_URL_ from '../config';
-
+import PostCardSkeleton from './PostCard/PostCardSkeleton';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 
 const App = () => {
     const topRatedPosts = useSelector((e: any) => e.posts);
     const dispatch = useDispatch();
     const loading = useSelector((e: any) => e.loading);
-
+    const [createPostModal, setCreatePostModal] = useState(false);
 
     useEffect(() => {
         const getProfile = async (authToken: string) => {
@@ -63,7 +65,9 @@ const App = () => {
     };
 
 
-
+    const handleCreateModal = () => {
+        setCreatePostModal((prev) => !prev)
+    }
 
 
     useEffect(() => {
@@ -76,13 +80,15 @@ const App = () => {
 
 
     return (
-        <Box sx={{ maxHeight: '100dvh' }}>
-            <Grid container >
+        <Box >
+            <Grid container>
                 <Grid item xs={0} md={2} sx={{
                     display: {
                         md: 'block',
                         xs: 'none'
-                    }
+                    },
+                    position: 'sticky',
+                    top: 0
                 }}>
                     left
                 </Grid>
@@ -102,9 +108,24 @@ const App = () => {
                         <Grid item xs={12}>
                             <Typography color='GrayText' fontWeight={600} variant='h6'>Top rated Posts</Typography>
                         </Grid>
+                        {!Boolean(topRatedPosts.length) && <>
+                            <Grid item xs={12} md={6} lg={4}>
+                                <PostCardSkeleton />
+                            </Grid>
+                            <Grid item xs={12} md={6} lg={4}>
+                                <PostCardSkeleton />
+                            </Grid>
+                            <Grid item xs={12} md={6} lg={4}>
+                                <PostCardSkeleton />
+                            </Grid>
+                        </>
+                        }
+
                         {topRatedPosts.map((post: any) => {
+                     
                             return <Grid item key={post._id} xs={12} md={6} lg={4}>
                                 <RecipeReviewCard
+                                    author={post.authorName}
                                     id={post._id}
                                     image={post.imgUrl}
                                     title={post.title}
@@ -112,18 +133,62 @@ const App = () => {
                                     subheader={post.createdAt} />
                             </Grid>
                         })}
-                        <Grid item xs={12} component={Stack} justifyContent='center' mt={2}>
+                        {Boolean(topRatedPosts.length) && <Grid item xs={12} component={Stack} justifyContent='center' mt={2}>
                             <Pagination count={10} variant="outlined" shape="rounded" />
                         </Grid>
+
+                        }
                     </Grid>
                 </Grid>
                 <Grid item xs={0} md={2} sx={{
                     display: {
                         md: 'block',
                         xs: 'none'
-                    }
+                    },
+                    px: 1,
+                    position: 'sticky'
                 }}>
-                    right
+                    <Stack spacing={2} mt={1}>
+                        <Stack direction='row'
+                            alignItems='center' justifyContent='space-between'>
+                            <Typography noWrap variant='h6'>My Posts</Typography>
+                            <Box component='a' href='/' display='flex' alignItems='center' gap={1}>
+                                <Typography variant='body2'>see all</Typography>
+                                <ArrowForwardRoundedIcon fontSize='small' />
+                            </Box>
+                        </Stack>
+                        <Divider />
+                        <Stack direction='row' spacing={1} alignItems='center'>
+                            <Tooltip title="New Post">
+                                <IconButton onClick={handleCreateModal}
+                                    sx={{
+                                        color: 'snow',
+                                        bgcolor: '#373737',
+                                        transition: 'background-color 0.3s',
+                                        '&:hover': {
+                                            bgcolor: '#bdbdbd',
+                                        },
+                                        width: '45px',
+                                        height: '45px'
+
+                                    }}
+                                >
+                                    <AddRoundedIcon color='inherit' />
+                                </IconButton>
+                            </Tooltip>
+
+
+
+                            <Box boxSizing={'border-box'} border='3px solid #373737' borderRadius='50%' padding='2px'>
+                                <Avatar sx={{ width: "38px", height: '38px' }}>A</Avatar>
+                            </Box>
+                            <Box boxSizing={'border-box'} border='3px solid #373737' borderRadius='50%' padding='2px'>
+                                <Avatar sx={{ width: "38px", height: '38px' }}>A</Avatar>
+                            </Box>
+                        </Stack>
+                    </Stack>
+
+
                 </Grid>
             </Grid>
             <Modal
@@ -135,12 +200,12 @@ const App = () => {
                 </Box>
             </Modal>
             <Modal
-                open={false}
+                open={createPostModal}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style} width={{ xs: 300, md: 600 }}>
-                    <CreatePost />
+                    <CreatePost toggle={setCreatePostModal} />
                 </Box>
             </Modal>
         </Box>

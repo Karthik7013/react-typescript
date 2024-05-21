@@ -12,7 +12,9 @@ import NotificationBox from './Todo/NotificationBox/NotificationBox'
 import Main from './Dashboard/Pages/Main';
 import { store } from './Redux/Store';
 import { Provider } from "react-redux";
-import { useEffect } from "react"
+import { useEffect } from "react";
+import { ThemeProvider } from '@mui/material';
+import theme from './Todo/Theme/theme';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -29,7 +31,7 @@ const Root = () => {
   return <Routes>
     <Route path='/' element={<><Header /><Outlet /></>}>
       <Route index element={<App />}></Route>
-      <Route path='postdetails' element={<PostDetails />}></Route>
+      <Route path='postdetails/:id' element={<PostDetails />}></Route>
       <Route path='messages' element={<MessageBox />}></Route>
       <Route path='notifications' element={<NotificationBox />}></Route>
     </Route>
@@ -51,7 +53,9 @@ const Root = () => {
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <Root />
+      <ThemeProvider theme={theme}>
+        <Root />
+      </ThemeProvider>
     </BrowserRouter>
   </Provider>
 );

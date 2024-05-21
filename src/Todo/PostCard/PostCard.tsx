@@ -10,32 +10,25 @@ import { red } from '@mui/material/colors';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { dateFormatter } from '../Utils/utils';
 interface props {
-    id: string
+    author: string,
+    id: string,
     title: string,
     subheader: string,
     image: string,
-    content: string
+    content: string,
 }
 
-const dateFormatter = (date: string): string => {
-    const newDate = new Date(date);
-    const months = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
-    const year = newDate.getFullYear();
-    const month = months[newDate.getMonth()];
-    const day = newDate.getDate();
-    return `${month} ${day}, ${year}`;;
-}
-export default function RecipeReviewCard({ title, subheader, image, content, id }: props) {
-
+export default function RecipeReviewCard({ author, title, subheader, image, content, id }: props) {
+    const isAuthenticated: boolean = useSelector((e: any) => e.auth.status);
+    let navigate = useNavigate();
 
     return (
         <Card
-            onClick={() => { console.log(id) }}
+            onClick={() => { navigate(isAuthenticated ? `/postdetails/${id}` : "/signin") }}
             elevation={3} sx={{
                 width: '100%',
                 maxWidth: { md: 345 }, margin: 'auto', borderRadius: '0.9em', boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
@@ -50,7 +43,7 @@ export default function RecipeReviewCard({ title, subheader, image, content, id 
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                        R
+                        {author[0]}
                     </Avatar>
                 }
                 action={
