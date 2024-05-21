@@ -134,7 +134,7 @@ const PostDetails = () => {
                                 </ListItem>
                                 <ListItem alignItems="flex-start" sx={{ p: 0 }}>
                                     <ListItemAvatar>
-                                        <Avatar alt="Remy Sharp" src="https://mui.com/static/images/avatar/3.jpg" />
+                                        <Avatar alt="Remy Sharp" src="https://mui.com/static/images/avatar/3.jpg" ></Avatar>
                                     </ListItemAvatar>
                                     <ListItemText
                                         primary="Arun Sing"
@@ -150,7 +150,7 @@ const PostDetails = () => {
                                 </ListItem>
 
                                 <Box component={Stack} direction='row' spacing={2}>
-                                    <Avatar alt="Remy Sharp" src="https://mui.com/static/images/avatar/1.jpg" />
+                                    <Avatar>{postDetails.authorName[0]}</Avatar>
                                     <Typography variant='h6' color="GrayText" fontWeight={500}>Add a comment</Typography>
                                 </Box>
                                 <Box>

@@ -122,7 +122,7 @@ const App = () => {
                         }
 
                         {topRatedPosts.map((post: any) => {
-                     
+
                             return <Grid item key={post._id} xs={12} md={6} lg={4}>
                                 <RecipeReviewCard
                                     author={post.authorName}
@@ -180,10 +180,10 @@ const App = () => {
 
 
                             <Box boxSizing={'border-box'} border='3px solid #373737' borderRadius='50%' padding='2px'>
-                                <Avatar sx={{ width: "38px", height: '38px' }}>A</Avatar>
+                                <Avatar src="https://mui.com/static/images/avatar/3.jpg" alt='t' sx={{ width: "38px", height: '38px' }}>A</Avatar>
                             </Box>
                             <Box boxSizing={'border-box'} border='3px solid #373737' borderRadius='50%' padding='2px'>
-                                <Avatar sx={{ width: "38px", height: '38px' }}>A</Avatar>
+                                <Avatar src="https://mui.com/static/images/avatar/4.jpg" sx={{ width: "38px", height: '38px' }}>A</Avatar>
                             </Box>
                         </Stack>
                     </Stack>

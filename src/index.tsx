@@ -15,6 +15,7 @@ import { Provider } from "react-redux";
 import { useEffect } from "react";
 import { ThemeProvider } from '@mui/material';
 import theme from './Todo/Theme/theme';
+import PageNotFound from './Todo/PageNotFound/PageNotFound';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -46,6 +47,7 @@ const Root = () => {
       <Route path='analytics' element={<>analytics dashboard</>}></Route>
       <Route path='settings' element={<>settings dashboard</>}></Route>
     </Route>
+    <Route path='*' element={<PageNotFound />}></Route>
   </Routes>
 
 }
