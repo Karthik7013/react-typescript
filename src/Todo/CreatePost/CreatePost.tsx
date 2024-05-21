@@ -1,6 +1,5 @@
-import { Autocomplete, Box, Button, IconButton, Stack, TextField, Typography } from '@mui/material'
+import { Autocomplete, Button, IconButton, Stack, TextField, Typography } from '@mui/material'
 import axios from 'axios';
-import React from 'react'
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useSelector } from 'react-redux';
 const CreatePost = () => {

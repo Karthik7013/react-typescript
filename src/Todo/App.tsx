@@ -1,11 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { Autocomplete, Box, Button, Chip, Grid, IconButton, Modal, Pagination, Stack, TextField, Typography } from '@mui/material'
+import { Box, Chip, Grid, Modal, Pagination, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-
-
 import RecipeReviewCard from './PostCard';
-
-
 import ScienceIcon from '@mui/icons-material/Science';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LightbulbCircleIcon from '@mui/icons-material/LightbulbCircle';
@@ -15,53 +10,53 @@ import NewspaperIcon from '@mui/icons-material/Newspaper';
 import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
-
 import CreatePost from './CreatePost/CreatePost';
+import BASE_URL_ from '../config';
 const App = () => {
     const topRatedPosts = useSelector((e: any) => e.posts);
     console.log(topRatedPosts)
     const dispatch = useDispatch();
     const loading = useSelector((e: any) => e.loading);
-    const auth = useSelector((e: any) => e.auth);
-    const isLoggedIn = auth.status;
-    const user = auth.data;
-    const [openModal, setOpenModal] = useState(!false)
-    const getProfile = async (authToken: string) => {
-        const headers = {
-            'Authorization': 'Bearer YourAccessToken',
-            'Content-Type': 'application/json',
-            'x-auth-token': authToken
-        };
+    // const auth = useSelector((e: any) => e.auth);
+    // const isLoggedIn = auth.status;
+    // const user = auth.data;
+    // const [openModal, setOpenModal] = useState(!false)
 
-        try {
-            dispatch({ type: 'LOADING', payload: true })
-            let res = await axios.get('https://blog-post-api-dsam.onrender.com/api/v1/user/profile', { headers })
-            if (res.status === 200) {
-                dispatch({ type: 'LOGIN', payload: res.data.user })
-            } else {
-                console.log('invalid/expired login')
-            };
-        } catch (error) {
-            console.log(error)
-        }
-        finally {
-            dispatch({ type: 'LOADING', payload: false })
-        }
-    }
-    const handleModal = () => setOpenModal(!openModal)
+    // const handleModal = () => setOpenModal(!openModal)
 
     useEffect(() => {
-        setOpenModal(true)
+        const getProfile = async (authToken: string) => {
+            const headers = {
+                'Authorization': 'Bearer YourAccessToken',
+                'Content-Type': 'application/json',
+                'x-auth-token': authToken
+            };
+
+            try {
+                dispatch({ type: 'LOADING', payload: true })
+                let res = await axios.get(`${BASE_URL_}/user/profile`, { headers })
+                if (res.status === 200) {
+                    dispatch({ type: 'LOGIN', payload: res.data.user })
+                } else {
+                    console.log('invalid/expired login')
+                };
+            } catch (error) {
+                console.log(error)
+            }
+            finally {
+                dispatch({ type: 'LOADING', payload: false })
+            }
+        }
         let authToken = localStorage.getItem('token');
         if (authToken)
             getProfile(authToken)
         else
             console.log('login again')
-    }, [])
+    }, [dispatch])
 
 
     const style = {
-        position: 'absolute' as 'absolute',
+        position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
@@ -75,14 +70,13 @@ const App = () => {
 
 
 
-    const getPosts = async () => {
-        let res = await axios.get('https://blog-post-api-dsam.onrender.com/api/v1/admin/post/all');
-        dispatch({ type: 'FETCH_POST', payload: res.data })
-    }
     useEffect(() => {
-
-            getPosts()
-    }, [])
+        const getPosts = async () => {
+            let res = await axios.get(`${BASE_URL_}/admin/post/all`);
+            dispatch({ type: 'FETCH_POST', payload: res.data });
+        };
+        getPosts();
+    }, [dispatch]);
 
 
     return (
@@ -143,7 +137,7 @@ const App = () => {
                 </Box>
             </Modal>
             <Modal
-                open={!openModal}
+                open={false}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
