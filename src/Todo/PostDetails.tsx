@@ -28,10 +28,10 @@ const PostDetails = () => {
             try {
                 const getPostDetails = async () => {
                     let res = await axios.get(`${BASE_URL_}/admin/post/${postID}`, { headers });
-                    console.log(res.status,'code')
-                    if(res.status === 200){
+                    console.log(res.status, 'code')
+                    if (res.status === 200) {
                         setPostDetails(res.data?.post);
-                    }else{
+                    } else {
                         navigate('/signin');
                     }
                 }
@@ -43,13 +43,12 @@ const PostDetails = () => {
         } else {
             navigate('/signin')
         }
-    }, [postID])
+    }, [postID, navigate])
 
     const Wrapper = () => {
         return <RecipeReviewCard author='K' image='https://www.eatingwell.com/thmb/m5xUzIOmhWSoXZnY-oZcO9SdArQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/article_291139_the-top-10-healthiest-foods-for-kids_-02-4b745e57928c4786a61b47d8ba920058.jpg' content='This impressive paella is a perfect party dish and a fun meal to cook
         together with your guests. Add 1 cup of frozen peas along with the mussels,
         if you like.' id='' title='Shrimp and Chorizo Paella' subheader='September 14, 2016' />
-
     }
 
     return (
