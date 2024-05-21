@@ -1,6 +1,5 @@
-
 import { Box, Chip, Grid, Modal, Pagination, Stack, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import RecipeReviewCard from './PostCard';
 import ScienceIcon from '@mui/icons-material/Science';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
@@ -19,7 +18,6 @@ const App = () => {
     const topRatedPosts = useSelector((e: any) => e.posts);
     const dispatch = useDispatch();
     const loading = useSelector((e: any) => e.loading);
-    const [openModal, setOpenModal] = useState(!false)
 
 
     useEffect(() => {
@@ -50,7 +48,6 @@ const App = () => {
             getProfile(authToken)
         else
             console.log('login again')
-
     }, [dispatch])
 
 
@@ -70,7 +67,6 @@ const App = () => {
 
 
     useEffect(() => {
-
         const getPosts = async () => {
             let res = await axios.get(`${BASE_URL_}/admin/post/all`);
             dispatch({ type: 'FETCH_POST', payload: res.data });
