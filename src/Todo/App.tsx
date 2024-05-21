@@ -1,3 +1,4 @@
+
 import { Box, Chip, Grid, Modal, Pagination, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import RecipeReviewCard from './PostCard';
@@ -12,17 +13,14 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
 import CreatePost from './CreatePost/CreatePost';
 import BASE_URL_ from '../config';
+
+
 const App = () => {
     const topRatedPosts = useSelector((e: any) => e.posts);
-    console.log(topRatedPosts)
     const dispatch = useDispatch();
     const loading = useSelector((e: any) => e.loading);
-    // const auth = useSelector((e: any) => e.auth);
-    // const isLoggedIn = auth.status;
-    // const user = auth.data;
-    // const [openModal, setOpenModal] = useState(!false)
+    const [openModal, setOpenModal] = useState(!false)
 
-    // const handleModal = () => setOpenModal(!openModal)
 
     useEffect(() => {
         const getProfile = async (authToken: string) => {
@@ -52,6 +50,7 @@ const App = () => {
             getProfile(authToken)
         else
             console.log('login again')
+
     }, [dispatch])
 
 
@@ -71,6 +70,7 @@ const App = () => {
 
 
     useEffect(() => {
+
         const getPosts = async () => {
             let res = await axios.get(`${BASE_URL_}/admin/post/all`);
             dispatch({ type: 'FETCH_POST', payload: res.data });
@@ -126,7 +126,9 @@ const App = () => {
                         md: 'block',
                         xs: 'none'
                     }
-                }}>right</Grid>
+                }}>
+                    right
+                </Grid>
             </Grid>
             <Modal
                 open={loading}

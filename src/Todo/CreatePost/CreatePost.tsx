@@ -2,6 +2,7 @@ import { Autocomplete, Button, IconButton, Stack, TextField, Typography } from '
 import axios from 'axios';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useSelector } from 'react-redux';
+
 const CreatePost = () => {
     const category = [
         { label: 'Scientific', year: 1994 },
@@ -12,11 +13,7 @@ const CreatePost = () => {
         { label: "Music", year: 1993 },
         { label: 'Information', year: 1994 },
     ];
-    let user = useSelector((e:any)=>e.auth.data);
-
-
-
-
+    let user = useSelector((e: any) => e.auth.data);
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         let data = {
@@ -36,12 +33,12 @@ const CreatePost = () => {
         }
         if (token) {
             try {
-                let res = await axios.post("http://localhost:8000/api/v1/admin/createpost",data, { headers })
+                let res = await axios.post("http://localhost:8000/api/v1/admin/createpost", data, { headers })
                 console.log(res.data)
             } catch (error) {
-console.log('failed to create')
+                console.log('failed to create')
             }
-        }else{
+        } else {
             console.log('token not found login again')
         }
     }
