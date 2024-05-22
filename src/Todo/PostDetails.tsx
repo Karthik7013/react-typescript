@@ -1,4 +1,4 @@
-import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, IconButton, Stack, Typography, Button, TextField, ListItem, ListItemAvatar, ListItemText } from '@mui/material'
+import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, IconButton, Stack, Typography, Button, TextField, ListItem, ListItemAvatar, ListItemText, Icon } from '@mui/material'
 
 import { red } from '@mui/material/colors';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
@@ -19,6 +19,7 @@ const PostDetails = () => {
     let [postDetails, setPostDetails] = useState<any>();
     let params = useParams();
     const postID = params.id;
+    useEffect(() => { console.log(postDetails) }, [postDetails])
     useEffect(() => {
         const token = localStorage.getItem('token')
         const headers = {
@@ -28,7 +29,6 @@ const PostDetails = () => {
             try {
                 const getPostDetails = async () => {
                     let res = await axios.get(`${BASE_URL_}/admin/post/${postID}`, { headers });
-                    console.log(res.status, 'code')
                     if (res.status === 200) {
                         setPostDetails(res.data?.post);
                     } else {
@@ -45,11 +45,11 @@ const PostDetails = () => {
         }
     }, [postID, navigate])
 
-    const Wrapper = () => {
-        return <RecipeReviewCard author='K' image='https://www.eatingwell.com/thmb/m5xUzIOmhWSoXZnY-oZcO9SdArQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/article_291139_the-top-10-healthiest-foods-for-kids_-02-4b745e57928c4786a61b47d8ba920058.jpg' content='This impressive paella is a perfect party dish and a fun meal to cook
-        together with your guests. Add 1 cup of frozen peas along with the mussels,
-        if you like.' id='' title='Shrimp and Chorizo Paella' subheader='September 14, 2016' />
-    }
+    // const Wrapper = () => {
+    //     return <RecipeReviewCard author='K' image='https://www.eatingwell.com/thmb/m5xUzIOmhWSoXZnY-oZcO9SdArQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/article_291139_the-top-10-healthiest-foods-for-kids_-02-4b745e57928c4786a61b47d8ba920058.jpg' content='This impressive paella is a perfect party dish and a fun meal to cook
+    //     together with your guests. Add 1 cup of frozen peas along with the mussels,
+    //     if you like.' id='' title='Shrimp and Chorizo Paella' subheader='September 14, 2016' />
+    // }
 
     return (
         <Box>
@@ -78,10 +78,7 @@ const PostDetails = () => {
                                 <Typography variant='body2' color="GrayText">{postDetails.subtitle
                                 }</Typography>
                                 <Stack direction={'row'} spacing={1} mt={1}>
-                                    <Chip size='small' label='Scientific' icon={<ScienceIcon fontSize='small' />} />
-                                    <Chip size='small' label='Information' icon={<LightbulbCircleIcon fontSize='small' />} />
-                                    <Chip size='small' label='Food' icon={<FastfoodIcon fontSize='small' />} />
-                                    <Chip size='small' label='Travel' icon={<LocalAirportIcon fontSize='small' />} />
+                                    {postDetails.category.map((e: string) => <Chip size='small' label={e} />)}
                                 </Stack>
                             </Stack>
                             <Box py={5}>
@@ -94,7 +91,7 @@ const PostDetails = () => {
                                 />
                             </Box>
                             <Box mb={3} fontWeight={500} color='GrayText'>
-                                <Typography variant='body1' >Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia, minus. Unde dolorem eveniet explicabo vel, hic eius in blanditiis, porro, provident cumque dolore! Reprehenderit magnam pariatur architecto eaque perspiciatis! Eius soluta minus earum dicta temporibus quod quis omnis, pariatur consequuntur quibusdam neque quisquam, impedit dolorum, rem possimus eligendi ipsam necessitatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis beatae molestias esse vero porro voluptas assumenda id consequatur deserunt. Cumque, est. Impedit magnam non at reiciendis repudiandae incidunt perspiciatis tempore! Dolore soluta esse dolorum officia id accusantium recusandae sint sapiente! Lorem ipsum dolor sit amet consectetur adipisicing elit. Non illum nisi vitae! Voluptates modi sint corporis est, enim voluptatem tenetur numquam commodi doloremque veritatis dicta itaque quo voluptatum quisquam ab nemo quam, maxime repellat iste corrupti officiis iusto facere ipsam. Distinctio assumenda quae laborum minima asperiores, doloribus delectus recusandae, iure reiciendis accusantium optio veritatis, deserunt nisi numquam! Eum, et officia.</Typography>
+                                <Typography variant='body1' >{postDetails.description}</Typography>
                             </Box>
                             <Divider />
                             <Grid my={2} container>
@@ -102,13 +99,13 @@ const PostDetails = () => {
                                     <Typography variant='h6' fontWeight={600} color="GrayText">Similar Posts</Typography>
                                 </Grid>
                                 <Grid item xs={12} md={4}>
-                                    <Wrapper />
+
                                 </Grid>
                                 <Grid item xs={12} md={4}>
-                                    <Wrapper />
+
                                 </Grid>
                                 <Grid item xs={12} md={4}>
-                                    <Wrapper />
+
                                 </Grid>
                             </Grid>
 

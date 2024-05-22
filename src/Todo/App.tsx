@@ -1,4 +1,4 @@
-import { Avatar, Box, Chip, Divider, Grid, IconButton, Modal, Pagination, Stack, Tooltip, Typography } from '@mui/material'
+import { Avatar, Box, Chip, CircularProgress, Divider, Grid, IconButton, LinearProgress, Modal, Pagination, Stack, Tooltip, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import RecipeReviewCard from './PostCard/PostCard';
 import ScienceIcon from '@mui/icons-material/Science';
@@ -53,16 +53,6 @@ const App = () => {
     }, [dispatch])
 
 
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        bgcolor: 'background.paper',
-        p: 3,
-        borderRadius: 3,
-        transition: '0.1s ease-in'
-    };
 
 
     const handleCreateModal = () => {
@@ -122,7 +112,6 @@ const App = () => {
                         }
 
                         {topRatedPosts.map((post: any) => {
-
                             return <Grid item key={post._id} xs={12} md={6} lg={4}>
                                 <RecipeReviewCard
                                     author={post.authorName}
@@ -136,7 +125,6 @@ const App = () => {
                         {Boolean(topRatedPosts.length) && <Grid item xs={12} component={Stack} justifyContent='center' mt={2}>
                             <Pagination count={10} variant="outlined" shape="rounded" />
                         </Grid>
-
                         }
                     </Grid>
                 </Grid>
@@ -176,15 +164,25 @@ const App = () => {
                                     <AddRoundedIcon color='inherit' />
                                 </IconButton>
                             </Tooltip>
-
-
-
                             <Box boxSizing={'border-box'} border='3px solid #373737' borderRadius='50%' padding='2px'>
                                 <Avatar src="https://mui.com/static/images/avatar/3.jpg" alt='t' sx={{ width: "38px", height: '38px' }}>A</Avatar>
                             </Box>
                             <Box boxSizing={'border-box'} border='3px solid #373737' borderRadius='50%' padding='2px'>
                                 <Avatar src="https://mui.com/static/images/avatar/4.jpg" sx={{ width: "38px", height: '38px' }}>A</Avatar>
                             </Box>
+                        </Stack>
+                    </Stack>
+
+
+                    <Stack mt={2}>
+                        <Stack direction='row'
+                            alignItems='center' justifyContent='space-between'>
+                            <Typography noWrap variant='h6'>Category</Typography>
+                        </Stack>
+                        <Divider />
+                        <Stack direction='row' gap={1} alignItems='center' flexWrap={'wrap'}>
+                           
+                       
                         </Stack>
                     </Stack>
 
@@ -197,17 +195,10 @@ const App = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box>
+                    <LinearProgress />
                 </Box>
             </Modal>
-            <Modal
-                open={createPostModal}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style} width={{ xs: 300, md: 600 }}>
-                    <CreatePost toggle={setCreatePostModal} />
-                </Box>
-            </Modal>
+            <CreatePost open={createPostModal} toggle={setCreatePostModal}/>
         </Box>
     )
 }

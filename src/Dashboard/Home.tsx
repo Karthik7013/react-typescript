@@ -127,11 +127,6 @@ export default function Home() {
         path: 'save'
     },
     {
-        icon: 'like',
-        title: 'Liked',
-        path: 'like'
-    },
-    {
         icon: 'analytics',
         title: 'Analytics',
         path: 'analytics'
@@ -175,7 +170,7 @@ export default function Home() {
                 <List>
                     {adminNavItems.map((item, index) => (
                         <Box key={item.title}>
-                            <Link to={item.path} >
+                            <Link to={item.path}>
                                 <ListItem disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton
                                         sx={{
