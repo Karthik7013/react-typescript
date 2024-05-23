@@ -127,11 +127,6 @@ export default function Home() {
         path: 'save'
     },
     {
-        icon: 'analytics',
-        title: 'Analytics',
-        path: 'analytics'
-    },
-    {
         icon: 'settings',
         title: 'Settings',
         path: 'settings'
