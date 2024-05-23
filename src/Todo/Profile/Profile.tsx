@@ -6,8 +6,10 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import LanguageIcon from '@mui/icons-material/Language';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import { useSelector } from 'react-redux';
 const Profile = () => {
-
+    const data = useSelector((e:any)=>e.auth.data);
+    console.log(data)
     return (
         <Grid container spacing={2}>
             <Grid item xs={9}>
@@ -23,20 +25,20 @@ const Profile = () => {
                                 />
                             </Card>
                             <Box position="absolute" bottom={-50} left={50}>
-                                <Avatar sx={{ width: 100, height: 100 }} src='https://mui.com/static/images/avatar/1.jpg' alt='l'>
+                                <Avatar sx={{ width: 100, height: 100,fontSize:'3em',fontWeight:700 }} src='' alt='l'>B
                                 </Avatar>
                             </Box>
                         </Box>
                         <Box>
                             <Stack sx={{ pl: 25, my: 2, position: 'relative' }}>
-                                <Typography variant='h4' fontWeight={600} color="GrayText">Karthik Tumala</Typography>
+                                <Typography sx={{textTransform: 'capitalize'}}   variant='h4' fontWeight={600} color="GrayText">{data?.name}</Typography>
                                 <List dense={true}>
                                     <ListItem sx={{ px: 0 }}>
                                         <ListItemIcon sx={{ minWidth: '36px' }}>
                                             <MailIcon />
                                         </ListItemIcon>
                                         <ListItemText
-                                            primary="karthiktumala143@gmail.com"
+                                            primary={data?.email}
                                         />
                                     </ListItem>
                                     <ListItem sx={{ px: 0 }}>

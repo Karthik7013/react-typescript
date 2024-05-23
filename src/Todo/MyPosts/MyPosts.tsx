@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import BASE_URL_ from '../../config';
 import { dateFormatter } from '../Utils/utils';
+import { Link } from 'react-router-dom';
 const MyPosts = () => {
     let userId = useSelector((e:any)=> e.auth.data?._id);
     let dispatch = useDispatch()
@@ -73,7 +74,7 @@ const MyPosts = () => {
                                     </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
-                                    primary={post.title}
+                                    primary={<Link to={`/postdetails/${post._id}`}>{post.title}</Link>}
                                     secondary={dateFormatter(post.createdAt
                                     )}
                                 />

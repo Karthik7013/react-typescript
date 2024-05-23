@@ -16,10 +16,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import { Link, Outlet} from 'react-router-dom';
-
+import { Link, Outlet } from 'react-router-dom';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import MarkunreadMailboxRoundedIcon from '@mui/icons-material/MarkunreadMailboxRounded';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import BookmarksRoundedIcon from '@mui/icons-material/BookmarksRounded';
+import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+const items = [<HomeRoundedIcon />, <MarkunreadMailboxRoundedIcon />, <BookmarksRoundedIcon />, <AccountCircleRoundedIcon />, <SettingsRoundedIcon />]
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -112,25 +115,25 @@ export default function Home() {
             path: '/dashboard'
         },
         {
-        icon: 'post',
-        title: 'Post',
-        path: 'post'
-    },
-    {
-        icon: 'face',
-        title: 'Profile',
-        path: 'profile'
-    },
-    {
-        icon: 'Saved',
-        title: 'Saved',
-        path: 'save'
-    },
-    {
-        icon: 'settings',
-        title: 'Settings',
-        path: 'settings'
-    }
+            icon: 'post',
+            title: 'Post',
+            path: 'post'
+        },
+        {
+            icon: 'Saved',
+            title: 'Saved',
+            path: 'save'
+        },
+        {
+            icon: 'face',
+            title: 'Profile',
+            path: 'profile'
+        },
+        {
+            icon: 'settings',
+            title: 'Settings',
+            path: 'settings'
+        }
     ]
 
     return (
@@ -181,7 +184,7 @@ export default function Home() {
                                                 justifyContent: 'center',
                                             }}
                                         >
-                                            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                            {items[index]}
                                         </ListItemIcon>
                                         <ListItemText primary={item.title} sx={{ opacity: open ? 1 : 0 }} />
                                     </ListItemButton>
