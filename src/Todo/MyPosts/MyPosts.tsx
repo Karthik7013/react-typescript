@@ -1,4 +1,4 @@
-import { Avatar, Box, Divider, IconButton, LinearProgress, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography } from '@mui/material'
+import { Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, IconButton, LinearProgress, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -8,7 +8,8 @@ import BASE_URL_ from '../../config';
 import { dateFormatter } from '../Utils/utils';
 import { Link } from 'react-router-dom';
 const MyPosts = () => {
-    let userId = useSelector((e:any)=> e.auth.data?._id);
+    const [alertBox, setAlertBox] = useState(false)
+    let userId = useSelector((e: any) => e.auth.data?._id);
     let dispatch = useDispatch()
     let loading = useSelector((e: any) => e.loading);
     let [myPost, setMyPost] = useState<any>();
@@ -54,7 +55,7 @@ const MyPosts = () => {
             <Typography variant="h6">MyPosts | Dashboard</Typography>
             <>
                 {loading ? <><LinearProgress /><>loading...</></> : <List dense={true}>
-                    <Stack divider={<Divider component="linearGradient" />}>
+                    <Stack divider={<Divider />}>
                         {myPost && myPost.map((post: any) => <ListItemButton key={post._id} disableRipple>
                             <ListItem
                                 sx={{ px: 0 }}
@@ -63,7 +64,7 @@ const MyPosts = () => {
                                         <IconButton edge="end" aria-label="delete">
                                             <EditIcon />
                                         </IconButton>
-                                        <IconButton edge="end" aria-label="delete" onClick={() => { deletePost(post._id) }}>
+                                        <IconButton edge="end" aria-label="delete" onClick={() => { setAlertBox(true) }}>
                                             <DeleteIcon color='error' />
                                         </IconButton>
                                     </Stack>
@@ -79,11 +80,35 @@ const MyPosts = () => {
                                     )}
                                 />
                             </ListItem>
+                            <Dialog
+                                sx={{ borderRadius: 5, padding: 3 }}
+                                open={alertBox}
+                                aria-labelledby="alert-dialog-title"
+                                aria-describedby="alert-dialog-description"
+                            >
+                                <DialogTitle id="alert-dialog-title">
+                                    {"This Action is Permanent"}
+                                </DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText id="alert-dialog-description">
+                                        are you sure to delete the post permanently.This Action cannot be revert back
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button autoFocus onClick={() => { setAlertBox(false) }}>Cancel</Button>
+                                    <Button
+                                        onClick={() => { deletePost(post._id);setAlertBox(false) }}
+                                        color='error' variant='contained' >
+                                        Delete
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
                         </ListItemButton>)
                         }
                     </Stack>
                 </List>}
             </>
+
         </Box>
     )
 }
