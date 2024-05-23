@@ -1,6 +1,6 @@
-import { Avatar, Box, Divider, IconButton, LinearProgress, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography } from '@mui/material';
+import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography } from '@mui/material';
 import React from 'react'
-import { dateFormatter } from '../Utils/utils';
+
 
 const SavedPost = () => {
     return (
