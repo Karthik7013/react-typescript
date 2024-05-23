@@ -8,7 +8,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useSelector } from 'react-redux';
 const Profile = () => {
-    const data = useSelector((e:any)=>e.auth.data);
+    const data = useSelector((e: any) => e.auth.data);
     console.log(data)
     return (
         <Grid container spacing={2}>
@@ -25,13 +25,13 @@ const Profile = () => {
                                 />
                             </Card>
                             <Box position="absolute" bottom={-50} left={50}>
-                                <Avatar sx={{ width: 100, height: 100,fontSize:'3em',fontWeight:700 }} src='' alt='l'>B
+                                <Avatar sx={{ width: 100, height: 100, fontSize: '3em', fontWeight: 700, textTransform: 'capitalize' }} src='' alt='l'>{data?.name[0]}
                                 </Avatar>
                             </Box>
                         </Box>
                         <Box>
                             <Stack sx={{ pl: 25, my: 2, position: 'relative' }}>
-                                <Typography sx={{textTransform: 'capitalize'}}   variant='h4' fontWeight={600} color="GrayText">{data?.name}</Typography>
+                                <Typography sx={{ textTransform: 'capitalize' }} variant='h4' fontWeight={600} color="GrayText">{data?.name}</Typography>
                                 <List dense={true}>
                                     <ListItem sx={{ px: 0 }}>
                                         <ListItemIcon sx={{ minWidth: '36px' }}>
