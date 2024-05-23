@@ -9,4 +9,9 @@ const dateFormatter = (date: string): string => {
     const day = newDate.getDate();
     return `${month} ${day}, ${year}`;;
 }
-export {dateFormatter}
+
+const getToken = ()=> localStorage.getItem('token');
+
+
+
+export {dateFormatter,getToken}

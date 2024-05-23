@@ -1,4 +1,4 @@
-import { Avatar, Box, CircularProgress, Divider, IconButton, LinearProgress, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography } from '@mui/material'
+import { Avatar, Box, Divider, IconButton, LinearProgress, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -7,13 +7,26 @@ import axios from 'axios';
 import BASE_URL_ from '../../config';
 import { dateFormatter } from '../Utils/utils';
 const MyPosts = () => {
+    let userId = useSelector((e:any)=> e.auth.data?._id);
     let dispatch = useDispatch()
     let loading = useSelector((e: any) => e.loading);
-    let [myPost, setMyPost] = useState<any>()
+    let [myPost, setMyPost] = useState<any>();
+
+    const deletePost = async (id: string) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const headers = {
+                'x-auth-token': token
+            }
+            let res = await axios.delete(`${BASE_URL_}/admin/deletepost/${id}`, { headers });
+            if (res.status === 200) {
+                setMyPost(myPost.filter((e: any) => e._id !== id))
+            }
+        }
+    }
 
     useEffect(() => {
-
-        const getMyPosts = async (userId: string, token: string) => {
+        const getMyPosts = async (token: string) => {
             const headers = {
                 'x-auth-token': token
             }
@@ -23,26 +36,16 @@ const MyPosts = () => {
                 setMyPost(res.data)
             }
             dispatch({ type: 'LOADING', payload: false });
-
         }
 
         const token = localStorage.getItem('token');
         if (token) {
-            const verifyToken = async (token: string) => {
-                const headers = {
-                    'x-auth-token': token
-                }
-                let res = await axios.get(`${BASE_URL_}/user/profile`, { headers })
-                if (res.status === 200) {
-                    getMyPosts(res.data.user._id, token)
-                }
-            }
-            verifyToken(token)
+            getMyPosts(token)
         }
 
-    }, [])
+    }, [dispatch, userId])
 
-    
+
 
 
     return (
@@ -59,14 +62,14 @@ const MyPosts = () => {
                                         <IconButton edge="end" aria-label="delete">
                                             <EditIcon />
                                         </IconButton>
-                                        <IconButton edge="end" aria-label="delete">
+                                        <IconButton edge="end" aria-label="delete" onClick={() => { deletePost(post._id) }}>
                                             <DeleteIcon color='error' />
                                         </IconButton>
                                     </Stack>
                                 }
                             >
                                 <ListItemAvatar>
-                                    <Avatar src='https://mui.com/static/images/avatar/3.jpg'>
+                                    <Avatar variant='rounded' src={post.imgUrl}>
                                     </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText

@@ -1,13 +1,9 @@
-import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, IconButton, Stack, Typography, Button, TextField, ListItem, ListItemAvatar, ListItemText, Icon } from '@mui/material'
+import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, IconButton, Stack, Typography, Button, TextField, ListItem, ListItemAvatar, ListItemText, LinearProgress } from '@mui/material'
 
 import { red } from '@mui/material/colors';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import SendIcon from '@mui/icons-material/Send';
-import ScienceIcon from '@mui/icons-material/Science';
-import FastfoodIcon from '@mui/icons-material/Fastfood';
-import LightbulbCircleIcon from '@mui/icons-material/LightbulbCircle';
-import LocalAirportIcon from '@mui/icons-material/LocalAirport';
-import RecipeReviewCard from './PostCard/PostCard';
+
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import BASE_URL_ from '../config';
@@ -45,11 +41,6 @@ const PostDetails = () => {
         }
     }, [postID, navigate])
 
-    // const Wrapper = () => {
-    //     return <RecipeReviewCard author='K' image='https://www.eatingwell.com/thmb/m5xUzIOmhWSoXZnY-oZcO9SdArQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/article_291139_the-top-10-healthiest-foods-for-kids_-02-4b745e57928c4786a61b47d8ba920058.jpg' content='This impressive paella is a perfect party dish and a fun meal to cook
-    //     together with your guests. Add 1 cup of frozen peas along with the mussels,
-    //     if you like.' id='' title='Shrimp and Chorizo Paella' subheader='September 14, 2016' />
-    // }
 
     return (
         <Box>
@@ -164,7 +155,7 @@ const PostDetails = () => {
                             </Stack>
                         </Stack>
                     </Box>
-                </Container> : "loading..."}
+                </Container> : <LinearProgress />}
         </Box>
     )
 }

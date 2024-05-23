@@ -1,4 +1,4 @@
-import { Avatar, Box, Chip, CircularProgress, Divider, Grid, IconButton, LinearProgress, Modal, Pagination, Stack, Tooltip, Typography } from '@mui/material'
+import { Avatar, Box, Chip, Divider, Grid, IconButton, LinearProgress, Modal, Pagination, Stack, Tooltip, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import RecipeReviewCard from './PostCard/PostCard';
 import ScienceIcon from '@mui/icons-material/Science';
@@ -22,36 +22,6 @@ const App = () => {
     const loading = useSelector((e: any) => e.loading);
     const [createPostModal, setCreatePostModal] = useState(false);
 
-    useEffect(() => {
-        const getProfile = async (authToken: string) => {
-            const headers = {
-                'Authorization': 'Bearer YourAccessToken',
-                'Content-Type': 'application/json',
-                'x-auth-token': authToken
-            };
-
-            try {
-                dispatch({ type: 'LOADING', payload: true })
-                let res = await axios.get(`${BASE_URL_}/user/profile`, { headers })
-                if (res.status === 200) {
-                    dispatch({ type: 'LOGIN', payload: res.data.user })
-                } else {
-                    console.log('invalid/expired login')
-                };
-            } catch (error) {
-                console.log(error)
-            }
-            finally {
-                dispatch({ type: 'LOADING', payload: false })
-            }
-        }
-        let authToken = localStorage.getItem('token');
-        if (authToken)
-            getProfile(authToken)
-        else
-            console.log('login again')
-    }, [dispatch])
-
 
 
 
@@ -59,7 +29,7 @@ const App = () => {
         setCreatePostModal((prev) => !prev)
     }
 
-
+    // api call for get all posts
     useEffect(() => {
         const getPosts = async () => {
             let res = await axios.get(`${BASE_URL_}/admin/post/all`);

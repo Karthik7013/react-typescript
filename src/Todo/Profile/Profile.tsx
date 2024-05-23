@@ -5,6 +5,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import LanguageIcon from '@mui/icons-material/Language';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 const Profile = () => {
 
     return (
@@ -52,7 +53,7 @@ const Profile = () => {
                                         <Chip size='small' label="JavaScript Developer" />
                                     </ListItem>
                                 </List>
-                                <Button sx={{ position: 'absolute', right: 16 }} variant="contained" >Follow</Button>
+                                <Button endIcon={<NotificationsIcon />} sx={{ position: 'absolute', right: 16 }} variant="contained" >Follow</Button>
                             </Stack>
                         </Box>
                     </Card>
