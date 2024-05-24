@@ -1,0 +1,11 @@
+{
+    "extends": [
+        "eslint:recommended"
+    ],
+    "rules": {
+        // Add or modify rules as needed
+        "no-console": "off",
+        // Override the rule to treat warnings as errors
+        "no-unused-vars": "warn"
+    }
+}
