@@ -49,7 +49,7 @@ const Root = () => {
           dispatch({ type: 'LOGIN', payload: res.data.user })
         } else {
           console.log('invalid/expired login')
-        };
+        }
       } catch (error) {
         console.log(error)
       }
