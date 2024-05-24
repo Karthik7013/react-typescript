@@ -1,24 +1,37 @@
 import { Box, Card, Grid, MenuItem, Stack, TextField, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import { BarChart, LineChart } from '@mui/x-charts';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { PieChart } from '@mui/x-charts/PieChart';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { getToken } from '../../Todo/Utils/utils';
+
 
 const Main = () => {
-    // bargraph1 data
-    const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-    const xLabels = [
-        'Movies',
-        'Games',
-        'Travel',
-        'Cooking',
-        'Science',
-        'Information',
-        'Food',
-    ];
 
-    // groups-cards
+    let user = useSelector((e: any) => e.auth);
+    let [chartData, setChartData] = useState();
 
+    const getData = async () => {
+        const headers = {
+            'x-auth-token': getToken()
+        }
+
+        let res = await axios.get(`http://localhost:8000/api/v1/admin/dashboard/${user.data._id}`, { headers })
+        if (res.status === 200) {
+            setChartData(res.data)
+        }
+    }
+
+    useEffect(() => {
+        if (user.status) {
+            getData()
+        } else {
+            console.log('login again')
+        }
+    }, [])
 
     return (
         <Box>
@@ -28,15 +41,12 @@ const Main = () => {
                         <BarChart
                             height={300}
                             series={[
-                                { data: pData, label: 'No of posts', id: 'pvId', stack: 'total' },
-
+                                { data: chartData ? Object.values(chartData) : [], label: 'No of posts', id: 'pvId', stack: 'total' },
                             ]}
-                            xAxis={[{ data: xLabels, scaleType: 'band' }]}
+                            xAxis={[{ data: chartData ? Object.keys(chartData) : [], scaleType: 'band' }]}
                         />
                         <Stack direction={'row'} position={'absolute'}
                             top={16} right={16} spacing={2}>
-                            {/* <TextField size='small' type="date"></TextField>
-                            <TextField size='small' type="date"></TextField> */}
                             <TextField select value="week" size='small'>
                                 <MenuItem value="week">This Week</MenuItem>
                                 <MenuItem value="">This Month</MenuItem>
@@ -89,7 +99,7 @@ const Main = () => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} md={7}>
-                    <LineChart
+                    {/* <LineChart
                         xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
                         series={[
                             {
@@ -98,32 +108,32 @@ const Main = () => {
                         ]}
                         width={500}
                         height={300}
-                    />
+                    /> */}
                 </Grid>
                 <Grid item xs={12} md={5}>
-                    
-                        <PieChart
-                            series={[
-                                {
-                                    arcLabel: (item) => `${item.value}`,
-                                    data: [
-                                        { value: 5, label: 'Food' },
-                                        { value: 10, label: 'Technology' },
-                                        { value: 15, label: 'Science' },
-                                        { value: 20, label: 'Movie' },
-                                    ],
-                                    innerRadius: 49,
-                                    outerRadius: 97,
-                                    paddingAngle: 3,
-                                    cornerRadius: 5,
-                                    startAngle: -1,
-                                    endAngle: 360,
-                                    cx: 150,
-                                    cy: 150,
-                                }
-                            ]}
-                        />
-                    
+
+                    {/* <PieChart
+                        series={[
+                            {
+                                arcLabel: (item) => `${item.value}`,
+                                data: [
+                                    { value: 5, label: 'Food' },
+                                    { value: 10, label: 'Technology' },
+                                    { value: 15, label: 'Science' },
+                                    { value: 20, label: 'Movie' },
+                                ],
+                                innerRadius: 49,
+                                outerRadius: 97,
+                                paddingAngle: 3,
+                                cornerRadius: 5,
+                                startAngle: -1,
+                                endAngle: 360,
+                                cx: 150,
+                                cy: 150,
+                            }
+                        ]}
+                    /> */}
+
 
                 </Grid>
             </Grid>
