@@ -9,7 +9,6 @@ const theme = createTheme({
         }
     },
     typography: {
-        
         fontFamily: 'Montserrat',
     }
 })

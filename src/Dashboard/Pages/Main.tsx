@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { getToken } from '../../Todo/Utils/utils';
+import BASE_URL_ from '../../config';
 
 
 const Main = () => {
@@ -19,7 +20,7 @@ const Main = () => {
             'x-auth-token': getToken()
         }
 
-        let res = await axios.get(`http://localhost:8000/api/v1/admin/dashboard/${user.data._id}`, { headers })
+        let res = await axios.get(`${BASE_URL_}/admin/dashboard/${user.data._id}`, { headers })
         if (res.status === 200) {
             setChartData(res.data)
         }

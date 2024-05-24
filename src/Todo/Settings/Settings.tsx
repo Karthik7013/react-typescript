@@ -1,6 +1,12 @@
-import { Box, Button, Card, Grid, Stack, TextField, Typography } from '@mui/material'
+import { Box, Button, Card, Grid, InputAdornment, Stack, TextField, Typography } from '@mui/material'
 import React from 'react'
-
+import PasswordRoundedIcon from '@mui/icons-material/PasswordRounded';
+import HttpsRoundedIcon from '@mui/icons-material/HttpsRounded';
+import PersonIcon from '@mui/icons-material/Person';
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import PhoneAndroidRoundedIcon from '@mui/icons-material/PhoneAndroidRounded';
+import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
+import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded';
 const Settings = () => {
   return (
     <Box >
@@ -8,32 +14,45 @@ const Settings = () => {
         <Grid container spacing={5} padding={2}>
           <Grid item xs={12} md={7}>
             <Typography variant='h5' fontWeight={600}>Edit</Typography>
-            <Card sx={{ p: 5, mt: 1, borderRadius: '0.6em',boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px"}}>
+            <Card sx={{ p: 5, mt: 1, borderRadius: '0.6em', boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px" }}>
               <Stack gap={3}>
-                <TextField label="Name"></TextField>
-                <TextField label="Email"></TextField>
-                <TextField label="Phone"></TextField>
-                <TextField label="Address" multiline rows={2}></TextField>
+                <TextField label="Name" InputProps={{
+                  startAdornment: <InputAdornment position="start"><PersonIcon /></InputAdornment>,
+                }}></TextField>
+                <TextField label="Email" InputProps={{
+                  startAdornment: <InputAdornment position="start"><EmailRoundedIcon /></InputAdornment>,
+                }}></TextField>
+                <TextField label="Phone" InputProps={{
+                  startAdornment: <InputAdornment position="start"><PhoneAndroidRoundedIcon /></InputAdornment>,
+                }}></TextField>
+                <TextField label="Address" multiline rows={2} ></TextField>
                 <TextField multiline label="About" rows={4}></TextField>
                 <Button variant='contained'>update</Button>
               </Stack>
             </Card>
-
           </Grid>
           <Grid item xs={12} md={5}>
             <Typography variant='h5' fontWeight={600}>Change Password</Typography>
-            <Card sx={{ p: 5, mt: 1, borderRadius: '0.6em',boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px"}}>
+            <Card sx={{ p: 5, mt: 1, borderRadius: '0.6em', boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px" }}>
               <Stack gap={3}>
-                <TextField label="Current Password"></TextField>
-                <TextField label="New Password"></TextField>
-                <TextField label="Confirm Password"></TextField>
+                <TextField type='password' label="Current Password" InputProps={{
+                  startAdornment: <InputAdornment position="start"><HttpsRoundedIcon /></InputAdornment>,
+                }}></TextField>
+
+                <TextField helperText={<Typography variant='caption' color={'error'}>Enter Strong Password</Typography>} error type='password' label="New Password" InputProps={{
+                  startAdornment: <InputAdornment position="start"><PasswordRoundedIcon /></InputAdornment>,
+                  endAdornment: <ErrorOutlineRoundedIcon color='error' />
+                }}></TextField>
+                <TextField color='success' type='password' label="Confirm Password" InputProps={{
+                  startAdornment: <InputAdornment position="start"><PasswordRoundedIcon /></InputAdornment>,
+                  endAdornment: <CheckCircleOutlineRoundedIcon color='success' />
+                }}></TextField>
                 <Button variant='contained'>Submit</Button>
               </Stack>
             </Card>
           </Grid>
         </Grid>
       </Card>
-
     </Box>
   )
 }
