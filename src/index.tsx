@@ -62,7 +62,6 @@ const Root = () => {
       getProfile(token)
     else
       navigate('/signin')
-    null
   }, [dispatch])
 
   return <Routes>
