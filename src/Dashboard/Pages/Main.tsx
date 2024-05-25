@@ -1,19 +1,20 @@
-import { Box, Card, Grid, MenuItem, Stack, TextField, Typography } from '@mui/material'
+import { Box, Card, Grid, MenuItem, Stack, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react'
-import { BarChart, LineChart } from '@mui/x-charts';
+import { BarChart } from '@mui/x-charts';
+// import { LineChart } from '@mui/x-charts';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { PieChart } from '@mui/x-charts/PieChart';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { getToken } from '../../Todo/Utils/utils';
-import BASE_URL_ from '../../config';
+import {BASE_URL_} from '../../config';
 
 
 const Main = () => {
 
     let user = useSelector((e: any) => e.auth);
-    let [chartData, setChartData] = useState();
+    let [chartData, setChartData] = useState<any>();
 
     const getData = async () => {
         const headers = {
@@ -21,6 +22,7 @@ const Main = () => {
         }
 
         let res = await axios.get(`${BASE_URL_}/admin/dashboard/${user.data._id}`, { headers })
+        console.log(res.data)
         if (res.status === 200) {
             setChartData(res.data)
         }
@@ -29,10 +31,8 @@ const Main = () => {
     useEffect(() => {
         if (user.status) {
             getData()
-        } else {
-            console.log('login again')
         }
-    }, [])
+    }, [user])
 
     return (
         <Box>
@@ -42,9 +42,9 @@ const Main = () => {
                         <BarChart
                             height={300}
                             series={[
-                                { data: chartData ? Object.values(chartData) : [], label: 'No of posts', id: 'pvId', stack: 'total' },
+                                { data: chartData ? Object.values(chartData?.categoryWisePosts) : [], label: 'No of posts', id: 'pvId', stack: 'total' },
                             ]}
-                            xAxis={[{ data: chartData ? Object.keys(chartData) : [], scaleType: 'band' }]}
+                            xAxis={[{ data: chartData ? Object.keys(chartData.categoryWisePosts) : [], scaleType: 'band' }]}
                         />
                         <Stack direction={'row'} position={'absolute'}
                             top={16} right={16} spacing={2}>
@@ -64,7 +64,7 @@ const Main = () => {
                             <Card elevation={4} sx={{ borderRadius: '1em' }}>
                                 <Stack p={'1em 12px'}>
                                     <Typography variant='caption' fontWeight={600} color={'GrayText'}>Total Posts</Typography>
-                                    <Typography variant='h2' fontWeight={600}>123</Typography>
+                                    <Typography variant='h2' fontWeight={600}>{chartData?.totalPosts}</Typography>
                                 </Stack>
                             </Card>
                         </Grid>
@@ -72,9 +72,9 @@ const Main = () => {
                             <Card elevation={4} sx={{ borderRadius: '1em' }}>
                                 <Stack p={'1em 12px'}>
                                     <Typography variant='caption' fontWeight={600} color={'GrayText'}>Posts Like</Typography>
-                                    <Typography variant='h2' fontWeight={600}>10<FavoriteIcon htmlColor='red' sx={{ fontSize: '0.8em' }} />
+                                    <Typography variant='h2' fontWeight={600}>{chartData?.totalLikes
+}<FavoriteIcon htmlColor='red' sx={{ fontSize: '0.8em' }} />
                                     </Typography>
-
                                 </Stack>
                             </Card>
                         </Grid>
@@ -113,7 +113,7 @@ const Main = () => {
                 </Grid>
                 <Grid item xs={12} md={5}>
 
-                    {/* <PieChart
+                    <PieChart
                         series={[
                             {
                                 arcLabel: (item) => `${item.value}`,
@@ -133,7 +133,7 @@ const Main = () => {
                                 cy: 150,
                             }
                         ]}
-                    /> */}
+                    />
 
 
                 </Grid>

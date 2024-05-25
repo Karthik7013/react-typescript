@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import BASE_URL_ from '../../config';
+import {BASE_URL_} from '../../config';
 import { dateFormatter } from '../Utils/utils';
 import { Link } from 'react-router-dom';
 const MyPosts = () => {

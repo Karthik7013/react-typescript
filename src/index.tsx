@@ -21,7 +21,7 @@ import MyPosts from './Todo/MyPosts/MyPosts';
 import SavedPost from './Todo/SavedPost/SavedPost';
 import Settings from './Todo/Settings/Settings';
 import axios from 'axios';
-import BASE_URL_ from './config';
+import {BASE_URL_} from './config';
 import { getToken } from './Todo/Utils/utils';
 
 const root = ReactDOM.createRoot(

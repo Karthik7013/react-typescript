@@ -11,7 +11,7 @@ import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
 import CreatePost from './CreatePost/CreatePost';
-import BASE_URL_ from '../config';
+import {BASE_URL_} from '../config';
 import PostCardSkeleton from './PostCard/PostCardSkeleton';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
@@ -68,7 +68,7 @@ const App = () => {
                         <Grid item xs={12}>
                             <Typography color='GrayText' fontWeight={600} variant='h6'>Top rated Posts</Typography>
                         </Grid>
-                        {!Boolean(topRatedPosts.length) && <>
+                        {!topRatedPosts.length && <>
                             <Grid item xs={12} md={6} lg={4}>
                                 <PostCardSkeleton />
                             </Grid>

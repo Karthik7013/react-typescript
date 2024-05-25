@@ -2,7 +2,7 @@ import { Autocomplete, Button, CircularProgress, FormControlLabel, IconButton, S
 import axios from 'axios';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useDispatch, useSelector } from 'react-redux';
-import BASE_URL_ from '../../config';
+import {BASE_URL_} from '../../config';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -18,15 +18,6 @@ type CreatePostProps = {
 
 
 
-// interface postObjectProps {
-//     title: string,
-//     authorName: string,
-//     subtitle: string,
-//     imgUrl: string,
-//     category: string[],
-//     private: boolean,
-//     description: string
-// }
 
 
 

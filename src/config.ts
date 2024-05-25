@@ -1,2 +1,3 @@
 const BASE_URL_:string = 'https://blog-post-api-dsam.onrender.com/api/v1';
-export default BASE_URL_;
+const LOCAL_URL:string = 'http://localhost:8000/api/v1'
+export {BASE_URL_,LOCAL_URL};
