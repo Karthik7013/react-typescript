@@ -58,10 +58,9 @@ const Root = () => {
       }
     }
     const token = getToken();
-    if (token)
+    if (token){
       getProfile(token)
-    else
-      navigate('/signin')
+    }
   }, [dispatch])
 
   return <Routes>
