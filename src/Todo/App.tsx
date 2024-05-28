@@ -89,7 +89,8 @@ const App = () => {
                                     image={post.imgUrl}
                                     title={post.title}
                                     content={post.description}
-                                    subheader={post.createdAt} />
+                                    subheader={post.createdAt}
+                                     />
                             </Grid>
                         })}
                         {Boolean(topRatedPosts.length) && <Grid item xs={12} component={Stack} justifyContent='center' mt={2}>
