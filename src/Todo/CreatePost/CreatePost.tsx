@@ -11,17 +11,14 @@ import { useState } from 'react';
 
 
 
-type CreatePostProps = {
-    toggle: (value: boolean) => void;
-    open: boolean
-};
 
 
 
 
 
 
-function CreatePostDialog(props: CreatePostProps) {
+
+function CreatePostDialog(props:any) {
     let [values, setValues] = useState([])
     let [data, setData] = useState<any>({
         title: "",
