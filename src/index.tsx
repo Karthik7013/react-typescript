@@ -32,7 +32,6 @@ const root = ReactDOM.createRoot(
 
 
 const Root = () => {
-  const navigate = useNavigate();
   let dispatch = useDispatch();
 
   useEffect(() => {
