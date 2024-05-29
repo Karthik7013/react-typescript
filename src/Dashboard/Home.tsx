@@ -116,7 +116,6 @@ export default function Home() {
 
     return (
         <Box sx={{ display: 'flex' }}>
-            <CssBaseline />
             <AppBar position="fixed">
                 <Toolbar sx={{ bgcolor: "#373737" }}>
                     <IconButton

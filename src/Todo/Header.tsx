@@ -15,11 +15,11 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
 import TemporaryDrawer from './SideDrawer';
-import { Avatar, Stack } from '@mui/material';
+import { Avatar, Stack, Switch } from '@mui/material';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-import { useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import logo from "../assets/logo.png"
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -65,7 +65,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
-    // let dispatch = useDispatch();
+    let dispatch = useDispatch();
+    let dark = useSelector((e:any)=>e.dark)
     const auth = useSelector((e: any) => e.auth);
     const isLoggedIn = auth.status;
     const user = auth.data;
@@ -205,11 +206,9 @@ export default function Header() {
     );
 
 
-
-
     return (
         <Box sx={{ flexGrow: 1, position: 'sticky', top: 0, zIndex: 999, width: '100%' }}>
-            <AppBar position="relative" sx={{ bgcolor: "#373737" }}>
+            <AppBar position="relative">
                 <Toolbar>
                     {<IconButton
                         sx={{ display: { xs: 'block', sm: 'none', mr: 2 } }}
@@ -292,16 +291,14 @@ export default function Header() {
                             <Avatar sx={{ width: 34, height: 34 }}>{user.userName[0]}</Avatar>
                         </IconButton>
                     </Box>}
+                    <Switch checked={dark} onChange={(e) => {
+                            dispatch({type:'SET_THEME',payload: !dark})
+                    }}></Switch>
                 </Toolbar>
             </AppBar>
             {renderMobileMenu}
             {renderMenu}
             <TemporaryDrawer drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
-            {/* <Box position={'relative'} sx={{ backgroundColor: 'yellowgreen' }} bottom={0} zIndex={999} width={'100%'} >
-                <Box px={'4em'} position={'absolute'} width={'100%'} sx={{ backgroundColor: 'pink' }}>
-                    <Typography variant='h4'>Search</Typography>
-                </Box>
-            </Box> */}
         </Box>
     );
 }

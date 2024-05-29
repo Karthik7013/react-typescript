@@ -1,5 +1,6 @@
 export { }
 const initialState = {
+    dark: false,
     success: false,
     error: false,
     loading: false,
@@ -14,6 +15,8 @@ const initialState = {
 export default function reducer(state = initialState, action: any) {
     const { type, payload } = action;
     switch (type) {
+        case 'SET_THEME':
+            return { ...state, dark: payload }
         case 'LOADING':
             return { ...state, loading: payload }
         case 'LOGIN':
@@ -21,9 +24,9 @@ export default function reducer(state = initialState, action: any) {
         case 'LOGOUT':
             return { ...state, auth: { data: null, status: false } }
         case 'FETCH_POST':
-            return {...state,posts:payload}
+            return { ...state, posts: payload }
         case 'ADD_POST':
-            return {...state,posts:[...state.posts,payload]}
+            return { ...state, posts: [...state.posts, payload] }
         default:
             return state
     }
