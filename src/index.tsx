@@ -23,19 +23,18 @@ import Settings from './Todo/Settings/Settings';
 import axios from 'axios';
 import { BASE_URL_ } from './config';
 import { getToken } from './Todo/Utils/utils';
+import { GoogleOAuthProvider } from "@react-oauth/google"
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-localStorage.setItem('dark', 'false');
-
 
 const Root = () => {
-  const dark = useSelector((e:any)=>e.dark);
+  const dark = useSelector((e: any) => e.dark);
   const stndTheme = createTheme({
     palette: {
-      mode: dark  ? "dark" : 'light'
+      mode: dark ? "dark" : 'light'
     }
   })
   let dispatch = useDispatch();
@@ -95,7 +94,9 @@ const Root = () => {
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <Root />
+      <GoogleOAuthProvider clientId='180663477927-tr6u63n64m3taho8r3gm3eqmmncqhc1q.apps.googleusercontent.com'>
+        <Root />
+      </GoogleOAuthProvider>
     </BrowserRouter>
   </Provider>
 );

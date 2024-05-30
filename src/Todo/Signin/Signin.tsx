@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { CircularProgress, Snackbar, Alert } from '@mui/material';
+import { GoogleLogin } from '@react-oauth/google';
 
 function Copyright(props: any) {
     return (
@@ -63,7 +64,7 @@ export default function SignIn() {
 
     return (
         <Container component="main" maxWidth="xs">
-           
+
             <Box
                 sx={{
                     marginTop: 8,
@@ -126,13 +127,22 @@ export default function SignIn() {
                     </Grid>
                 </Box>
             </Box>
+            <GoogleLogin
+                onSuccess={credentialResponse => {
+                    console.log(credentialResponse);
+                }}
+                onError={() => {
+                    console.log('Login Failed');
+                }}
+            />;
             <Copyright sx={{ mt: 8, mb: 4 }} />
+
             <Snackbar
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                 open={err}
                 autoHideDuration={2000}
                 onClose={() => { setErr(false) }}
-            ><Alert  sx={{width:'100%'}} variant='filled' severity='error'>Invalid Login Details</Alert>
+            ><Alert sx={{ width: '100%' }} variant='filled' severity='error'>Invalid Login Details</Alert>
             </Snackbar>
         </Container>
     );
