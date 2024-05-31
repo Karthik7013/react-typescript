@@ -9,7 +9,6 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useSelector } from 'react-redux';
 const Profile = () => {
     const data = useSelector((e: any) => e.auth.data);
-    console.log(data)
     return (
         <Grid container spacing={2}>
             <Grid item xs={9}>

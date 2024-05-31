@@ -13,8 +13,8 @@ import Main from './Dashboard/Pages/Main';
 import { store } from './Redux/Store';
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
-import theme from './Todo/Theme/theme';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import {lightTheme,darkTheme} from './Todo/Theme/theme';
 import PageNotFound from './Todo/PageNotFound/PageNotFound';
 import Profile from './Todo/Profile/Profile';
 import MyPosts from './Todo/MyPosts/MyPosts';
@@ -32,11 +32,6 @@ const root = ReactDOM.createRoot(
 
 const Root = () => {
   const dark = useSelector((e: any) => e.dark);
-  const stndTheme = createTheme({
-    palette: {
-      mode: dark ? "dark" : 'light'
-    }
-  })
   let dispatch = useDispatch();
 
   useEffect(() => {
@@ -67,7 +62,7 @@ const Root = () => {
     }
   }, [dispatch])
 
-  return <ThemeProvider theme={stndTheme}>
+  return <ThemeProvider theme={ dark ? darkTheme : lightTheme}>
     <CssBaseline />
     <Routes>
       <Route path='/' element={<><Header /><Outlet /></>}>
@@ -100,4 +95,3 @@ root.render(
     </BrowserRouter>
   </Provider>
 );
-

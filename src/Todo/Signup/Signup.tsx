@@ -12,10 +12,15 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { CircularProgress, IconButton, InputAdornment } from '@mui/material';
+import { CircularProgress, Divider, IconButton, InputAdornment } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useDispatch, useSelector } from 'react-redux';
+import EmailIcon from '@mui/icons-material/Email';
+import PasswordIcon from '@mui/icons-material/Password';
+import PersonIcon from '@mui/icons-material/Person';
+import { useForm } from 'react-hook-form';
+
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -32,37 +37,34 @@ function Copyright(props: any) {
 
 
 export default function SignUp() {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
     const dispatch = useDispatch();
-    let loading = useSelector((e:any)=>e.loading);
+    let loading = useSelector((e: any) => e.loading);
     const [show, setShow] = React.useState(false)
     const navigate = useNavigate()
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        let userRegisterData = {
-            userName: data.get('firstName'),
-            name: data.get('lastName'),
-            email: data.get('email'),
-            password: data.get('password'),
-        }
+    const handleSubmitForm = async (data: any) => {
         try {
-            dispatch({type:'LOADING',payload:true})
-            let res = await axios.post('https://blog-post-api-dsam.onrender.com/api/v1/user/register', userRegisterData)
+            dispatch({ type: 'LOADING', payload: true })
+            let res = await axios.post('https://blog-post-api-dsam.onrender.com/api/v1/user/register', data)
             console.log(res.status)
             if (res.status === 201) {
                 navigate('/signin')
             }
         } catch (error) {
             console.log({ message: error })
-        }finally{
-            dispatch({type:'LOADING',payload:false})
+        } finally {
+            dispatch({ type: 'LOADING', payload: false })
         }
     };
     const showToggle = () => setShow((prev) => !prev)
 
     return (
         <Container component="main" maxWidth="xs">
-            
+
             <Box
                 sx={{
                     marginTop: 8,
@@ -71,64 +73,84 @@ export default function SignUp() {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                <Avatar sx={{ m: 1, bgcolor: 'info.main' }}>
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                <Box component="form" noValidate onSubmit={handleSubmit(handleSubmitForm)} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
+                                {...register('userName', {
+                                    required: 'Name is required'
+                                })}
+                                error={!!errors.userName}
                                 autoComplete="given-name"
-                                name="firstName"
                                 required
                                 fullWidth
-                                id="firstName"
                                 label="User Name"
                                 autoFocus
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start"><PersonIcon /></InputAdornment>
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
+                                {...register('name', {
+                                    required: 'Name is required'
+                                })}
+                                error={!!errors.name}
                                 required
                                 fullWidth
-                                id="lastName"
+
                                 label="Name"
-                                name="lastName"
+
                                 autoComplete="family-name"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type={show ? 'text' : 'password'}
-                                id="password"
-                                autoComplete="new-password"
                                 InputProps={{
-                                    endAdornment: <InputAdornment position="start">
-                                        {show ?
-                                            <IconButton onClick={showToggle}><VisibilityIcon /></IconButton> :
-                                            <IconButton onClick={showToggle}>
-                                                <VisibilityOffIcon />
-                                            </IconButton>
-                                        }
-                                    </InputAdornment>,
+                                    startAdornment: <InputAdornment position="start"><PersonIcon /></InputAdornment>
                                 }}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start"><EmailIcon /></InputAdornment>
+                                }}
+                                helperText={!!errors.email && 'Invalid email address'}
+                                label="Email"
+                                variant="outlined"
+                                {...register('email', {
+                                    required: 'Email is required',
+                                    pattern: {
+                                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                        message: 'Invalid email address'
+                                    },
+                                })}
+                                error={!!errors.email}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                fullWidth
+                                helperText={!!errors.password && 'Password is Require'}
+                                label="Password"
+                                type="password"
+                                variant="outlined"
+                                {...register('password', {
+                                    required: 'Password is required',
+                                    minLength: {
+                                        value: 4,
+                                        message: 'Password must be at least 6 characters long',
+                                    }
+                                })}
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start"><PasswordIcon /></InputAdornment>,
+                                }}
+                                error={!!errors.password}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -145,7 +167,7 @@ export default function SignUp() {
                         sx={{ mt: 3, mb: 2 }}
                         disabled={loading}
                     >
-                        {loading ? <CircularProgress size='30px' />:"Sign Up"}
+                        {loading ? <CircularProgress size='30px' /> : "Sign Up"}
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
@@ -157,6 +179,7 @@ export default function SignUp() {
                 </Box>
             </Box>
             <Copyright sx={{ mt: 5 }} />
+
         </Container>
     );
 }

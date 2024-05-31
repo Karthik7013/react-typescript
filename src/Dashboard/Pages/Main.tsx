@@ -22,7 +22,6 @@ const Main = () => {
         }
 
         let res = await axios.get(`${BASE_URL_}/admin/dashboard/${user.data._id}`, { headers })
-        console.log(res.data)
         if (res.status === 200) {
             setChartData(res.data)
         }

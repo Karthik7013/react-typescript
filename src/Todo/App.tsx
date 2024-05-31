@@ -1,4 +1,4 @@
-import { Avatar, Box, Chip, Divider, Grid, IconButton, LinearProgress, Modal, Pagination, Stack, Tooltip, Typography } from '@mui/material'
+import { Avatar, Box, Button, Chip, Divider, Grid, IconButton, LinearProgress, Modal, Pagination, Stack, styled, Tooltip, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import RecipeReviewCard from './PostCard/PostCard';
 import ScienceIcon from '@mui/icons-material/Science';
@@ -11,7 +11,7 @@ import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
 import CreatePost from './CreatePost/CreatePost';
-import {BASE_URL_} from '../config';
+import { BASE_URL_ } from '../config';
 import PostCardSkeleton from './PostCard/PostCardSkeleton';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
@@ -22,12 +22,7 @@ const App = () => {
     const loading = useSelector((e: any) => e.loading);
     const [createPostModal, setCreatePostModal] = useState(false);
 
-
-
-
-    const handleCreateModal = () => {
-        setCreatePostModal((prev) => !prev)
-    }
+    const handleCreateModal = () => setCreatePostModal((prev) => !prev)
 
     // api call for get all posts
     useEffect(() => {
@@ -39,10 +34,26 @@ const App = () => {
     }, [dispatch]);
 
 
+
+    const UserAvatar = (props: any) => {
+        const Ring = styled(Box)({
+            boxSizing: 'border-box',
+            borderRadius: '50%',
+            padding: '2px',
+            border: '2px solid'
+        })
+        return <Ring>
+            <Avatar src={props.url} alt='t' sx={{ width: "38px", height: '38px' }}>A</Avatar>
+        </Ring>
+    }
+    const PlusBtn = styled(IconButton)({
+
+    })
+
     return (
         <Box >
             <Grid container>
-                <Grid item xs={0} md={2} sx={{
+                <Grid item md={2} sx={{
                     display: {
                         md: 'block',
                         xs: 'none'
@@ -66,23 +77,19 @@ const App = () => {
                             </Stack>
                         </Grid>
                         <Grid item xs={12}>
-                            <Typography color='GrayText' fontWeight={600} variant='h6'>Top rated Posts</Typography>
+                            <Typography variant='h6'>Top rated Posts</Typography>
                         </Grid>
                         {!topRatedPosts.length && <>
-                            <Grid item xs={12} md={6} lg={4}>
-                                <PostCardSkeleton />
-                            </Grid>
-                            <Grid item xs={12} md={6} lg={4}>
-                                <PostCardSkeleton />
-                            </Grid>
-                            <Grid item xs={12} md={6} lg={4}>
-                                <PostCardSkeleton />
-                            </Grid>
+                            {[1, 2, 3].map((e) => {
+                                return <Grid key={e} item xs={12}>
+                                    <PostCardSkeleton />
+                                </Grid>
+                            })}
                         </>
                         }
 
                         {topRatedPosts.map((post: any) => {
-                            return <Grid item key={post._id} xs={12} md={6} lg={4}>
+                            return <Grid item key={post._id} xs={12}>
                                 <RecipeReviewCard
                                     author={post.authorName}
                                     id={post._id}
@@ -90,16 +97,17 @@ const App = () => {
                                     title={post.title}
                                     content={post.description}
                                     subheader={post.createdAt}
-                                     />
+                                />
                             </Grid>
                         })}
+
                         {Boolean(topRatedPosts.length) && <Grid item xs={12} component={Stack} justifyContent='center' mt={2}>
                             <Pagination count={10} variant="outlined" shape="rounded" />
                         </Grid>
                         }
                     </Grid>
                 </Grid>
-                <Grid item xs={0} md={2} sx={{
+                <Grid item md={2} sx={{
                     display: {
                         md: 'block',
                         xs: 'none'
@@ -119,45 +127,14 @@ const App = () => {
                         <Divider />
                         <Stack direction='row' spacing={1} alignItems='center'>
                             <Tooltip title="New Post">
-                                <IconButton onClick={handleCreateModal}
-                                    sx={{
-                                        color: 'snow',
-                                        bgcolor: '#373737',
-                                        transition: 'background-color 0.3s',
-                                        '&:hover': {
-                                            bgcolor: '#bdbdbd',
-                                        },
-                                        width: '45px',
-                                        height: '45px'
-
-                                    }}
-                                >
+                                <Button variant='contained' onClick={handleCreateModal}>
                                     <AddRoundedIcon color='inherit' />
-                                </IconButton>
+                                </Button>
                             </Tooltip>
-                            <Box boxSizing={'border-box'} border='3px solid #373737' borderRadius='50%' padding='2px'>
-                                <Avatar src="https://mui.com/static/images/avatar/3.jpg" alt='t' sx={{ width: "38px", height: '38px' }}>A</Avatar>
-                            </Box>
-                            <Box boxSizing={'border-box'} border='3px solid #373737' borderRadius='50%' padding='2px'>
-                                <Avatar src="https://mui.com/static/images/avatar/4.jpg" sx={{ width: "38px", height: '38px' }}>A</Avatar>
-                            </Box>
+                            <UserAvatar url='https://mui.com/static/images/avatar/3.jpg' />
+                            <UserAvatar url='https://mui.com/static/images/avatar/4.jpg' />
                         </Stack>
                     </Stack>
-
-
-                    <Stack mt={2}>
-                        <Stack direction='row'
-                            alignItems='center' justifyContent='space-between'>
-                            <Typography noWrap variant='h6'>Category</Typography>
-                        </Stack>
-                        <Divider />
-                        <Stack direction='row' gap={1} alignItems='center' flexWrap={'wrap'}>
-                           
-                       
-                        </Stack>
-                    </Stack>
-
-
                 </Grid>
             </Grid>
             <Modal
@@ -169,7 +146,7 @@ const App = () => {
                     <LinearProgress />
                 </Box>
             </Modal>
-            <CreatePost open={createPostModal} toggle={setCreatePostModal}/>
+            <CreatePost open={createPostModal} toggle={setCreatePostModal} />
         </Box>
     )
 }

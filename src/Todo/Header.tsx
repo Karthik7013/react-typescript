@@ -10,20 +10,18 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-
 import TemporaryDrawer from './SideDrawer';
 import { Avatar, Stack, Switch } from '@mui/material';
-
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
 import { useDispatch, useSelector } from 'react-redux';
 import logo from "../assets/logo.png"
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -66,15 +64,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Header() {
     let dispatch = useDispatch();
-    let dark = useSelector((e:any)=>e.dark)
+    let dark = useSelector((e: any) => e.dark)
     const auth = useSelector((e: any) => e.auth);
     const isLoggedIn = auth.status;
     const user = auth.data;
     const navigate = useNavigate();
-    const [drawerOpen, setDrawerOpen] = React.useState(false)
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-        React.useState<null | HTMLElement>(null);
+    const [drawerOpen, setDrawerOpen] = useState(false)
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -207,7 +204,7 @@ export default function Header() {
 
 
     return (
-        <Box sx={{ flexGrow: 1, position: 'sticky', top: 0, zIndex: 999, width: '100%' }}>
+        <Box sx={{ position: 'sticky', top: 0, zIndex: 999 }}>
             <AppBar position="relative">
                 <Toolbar>
                     {<IconButton
@@ -217,15 +214,12 @@ export default function Header() {
                         edge="start"
                         color="inherit"
                         aria-label="open drawer"
-
                     >
                         <MenuIcon />
-
                     </IconButton>}
                     <a href='/' >
                         <Avatar alt="Remy Sharp" src={logo} sx={{ display: { xs: 'none', sm: 'block' } }} />
                     </a>
-
                     <Box sx={{ flexGrow: 1 }} />
                     <Box>
                         <Search>
@@ -270,13 +264,11 @@ export default function Header() {
                         <Stack direction='row' spacing={2}>
                             <a href="/signin">
                                 <IconButton >
-                                    <Avatar sx={{ bgcolor: "#ffffff14" }}>
+                                    <Avatar>
                                         <AccountCircleIcon />
                                     </Avatar>
                                 </IconButton>
                             </a>
-
-
                         </Stack>
                     }
                     {isLoggedIn && <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
@@ -292,7 +284,7 @@ export default function Header() {
                         </IconButton>
                     </Box>}
                     <Switch checked={dark} onChange={(e) => {
-                            dispatch({type:'SET_THEME',payload: !dark})
+                        dispatch({ type: 'SET_THEME', payload: !dark })
                     }}></Switch>
                 </Toolbar>
             </AppBar>

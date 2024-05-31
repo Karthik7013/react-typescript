@@ -14,9 +14,13 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { CircularProgress, Snackbar, Alert } from '@mui/material';
+import { CircularProgress, Snackbar, Alert, InputAdornment, Stack, FormHelperText, Card } from '@mui/material';
 import { GoogleLogin } from '@react-oauth/google';
-
+import EmailIcon from '@mui/icons-material/Email';
+import PasswordIcon from '@mui/icons-material/Password';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { useForm } from 'react-hook-form';
+import { BASE_URL_ } from '../../config';
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -31,6 +35,15 @@ function Copyright(props: any) {
 }
 
 export default function SignIn() {
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+
+
+
     const [err, setErr] = useState(false);
     // const [success,setSuccess] = useState(false)
     const loading = useSelector((e: any) => e.loading)
@@ -38,17 +51,14 @@ export default function SignIn() {
     const navigate = useNavigate()
     const [remember, setRemeber] = useState(false)
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
+    const handleSubmitForm = async (data: any) => {
         let userSignInData = {
-            email: data.get('email'),
-            password: data.get('password'),
+            ...data,
             remember
         };
         try {
             dispatch({ type: 'LOADING', payload: true })
-            let res = await axios.post('https://blog-post-api-dsam.onrender.com/api/v1/user/login', userSignInData)
+            let res = await axios.post(`${BASE_URL_}/user/login`, userSignInData)
             if (res.status === 200) {
                 if (res.data?.token) {
                     localStorage.setItem('token', res.data?.token)
@@ -79,31 +89,52 @@ export default function SignIn() {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Stack
+                    justifyContent='center'
+                    mt={2}
+                    spacing={2}
+                    component="form"
+                    onSubmit={handleSubmit(handleSubmitForm)}
+                    noValidate
+                    autoComplete="off"
+                >
                     <TextField
-                        margin="normal"
-                        required
                         fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start"><EmailIcon /></InputAdornment>,
+                            endAdornment: <InputAdornment position="end">{!!errors.email && <ErrorOutlineIcon color='error' />}</InputAdornment>
+                        }}
+                        helperText={!!errors.email && 'Invalid email address'}
+                        label="Email"
+                        variant="outlined"
+                        {...register('email', {
+                            required: 'Email is required',
+                            pattern: {
+                                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                message: 'Invalid email address'
+                            },
+                        })}
+                        error={!!errors.email}
                     />
                     <TextField
-                        margin="normal"
-                        required
                         fullWidth
-                        name="password"
+                        helperText={!!errors.password && 'Password is Require'}
                         label="Password"
                         type="password"
-                        id="password"
-                        autoComplete="current-password"
+                        variant="outlined"
+                        {...register('password', {
+                            required: 'Password is required',
+                            minLength: {
+                                value: 4,
+                                message: 'Password must be at least 6 characters long',
+                            }
+                        })}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start"><PasswordIcon /></InputAdornment>,
+                        }}
+                        error={!!errors.password}
                     />
-                    <FormControlLabel
-                        control={<Checkbox onChange={() => { setRemeber((prev) => !prev) }} value={remember} color="primary" />}
-                        label="Remember me"
-                    />
+
                     <Button
                         type="submit"
                         fullWidth
@@ -125,18 +156,22 @@ export default function SignIn() {
                             </Link>
                         </Grid>
                     </Grid>
-                </Box>
+                    <GoogleLogin onSuccess={credentialResponse => {
+                        console.log(credentialResponse);
+                    }}
+                        onError={() => {
+                            console.log('Login Failed');
+                        }}
+                    />
+                </Stack>
             </Box>
-            <GoogleLogin
-                onSuccess={credentialResponse => {
-                    console.log(credentialResponse);
-                }}
-                onError={() => {
-                    console.log('Login Failed');
-                }}
-            />;
-            <Copyright sx={{ mt: 8, mb: 4 }} />
 
+
+
+
+
+
+            <Copyright sx={{ mt: 8, mb: 4 }} />
             <Snackbar
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                 open={err}
@@ -144,6 +179,67 @@ export default function SignIn() {
                 onClose={() => { setErr(false) }}
             ><Alert sx={{ width: '100%' }} variant='filled' severity='error'>Invalid Login Details</Alert>
             </Snackbar>
+            {/* ================ hook form */}
+            {/* <Box
+                component="form"
+                onSubmit={handleSubmit(onSubmit)}
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    '& .MuiTextField-root': { m: 1, width: '300px' },
+                }}
+                noValidate
+                autoComplete="off"
+            >
+                <TextField
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start"><EmailIcon /></InputAdornment>,
+                        endAdornment: <InputAdornment position="end">{!!errors.email && <ErrorOutlineIcon color='error' />}</InputAdornment>
+                    }}
+                    helperText={!!errors.email && 'Invalid email address'}
+                    label="Email"
+                    variant="outlined"
+                    {...register('email', {
+                        required: 'Email is required',
+                        pattern: {
+                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                            message: 'Invalid email address'
+                        },
+                    })}
+                    error={!!errors.email}
+                />
+
+                <TextField
+                    helperText={!!errors.password && 'Password is Require'}
+                    label="Password"
+                    type="password"
+                    variant="outlined"
+                    {...register('password', {
+                        required: 'Password is required',
+                        minLength: {
+                            value: 4,
+                            message: 'Password must be at least 6 characters long',
+                        }
+                    })}
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start"><PasswordIcon /></InputAdornment>,
+                    }}
+                    error={!!errors.password}
+                />
+
+                <Button
+                    type="submit"
+                    fullWidth
+                    disabled={loading}
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+
+                >
+                    {loading ? <CircularProgress size="30px" /> : 'Sign In'}
+                </Button>
+
+            </Box> */}
         </Container>
     );
 }
