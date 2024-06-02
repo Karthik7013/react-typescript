@@ -14,7 +14,7 @@ import { store } from './Redux/Store';
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import {lightTheme,darkTheme} from './Todo/Theme/theme';
+import { lightTheme, darkTheme } from './Todo/Theme/theme';
 import PageNotFound from './Todo/PageNotFound/PageNotFound';
 import Profile from './Todo/Profile/Profile';
 import MyPosts from './Todo/MyPosts/MyPosts';
@@ -34,35 +34,38 @@ const Root = () => {
   const dark = useSelector((e: any) => e.dark);
   let dispatch = useDispatch();
 
-  useEffect(() => {
-    const getProfile = async (token: string) => {
-      const headers = {
-        'Authorization': 'Bearer YourAccessToken',
-        'Content-Type': 'application/json',
-        'x-auth-token': token
-      };
-      try {
-        dispatch({ type: 'LOADING', payload: true })
-        let res = await axios.get(`${BASE_URL_}/user/profile`, { headers })
-        if (res.status === 200) {
-          dispatch({ type: 'LOGIN', payload: res.data.user })
-        } else {
-          console.log('invalid/expired login')
-        }
-      } catch (error) {
-        console.log(error)
+
+
+  const getProfile = async (token: string) => {
+    const headers = {
+      'Authorization': 'Bearer YourAccessToken',
+      'Content-Type': 'application/json',
+      'x-auth-token': token
+    };
+    try {
+      dispatch({ type: 'LOADING', payload: true })
+      let res = await axios.get(`${BASE_URL_}/user/profile`, { headers })
+      if (res.status === 200) {
+        dispatch({ type: 'LOGIN', payload: res.data.user })
+      } else {
+        console.log('invalid/expired login')
       }
-      finally {
-        dispatch({ type: 'LOADING', payload: false })
-      }
+    } catch (error) {
+      console.log(error)
     }
+    finally {
+      dispatch({ type: 'LOADING', payload: false })
+    }
+  }
+
+  useEffect(() => {
     const token = getToken();
     if (token) {
       getProfile(token)
     }
   }, [dispatch])
 
-  return <ThemeProvider theme={ dark ? darkTheme : lightTheme}>
+  return <ThemeProvider theme={dark ? darkTheme : lightTheme}>
     <CssBaseline />
     <Routes>
       <Route path='/' element={<><Header /><Outlet /></>}>

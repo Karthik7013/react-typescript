@@ -65,7 +65,14 @@ const App = () => {
                 </Grid>
                 <Grid item xs={12} md={8} >
                     <Grid container spacing={2} px={{ xs: 1, md: 2 }} py={2}>
-                        <Grid item xs={12}>
+                        <Grid item xs={12}
+                            sx={{
+                                display: {
+                                    md: 'block',
+                                    xs: 'none'
+                                }
+                            }}
+                        >
                             <Stack direction={'row'} spacing={2} flexWrap="wrap">
                                 <Chip clickable label='Scientific' icon={<ScienceIcon fontSize='small' />} />
                                 <Chip clickable label='Information' icon={<LightbulbCircleIcon fontSize='small' />} />

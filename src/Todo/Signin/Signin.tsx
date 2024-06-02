@@ -27,7 +27,7 @@ function Copyright(props: any) {
             {'Copyright © '}
             <Link color="inherit" href="/">
                 Bloger Blogs
-            </Link>{' '}
+            </Link>
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -61,8 +61,8 @@ export default function SignIn() {
             let res = await axios.post(`${BASE_URL_}/user/login`, userSignInData)
             if (res.status === 200) {
                 if (res.data?.token) {
-                    localStorage.setItem('token', res.data?.token)
-                    navigate('/')
+                    localStorage.setItem('token', res.data?.token);
+                    window.location.href = "/"
                 }
             }
         } catch (error) {
@@ -73,8 +73,7 @@ export default function SignIn() {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
-
+        <Container component={Stack} maxWidth="xs">
             <Box
                 sx={{
                     marginTop: 8,
@@ -165,12 +164,6 @@ export default function SignIn() {
                     />
                 </Stack>
             </Box>
-
-
-
-
-
-
             <Copyright sx={{ mt: 8, mb: 4 }} />
             <Snackbar
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
@@ -179,67 +172,6 @@ export default function SignIn() {
                 onClose={() => { setErr(false) }}
             ><Alert sx={{ width: '100%' }} variant='filled' severity='error'>Invalid Login Details</Alert>
             </Snackbar>
-            {/* ================ hook form */}
-            {/* <Box
-                component="form"
-                onSubmit={handleSubmit(onSubmit)}
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    '& .MuiTextField-root': { m: 1, width: '300px' },
-                }}
-                noValidate
-                autoComplete="off"
-            >
-                <TextField
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start"><EmailIcon /></InputAdornment>,
-                        endAdornment: <InputAdornment position="end">{!!errors.email && <ErrorOutlineIcon color='error' />}</InputAdornment>
-                    }}
-                    helperText={!!errors.email && 'Invalid email address'}
-                    label="Email"
-                    variant="outlined"
-                    {...register('email', {
-                        required: 'Email is required',
-                        pattern: {
-                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                            message: 'Invalid email address'
-                        },
-                    })}
-                    error={!!errors.email}
-                />
-
-                <TextField
-                    helperText={!!errors.password && 'Password is Require'}
-                    label="Password"
-                    type="password"
-                    variant="outlined"
-                    {...register('password', {
-                        required: 'Password is required',
-                        minLength: {
-                            value: 4,
-                            message: 'Password must be at least 6 characters long',
-                        }
-                    })}
-                    InputProps={{
-                        startAdornment: <InputAdornment position="start"><PasswordIcon /></InputAdornment>,
-                    }}
-                    error={!!errors.password}
-                />
-
-                <Button
-                    type="submit"
-                    fullWidth
-                    disabled={loading}
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-
-                >
-                    {loading ? <CircularProgress size="30px" /> : 'Sign In'}
-                </Button>
-
-            </Box> */}
         </Container>
     );
 }
