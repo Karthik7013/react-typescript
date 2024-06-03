@@ -11,13 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import SimilarCard from '../PostCard/SimilarCard';
 
 
-// =======
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { deepPurple } from "@mui/material/colors";
-import FormControl from "@mui/material/FormControl";
-import { menuClasses } from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { selectClasses } from "@mui/material/Select";
 
 
 
@@ -27,8 +20,8 @@ import Select, { selectClasses } from "@mui/material/Select";
 const PostDetails = () => {
     let navigate = useNavigate();
     let [postDetails, setPostDetails] = useState<any>();
-    let params = useParams();
-    const postID = params.id;
+    let params:any = useParams();
+    const postID = atob(params.id);
 
     useEffect(() => {
         const token = getToken();

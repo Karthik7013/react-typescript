@@ -40,7 +40,7 @@ export default function Cardx(props: any) {
         />
         <CardMedia
             sx={{ borderRadius: "8px" }}
-            onClick={() => { navigate(isAuthenticated ? `/postdetails/${props.id}` : "/signin") }}
+            onClick={() => { navigate(isAuthenticated ? `/postdetails/${btoa(props.id)}` : "/signin") }}
             component="img"
             height="240"
             image={props.image}
