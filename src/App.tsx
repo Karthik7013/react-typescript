@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Chip, Divider, Grid, IconButton, LinearProgress, Modal, Pagination, Stack, styled, Tooltip, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import RecipeReviewCard from './PostCard/PostCard';
+import PostCard from './Components/PostCard/PostCard';
 import ScienceIcon from '@mui/icons-material/Science';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LightbulbCircleIcon from '@mui/icons-material/LightbulbCircle';
@@ -10,9 +10,9 @@ import NewspaperIcon from '@mui/icons-material/Newspaper';
 import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
-import CreatePost from './CreatePost/CreatePost';
-import { BASE_URL_ } from '../config';
-import PostCardSkeleton from './PostCard/PostCardSkeleton';
+import CreatePost from './Components/CreatePost/CreatePost';
+import { BASE_URL_ } from './config';
+import PostCardSkeleton from './Components/PostCard/PostCardSkeleton';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 
@@ -97,7 +97,7 @@ const App = () => {
 
                         {topRatedPosts.map((post: any) => {
                             return <Grid item key={post._id} xs={12}>
-                                <RecipeReviewCard
+                                <PostCard
                                     author={post.authorName}
                                     id={post._id}
                                     image={post.imgUrl}

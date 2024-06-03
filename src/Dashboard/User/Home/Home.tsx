@@ -20,6 +20,8 @@ import MarkunreadMailboxRoundedIcon from '@mui/icons-material/MarkunreadMailboxR
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import BookmarksRoundedIcon from '@mui/icons-material/BookmarksRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import { Avatar } from '@mui/material';
+import Logo from "../../../assets/logo.png";
 const items = [<HomeRoundedIcon />, <MarkunreadMailboxRoundedIcon />, <BookmarksRoundedIcon />, <AccountCircleRoundedIcon />, <SettingsRoundedIcon />]
 const drawerWidth = 240;
 
@@ -82,7 +84,7 @@ export default function Home() {
         setOpen(true);
     };
 
- 
+
 
 
 
@@ -117,7 +119,7 @@ export default function Home() {
     return (
         <Box sx={{ display: 'flex' }}>
             <AppBar position="fixed">
-                <Toolbar sx={{ bgcolor: "#373737" }}>
+                <Toolbar>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
@@ -137,7 +139,7 @@ export default function Home() {
             </AppBar>
             <Drawer variant="permanent" open={open}>
                 <DrawerHeader>
-
+                    <Avatar component={Link} to='/' variant="square" src={Logo} sx={{ width: '32px', height: '32px', margin: 'auto' }}></Avatar>
                 </DrawerHeader>
                 <Divider />
                 <List>

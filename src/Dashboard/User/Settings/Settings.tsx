@@ -7,9 +7,9 @@ import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import PhoneAndroidRoundedIcon from '@mui/icons-material/PhoneAndroidRounded';
 import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded';
-import { BASE_URL_ } from '../../config';
+import { BASE_URL_ } from '../../../config';
 import axios from 'axios';
-import { getToken } from '../Utils/utils';
+import { getToken } from '../../../Utils/utils';
 const Settings = () => {
   const [updatePsw, setUpdatePsw] = useState({
     oldPsw: '',

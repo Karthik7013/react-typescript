@@ -12,7 +12,7 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { dateFormatter } from '../Utils/utils';
+import { dateFormatter } from '.././../Utils/utils';
 
 export default function Cardx(props: any) {
     const navigate = useNavigate();

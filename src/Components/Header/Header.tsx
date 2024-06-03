@@ -12,11 +12,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import TemporaryDrawer from './SideDrawer';
+import SideDrawer from '../SideDrawer/SideDrawer';
 import { Avatar, Stack, Switch } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useDispatch, useSelector } from 'react-redux';
-import logo from "../assets/logo.png"
+import logo from "../../assets/logo.png"
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
@@ -290,7 +290,7 @@ export default function Header() {
             </AppBar>
             {renderMobileMenu}
             {renderMenu}
-            <TemporaryDrawer drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
+            <SideDrawer drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
         </Box>
     );
 }

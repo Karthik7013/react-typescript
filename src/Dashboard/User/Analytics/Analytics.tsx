@@ -7,8 +7,8 @@ import { PieChart } from '@mui/x-charts/PieChart';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { getToken } from '../../Todo/Utils/utils';
-import {BASE_URL_} from '../../config';
+import { getToken } from '../../../Utils/utils';
+import {BASE_URL_} from '../../../config';
 
 
 const Main = () => {

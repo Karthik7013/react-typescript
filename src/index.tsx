@@ -1,28 +1,28 @@
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from "./Todo/App"
+import App from "./App"
 import { Route, Routes, BrowserRouter, Outlet, useNavigate } from "react-router-dom"
-import DashboardHome from "./Dashboard/Home"
-import SignIn from './Todo/Signin/Signin';
-import PostDetails from './Todo/PostDetails';
-import Header from './Todo/Header';
-import SignUp from './Todo/Signup/Signup';
+import DashboardHome from "./Dashboard/User/Home/Home"
+import SignIn from './Pages/Signin/Signin';
+import PostDetails from './Components/PostDetails/PostDetails';
+import Header from './Components/Header/Header';
+import SignUp from './Pages/Signup/Signup';
 import MessageBox from './Todo/MessageBox/MessageBox';
 import NotificationBox from './Todo/NotificationBox/NotificationBox'
-import Main from './Dashboard/Pages/Main';
+import Analytics from './Dashboard/User/Analytics/Analytics';
 import { store } from './Redux/Store';
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { lightTheme, darkTheme } from './Todo/Theme/theme';
-import PageNotFound from './Todo/PageNotFound/PageNotFound';
-import Profile from './Todo/Profile/Profile';
-import MyPosts from './Todo/MyPosts/MyPosts';
-import SavedPost from './Todo/SavedPost/SavedPost';
-import Settings from './Todo/Settings/Settings';
+import { lightTheme, darkTheme } from './Theme/theme';
+import PageNotFound from './Pages/PageNotFound/PageNotFound';
+import Profile from './Dashboard/User/Profile/Profile';
+import MyPosts from './Dashboard/User/MyPosts/MyPosts';
+import SavedPost from './Dashboard/User/SavedPost/SavedPost';
+import Settings from './Dashboard/User/Settings/Settings';
 import axios from 'axios';
 import { BASE_URL_ } from './config';
-import { getToken } from './Todo/Utils/utils';
+import { getToken } from './Utils/utils';
 import { GoogleOAuthProvider } from "@react-oauth/google"
 
 const root = ReactDOM.createRoot(
@@ -33,8 +33,6 @@ const root = ReactDOM.createRoot(
 const Root = () => {
   const dark = useSelector((e: any) => e.dark);
   let dispatch = useDispatch();
-
-
 
   const getProfile = async (token: string) => {
     const headers = {
@@ -77,7 +75,7 @@ const Root = () => {
       <Route path='/signin' element={<SignIn />}></Route>
       <Route path='/signup' element={<SignUp />}></Route>
       <Route path="dashboard" element={<DashboardHome />} >
-        <Route index element={<Main />}></Route>
+        <Route index element={<Analytics />}></Route>
         <Route path='post' element={<MyPosts />}></Route>
         <Route path='profile' element={<Profile />}></Route>
         <Route path='save' element={<SavedPost />}></Route>
