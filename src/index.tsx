@@ -31,9 +31,8 @@ const root = ReactDOM.createRoot(
 
 
 const Root = () => {
-  const dark = useSelector((e: any) => e.dark);
+  const data = useSelector((e: any) => e.auth.data);
   let dispatch = useDispatch();
-
   const getProfile = async (token: string) => {
     const headers = {
       'Authorization': 'Bearer YourAccessToken',
@@ -44,6 +43,7 @@ const Root = () => {
       dispatch({ type: 'LOADING', payload: true })
       let res = await axios.get(`${BASE_URL_}/user/profile`, { headers })
       if (res.status === 200) {
+        console.log(res.data.user)
         dispatch({ type: 'LOGIN', payload: res.data.user })
       } else {
         console.log('invalid/expired login')
@@ -63,7 +63,7 @@ const Root = () => {
     }
   }, [dispatch])
 
-  return <ThemeProvider theme={dark ? darkTheme : lightTheme}>
+  return <ThemeProvider theme={data?.dark ? darkTheme : lightTheme}>
     <CssBaseline />
     <Routes>
       <Route path='/' element={<><Header /><Outlet /></>}>

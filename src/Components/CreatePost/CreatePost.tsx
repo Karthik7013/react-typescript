@@ -74,7 +74,6 @@ function CreatePostDialog(props:any) {
         const headers = {
             "x-auth-token": token
         }
-        console.log(postBody);
 
         if (token) {
             try {
@@ -93,7 +92,6 @@ function CreatePostDialog(props:any) {
         } else {
             console.log('token not found login again')
         }
-
     }
 
 

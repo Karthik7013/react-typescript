@@ -43,7 +43,7 @@ const App = () => {
             border: '2px solid'
         })
         return <Ring>
-            <Avatar src={props.url} alt='t' sx={{ width: "38px", height: '38px' }}>A</Avatar>
+            <Avatar src={props.url} alt='t' sx={{ width: "38px", height: '38px' }}></Avatar>
         </Ring>
     }
     const PlusBtn = styled(IconButton)({
@@ -133,10 +133,12 @@ const App = () => {
                         </Stack>
                         <Divider />
                         <Stack direction='row' spacing={1} alignItems='center'>
-                            <Tooltip title="New Post">
-                                <Button variant='contained' onClick={handleCreateModal}>
-                                    <AddRoundedIcon color='inherit' />
-                                </Button>
+                            <Tooltip title={"New Post"}>
+                                <Avatar sx={{ width: '48px', height: '48px' }}>
+                                    <Button variant='contained' sx={{ width: '100%', height: '100%' }} onClick={handleCreateModal}>
+                                        <AddRoundedIcon color='inherit' />
+                                    </Button>
+                                </Avatar>
                             </Tooltip>
                             <UserAvatar url='https://mui.com/static/images/avatar/3.jpg' />
                             <UserAvatar url='https://mui.com/static/images/avatar/4.jpg' />

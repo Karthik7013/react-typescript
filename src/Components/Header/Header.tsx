@@ -21,6 +21,8 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -63,9 +65,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
-    let dispatch = useDispatch();
-    let dark = useSelector((e: any) => e.dark)
+    const dispatch = useDispatch();
+    const holdDark = useSelector((e: any) => e.auth.data);
+
     const auth = useSelector((e: any) => e.auth);
+
     const isLoggedIn = auth.status;
     const user = auth.data;
     const navigate = useNavigate();
@@ -203,6 +207,25 @@ export default function Header() {
     );
 
 
+    const handleDarkMode = async () => {
+
+        const token = localStorage.getItem('token');
+        const headers = {
+            "x-auth-token": token
+        }
+        if (token) {
+            let res = await axios.put('https://blog-post-api-dsam.onrender.com/api/v1/user/profile/dark', {}, { headers });
+            if (res.status === 200) {
+                dispatch({ type: "SET_THEME" })
+            }
+        } else {
+            console.log('failed to toggle')
+        }
+    }
+
+
+
+
     return (
         <Box sx={{ position: 'sticky', top: 0, zIndex: 999 }}>
             <AppBar position="relative">
@@ -260,6 +283,7 @@ export default function Header() {
                         >
                             <Avatar sx={{ width: 38, height: 38 }} > {user.userName[0]}</Avatar>
                         </IconButton>
+                        <Switch color='default' checked={holdDark?.dark} onChange={handleDarkMode} />
                     </Box> :
                         <Stack direction='row' spacing={2}>
                             <a href="/signin">
@@ -271,6 +295,7 @@ export default function Header() {
                             </a>
                         </Stack>
                     }
+
                     {isLoggedIn && <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="small"
@@ -283,9 +308,7 @@ export default function Header() {
                             <Avatar sx={{ width: 34, height: 34 }}>{user.userName[0]}</Avatar>
                         </IconButton>
                     </Box>}
-                    <Switch checked={dark} onChange={(e) => {
-                        dispatch({ type: 'SET_THEME', payload: !dark })
-                    }}></Switch>
+
                 </Toolbar>
             </AppBar>
             {renderMobileMenu}
