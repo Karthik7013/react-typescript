@@ -35,7 +35,7 @@ export default function Cardx(props: any) {
                     <BookmarkBorderIcon />
                 </IconButton>
             }
-            title={props.title}
+            title={<Typography textTransform="capitalize">{props.author}</Typography>}
             subheader={dateFormatter(props.subheader)}
         />
         <CardMedia
@@ -46,7 +46,10 @@ export default function Cardx(props: any) {
             image={props.image}
             alt="Paella dish"
         />
-        <CardContent>
+        <CardContent sx={{px:0}}>
+        <Typography variant="h6" color="text.secondary">
+                {props.title}
+            </Typography>
             <Typography variant="body2" color="text.secondary">
                 {props.content}
             </Typography>

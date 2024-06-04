@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Chip, Divider, Grid, IconButton, LinearProgress, Modal, Pagination, Stack, styled, Tooltip, Typography } from '@mui/material'
+import { Avatar, Box, Button, Card, Chip, Divider, Grid, IconButton, LinearProgress, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Modal, Pagination, Skeleton, Stack, styled, Tooltip, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import PostCard from './Components/PostCard/PostCard';
 import ScienceIcon from '@mui/icons-material/Science';
@@ -15,8 +15,21 @@ import { BASE_URL_ } from './config';
 import PostCardSkeleton from './Components/PostCard/PostCardSkeleton';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import InboxIcon from '@mui/icons-material/Inbox';
+import DraftsIcon from '@mui/icons-material/Drafts';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
+import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
+import WhatshotIcon from '@mui/icons-material/Whatshot';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import MovieCreationRoundedIcon from '@mui/icons-material/MovieCreationRounded';
+import MusicNoteRoundedIcon from '@mui/icons-material/MusicNoteRounded';
 
 const App = () => {
+    const limit = useSelector((e: any) => e.pagination.limit)
+    const page = useSelector((e: any) => e.pagination.page)
     const topRatedPosts = useSelector((e: any) => e.posts);
     const dispatch = useDispatch();
     const loading = useSelector((e: any) => e.loading);
@@ -27,11 +40,18 @@ const App = () => {
     // api call for get all posts
     useEffect(() => {
         const getPosts = async () => {
-            let res = await axios.get(`${BASE_URL_}/admin/post/all`);
-            dispatch({ type: 'FETCH_POST', payload: res.data });
+            try {
+                dispatch({ type: 'LOADING', payload: true })
+                let res = await axios.get(`${BASE_URL_}/admin/post/all?limit=${limit}&page=${page}`);
+                dispatch({ type: 'FETCH_POST', payload: res.data });
+            } catch (error) {
+                console.log(error)
+            } finally {
+                dispatch({ type: 'LOADING', payload: false })
+            }
         };
         getPosts();
-    }, [dispatch]);
+    }, [dispatch, page, limit]);
 
 
 
@@ -46,24 +66,118 @@ const App = () => {
             <Avatar src={props.url} alt='t' sx={{ width: "38px", height: '38px' }}></Avatar>
         </Ring>
     }
-    const PlusBtn = styled(IconButton)({
 
-    })
+    const handlePagination = (e: any, value: number) => {
+        dispatch({ type: 'PAGE_CHANGE', payload: value })
+    }
 
     return (
-        <Box >
-            <Grid container>
-                <Grid item md={2} sx={{
+        <Box>
+            <Grid container columns={18}>
+                <Grid item md={3} sx={{
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
                     display: {
-                        md: 'block',
+                        md: 'flex',
                         xs: 'none'
                     },
-                    position: 'sticky',
-                    top: 0
+                    height: 'calc(100dvh - 64px)',
+                    overflowY: 'scroll'
                 }}>
-                    left
+                    <Box>
+                        <Box p={2}>
+                            <Tooltip title={"New Post"}>
+                                <Button
+                                    fullWidth
+                                    sx={{ borderRadius: 999 }}
+                                    startIcon={<AddRoundedIcon
+                                        sx={{ width: '32px', height: '32px' }}
+                                        color='inherit' />}
+                                    variant='contained' onClick={handleCreateModal}>
+                                    <Typography variant='subtitle2' noWrap fontWeight={600}>Create Post</Typography>
+                                </Button>
+
+                            </Tooltip>
+                        </Box>
+                        <Divider variant='middle' />
+                        <Box>
+                            <List >
+                                <ListItem disablePadding>
+                                    <ListItemButton>
+                                        <ListItemIcon>
+                                            <HomeRoundedIcon />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Home" />
+                                    </ListItemButton>
+                                </ListItem>
+                                <ListItem disablePadding>
+                                    <ListItemButton>
+                                        <ListItemIcon>
+                                            <WhatshotIcon />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Trending" />
+                                    </ListItemButton>
+                                </ListItem>
+                                <ListItem disablePadding>
+                                    <ListItemButton>
+                                        <ListItemIcon>
+                                            <MovieCreationRoundedIcon />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Videos" />
+                                    </ListItemButton>
+                                </ListItem>
+                                <ListItem disablePadding>
+                                    <ListItemButton>
+                                        <ListItemIcon>
+                                            <MusicNoteRoundedIcon />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Music" />
+                                    </ListItemButton>
+                                </ListItem>
+                                <ListItem disablePadding>
+                                    <ListItemButton>
+                                        <ListItemIcon>
+                                            <PeopleRoundedIcon />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Friends" />
+                                    </ListItemButton>
+                                </ListItem>
+                                <ListItem disablePadding>
+                                    <ListItemButton>
+                                        <ListItemIcon>
+                                            <ThumbUpIcon />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Liked Posts" />
+                                    </ListItemButton>
+                                </ListItem>
+                            </List>
+                        </Box>
+                        <Divider variant='middle' />
+                    </Box>
+
+                    <Box p={2}>
+
+                        <Card sx={{ width: '100%', borderRadius: '14px' }}>
+                            <Stack alignItems='center' p={1} direction='row' gap={1} px={2}>
+
+
+                                <Avatar>
+                                    K
+                                </Avatar>
+
+                                <Box flex={1} component={Stack}>
+                                    <Typography variant='body1'>User</Typography>
+                                    <Typography variant='caption'>
+                                        Basic Plan</Typography>
+                                </Box>
+                                <IconButton>
+                                    <SettingsRoundedIcon fontSize='small' />
+                                </IconButton>
+                            </Stack>
+                        </Card>
+                    </Box>
                 </Grid>
-                <Grid item xs={12} md={8} >
+                <Grid sx={{ height: 'calc(100dvh - 64px)', overflowY: 'scroll' }} item xs={18} md={12} >
                     <Grid container spacing={2} px={{ xs: 1, md: 2 }} py={2}>
                         <Grid item xs={12}
                             sx={{
@@ -86,7 +200,7 @@ const App = () => {
                         <Grid item xs={12}>
                             <Typography variant='h6'>Top rated Posts</Typography>
                         </Grid>
-                        {!topRatedPosts.length && <>
+                        {loading && <>
                             {[1, 2, 3].map((e) => {
                                 return <Grid key={e} item xs={12}>
                                     <PostCardSkeleton />
@@ -108,19 +222,22 @@ const App = () => {
                             </Grid>
                         })}
 
-                        {Boolean(topRatedPosts.length) && <Grid item xs={12} component={Stack} justifyContent='center' mt={2}>
-                            <Pagination count={10} variant="outlined" shape="rounded" />
+                        <Grid item xs={12} component={Stack} justifyContent='center' mt={2}>
+                            <Pagination count={3}
+                                page={page}
+                                onChange={handlePagination}
+                                variant="text" shape="circular" />
                         </Grid>
-                        }
                     </Grid>
                 </Grid>
-                <Grid item md={2} sx={{
+                <Grid item md={3} sx={{
                     display: {
                         md: 'block',
                         xs: 'none'
                     },
                     px: 1,
-                    position: 'sticky'
+                    height: 'calc(100dvh - 64px)',
+                    overflowY: 'scroll'
                 }}>
                     <Stack spacing={2} mt={1}>
                         <Stack direction='row'
@@ -133,13 +250,7 @@ const App = () => {
                         </Stack>
                         <Divider />
                         <Stack direction='row' spacing={1} alignItems='center'>
-                            <Tooltip title={"New Post"}>
-                                <Avatar sx={{ width: '48px', height: '48px' }}>
-                                    <Button variant='contained' sx={{ width: '100%', height: '100%' }} onClick={handleCreateModal}>
-                                        <AddRoundedIcon color='inherit' />
-                                    </Button>
-                                </Avatar>
-                            </Tooltip>
+
                             <UserAvatar url='https://mui.com/static/images/avatar/3.jpg' />
                             <UserAvatar url='https://mui.com/static/images/avatar/4.jpg' />
                         </Stack>

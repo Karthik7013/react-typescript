@@ -1,4 +1,4 @@
-export { }
+
 const initialState = {
     success: false,
     error: false,
@@ -8,10 +8,14 @@ const initialState = {
         status: false
     },
     posts: [],
-    similarPosts: []
+    similarPosts: [],
+    pagination: {
+        page: 1,
+        limit: 5
+    }
 }
 
-export default function reducer(state = initialState, action: any) {
+const reducer = (state = initialState, action: any) => {
     const { type, payload } = action;
     switch (type) {
         case 'SET_THEME':
@@ -30,7 +34,13 @@ export default function reducer(state = initialState, action: any) {
             return { ...state, posts: payload }
         case 'ADD_POST':
             return { ...state, posts: [...state.posts, payload] }
+        case 'PAGE_CHANGE':
+            // return state;
+            return { ...state, pagination: { ...state.pagination, page: payload } }
+
         default:
             return state
     }
 }
+
+export default reducer;

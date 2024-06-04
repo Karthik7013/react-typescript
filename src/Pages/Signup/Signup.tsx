@@ -20,7 +20,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import PasswordIcon from '@mui/icons-material/Password';
 import PersonIcon from '@mui/icons-material/Person';
 import { useForm } from 'react-hook-form';
-
+import logo from "../../assets/logo.png"
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -73,9 +73,9 @@ export default function SignUp() {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'info.main' }}>
-                    <LockOutlinedIcon />
-                </Avatar>
+                <Avatar sx={{ m: 1 }} src={logo} />
+                   
+              
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>

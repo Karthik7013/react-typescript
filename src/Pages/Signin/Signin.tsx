@@ -21,6 +21,7 @@ import PasswordIcon from '@mui/icons-material/Password';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { useForm } from 'react-hook-form';
 import { BASE_URL_ } from '../../config';
+import logo from "../../assets/logo.png"
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -82,9 +83,7 @@ export default function SignIn() {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
-                </Avatar>
+                <Avatar sx={{ m: 1 }} src={logo} />
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>

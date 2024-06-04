@@ -13,7 +13,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import SideDrawer from '../SideDrawer/SideDrawer';
-import { Avatar, Stack, Switch } from '@mui/material';
+import { Avatar, Stack, Switch, Typography } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useDispatch, useSelector } from 'react-redux';
 import logo from "../../assets/logo.png"
@@ -23,7 +23,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
-
+import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
