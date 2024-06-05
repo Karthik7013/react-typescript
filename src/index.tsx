@@ -85,29 +85,32 @@ const Root = () => {
   const AdminRoutes = () => {
     return <Box><AppBar color="info"><Toolbar>ADMIN</Toolbar></AppBar></Box>;
   };
+  const useLater = () => {
+    return <Routes>
+      <Route path='/' element={<><Header /><Outlet /></>}>
+        <Route index element={<App />}></Route>
+        <Route path='postdetails/:id' element={<PostDetails />}></Route>
+        <Route path='messages' element={<MessageBox />}></Route>
+        <Route path='notifications' element={<NotificationBox />}></Route>
+      </Route>
+      <Route path='/signin' element={<SignIn />}></Route>
+      <Route path='/signup' element={<SignUp />}></Route>
+      <Route path="dashboard" element={<DashboardHome />} >
+        <Route index element={<Analytics />}></Route>
+        <Route path='post' element={<MyPosts />}></Route>
+        <Route path='profile' element={<Profile />}></Route>
+        <Route path='save' element={<SavedPost />}></Route>
+        <Route path='settings' element={<Settings />}></Route>
+      </Route>
+      <Route path='*' element={<PageNotFound />}></Route>
+    </Routes>
+  }
 
 
   return (
     <ThemeProvider theme={lightTheme}>
       <CssBaseline />
-      {/* <Routes>
-        <Route path='/' element={<><Header /><Outlet /></>}>
-          <Route index element={<App />}></Route>
-          <Route path='postdetails/:id' element={<PostDetails />}></Route>
-          <Route path='messages' element={<MessageBox />}></Route>
-          <Route path='notifications' element={<NotificationBox />}></Route>
-        </Route>
-        <Route path='/signin' element={<SignIn />}></Route>
-        <Route path='/signup' element={<SignUp />}></Route>
-        <Route path="dashboard" element={<DashboardHome />} >
-          <Route index element={<Analytics />}></Route>
-          <Route path='post' element={<MyPosts />}></Route>
-          <Route path='profile' element={<Profile />}></Route>
-          <Route path='save' element={<SavedPost />}></Route>
-          <Route path='settings' element={<Settings />}></Route>
-        </Route>
-        <Route path='*' element={<PageNotFound />}></Route>
-      </Routes> */}
+
       <Routes>
         <Route path="/" element={isAdmin ? <AdminRoutes /> : <UserRoutes />} />
         <Route path='/signin' element={<SignIn />} />
