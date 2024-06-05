@@ -20,7 +20,7 @@ const reducer = (state = initialState, action: any) => {
     switch (type) {
         case 'SET_THEME':
             if (state.auth.status) {
-                let newData = { ...state.auth.data, dark: !state.auth.data.dark }
+                const newData = { ...state.auth.data, dark: !state.auth.data.dark }
                 return { ...state, auth: { data: newData, status: true } }
             }
             return state;

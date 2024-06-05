@@ -13,8 +13,20 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { dateFormatter } from '.././../Utils/utils';
+import { Checkbox } from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ThumbUpRoundedIcon from '@mui/icons-material/ThumbUpRounded';
 
-export default function Cardx(props: any) {
+type CardxProps = {
+    image: string
+    id: string,
+    author: string,
+    subheader: string,
+    title: string,
+    content: string
+}
+
+export default function Cardx(props: CardxProps) {
     const navigate = useNavigate();
     const isAuthenticated: boolean = useSelector((e: any) => e.auth.status);
     return <Card
@@ -46,8 +58,8 @@ export default function Cardx(props: any) {
             image={props.image}
             alt="Paella dish"
         />
-        <CardContent sx={{px:0}}>
-        <Typography variant="h6" color="text.secondary">
+        <CardContent sx={{ px: 0 }}>
+            <Typography variant="h6" color="text.secondary">
                 {props.title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -55,12 +67,13 @@ export default function Cardx(props: any) {
             </Typography>
         </CardContent>
         <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
-                <FavoriteBorderIcon />
-            </IconButton>
-            <IconButton aria-label="share">
+            <Checkbox checkedIcon={<FavoriteIcon color='error' />} icon={<FavoriteBorderIcon />}></Checkbox>
+
+            <Checkbox checkedIcon={<ThumbUpRoundedIcon color='primary'/>} icon={<ThumbUpOffAltIcon />}></Checkbox>
+
+            {/* <IconButton aria-label="share">
                 <ThumbUpOffAltIcon />
-            </IconButton>
+            </IconButton> */}
         </CardActions>
     </Card>
 }

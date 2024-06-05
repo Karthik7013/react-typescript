@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import logo from "../../assets/logo.png"
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
@@ -138,7 +138,6 @@ export default function Header() {
                 >
                     <LogoutIcon />
                 </IconButton>
-
                 <p>Logout</p>
             </MenuItem>
         </Menu>
@@ -214,7 +213,7 @@ export default function Header() {
             "x-auth-token": token
         }
         if (token) {
-            let res = await axios.put('https://blog-post-api-dsam.onrender.com/api/v1/user/profile/dark', {}, { headers });
+            const res = await axios.put('https://blog-post-api-dsam.onrender.com/api/v1/user/profile/dark', {}, { headers });
             if (res.status === 200) {
                 dispatch({ type: "SET_THEME" })
             }
@@ -255,6 +254,7 @@ export default function Header() {
                             />
                         </Search>
                     </Box>
+                    <Link to="/messages">messages</Link>
 
                     {isLoggedIn ? <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton size="large" href='/messages' aria-label="show 4 new mails" color="inherit">

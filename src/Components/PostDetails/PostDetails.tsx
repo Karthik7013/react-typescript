@@ -18,9 +18,9 @@ import SimilarCard from '../PostCard/SimilarCard';
 
 
 const PostDetails = () => {
-    let navigate = useNavigate();
-    let [postDetails, setPostDetails] = useState<any>();
-    let params:any = useParams();
+    const navigate = useNavigate();
+    const [postDetails, setPostDetails] = useState<any>();
+    const params: any = useParams();
     const postID = atob(params.id);
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const PostDetails = () => {
         if (token) {
             try {
                 const getPostDetails = async () => {
-                    let res = await axios.get(`${BASE_URL_}/admin/post/${postID}`, { headers });
+                    const res = await axios.get(`${BASE_URL_}/admin/post/${postID}`, { headers });
                     if (res.status === 200) {
                         setPostDetails(res.data?.post);
                     } else {
@@ -114,13 +114,13 @@ const PostDetails = () => {
                                 <Typography variant='h6'>Similar Posts</Typography> <Typography variant='caption' component={'a'} href='/'>more</Typography>
                             </Grid>
                             <Grid item xs={12} md={4}>
-                                <SimilarCard />
+                                <SimilarCard image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS648NVi2-QaglnIqsI2zMthGTQz8avHaol9ytKHOjFyA&s' content='lorem5000' title='Lizard' />
                             </Grid>
                             <Grid item xs={12} md={4}>
-                            <SimilarCard />
+                                <SimilarCard image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS648NVi2-QaglnIqsI2zMthGTQz8avHaol9ytKHOjFyA&s' content='lorem5000' title='Lizard' />
                             </Grid>
                             <Grid item xs={12} md={4}>
-                            <SimilarCard />
+                                <SimilarCard image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS648NVi2-QaglnIqsI2zMthGTQz8avHaol9ytKHOjFyA&s' content='lorem5000' title='Lizard' />
                             </Grid>
                         </Grid>
 

@@ -42,7 +42,7 @@ const App = () => {
         const getPosts = async () => {
             try {
                 dispatch({ type: 'LOADING', payload: true })
-                let res = await axios.get(`${BASE_URL_}/admin/post/all?limit=${limit}&page=${page}`);
+                const res = await axios.get(`${BASE_URL_}/admin/post/all?limit=${limit}&page=${page}`);
                 dispatch({ type: 'FETCH_POST', payload: res.data });
             } catch (error) {
                 console.log(error)
