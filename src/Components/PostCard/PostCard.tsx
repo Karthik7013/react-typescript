@@ -13,10 +13,12 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { dateFormatter } from '.././../Utils/utils';
-import { Checkbox } from '@mui/material';
+import { Box, Checkbox, Stack } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ThumbUpRoundedIcon from '@mui/icons-material/ThumbUpRounded';
-
+import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
+import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
+import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
 type CardxProps = {
     image: string
     id: string,
@@ -44,7 +46,7 @@ export default function Cardx(props: CardxProps) {
             }
             action={
                 <IconButton aria-label="settings">
-                    <BookmarkBorderIcon />
+                    <MoreVertRoundedIcon />
                 </IconButton>
             }
             title={<Typography textTransform="capitalize">{props.author}</Typography>}
@@ -67,13 +69,19 @@ export default function Cardx(props: CardxProps) {
             </Typography>
         </CardContent>
         <CardActions disableSpacing>
-            <Checkbox checkedIcon={<FavoriteIcon color='error' />} icon={<FavoriteBorderIcon />}></Checkbox>
+            <Stack direction="row" justifyContent='space-between' sx={{ width: '100%' }}>
+                <Box>
+                    {/* <Checkbox checkedIcon={<FavoriteIcon color='error' />} icon={<FavoriteBorderIcon />}></Checkbox> */}
 
-            <Checkbox checkedIcon={<ThumbUpRoundedIcon color='primary'/>} icon={<ThumbUpOffAltIcon />}></Checkbox>
-
-            {/* <IconButton aria-label="share">
-                <ThumbUpOffAltIcon />
-            </IconButton> */}
+                    <Checkbox checkedIcon={<ThumbUpRoundedIcon color='primary' />} icon={<ThumbUpOffAltIcon />}></Checkbox>
+                    <IconButton>
+                        <ShareRoundedIcon />
+                    </IconButton>
+                </Box>
+                <Box>
+                    <Checkbox icon={<BookmarkBorderIcon />} checkedIcon={<BookmarkRoundedIcon color='action' />}></Checkbox>
+                </Box>
+            </Stack>
         </CardActions>
     </Card>
 }
