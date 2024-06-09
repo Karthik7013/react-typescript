@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Card, Chip, Divider, Grid, IconButton, LinearProgress, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Modal, Pagination, Skeleton, Stack, styled, Tooltip, Typography } from '@mui/material'
+import { Avatar, Box, Button, Card, Chip, Divider, Grid, IconButton, LinearProgress, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Modal, Pagination, Stack, styled, Tooltip, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import PostCard from './Components/PostCard/PostCard';
 import ScienceIcon from '@mui/icons-material/Science';
@@ -15,24 +15,29 @@ import { BASE_URL_ } from './config';
 import PostCardSkeleton from './Components/PostCard/PostCardSkeleton';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
-import InboxIcon from '@mui/icons-material/Inbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
+// import InboxIcon from '@mui/icons-material/Inbox';
+// import DraftsIcon from '@mui/icons-material/Drafts';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
+// import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+// import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import MovieCreationRoundedIcon from '@mui/icons-material/MovieCreationRounded';
 import MusicNoteRoundedIcon from '@mui/icons-material/MusicNoteRounded';
 
 const App = () => {
-    const limit = useSelector((e: any) => e.pagination.limit)
-    const page = useSelector((e: any) => e.pagination.page)
-    const topRatedPosts = useSelector((e: any) => e.posts);
+    type posts = {
+        title: string,
+        subtitle: string,
+
+    }
+    const limit = useSelector((e: { pagination: { limit: number } }) => e.pagination.limit)
+    const page = useSelector((e: { pagination: { page: number } }) => e.pagination.page)
+    const topRatedPosts = useSelector((e: { posts: posts[] }) => e.posts);
     const dispatch = useDispatch();
-    const loading = useSelector((e: any) => e.loading);
+    const loading = useSelector((e: { loading: boolean }) => e.loading);
     const [createPostModal, setCreatePostModal] = useState(false);
 
     const handleCreateModal = () => setCreatePostModal((prev) => !prev)
