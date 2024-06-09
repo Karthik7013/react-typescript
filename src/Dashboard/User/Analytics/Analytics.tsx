@@ -13,15 +13,15 @@ import {BASE_URL_} from '../../../config';
 
 const Main = () => {
 
-    let user = useSelector((e: any) => e.auth);
-    let [chartData, setChartData] = useState<any>();
+    const user = useSelector((e: any) => e.auth);
+    const [chartData, setChartData] = useState<any>();
 
     const getData = async () => {
         const headers = {
             'x-auth-token': getToken()
         }
 
-        let res = await axios.get(`${BASE_URL_}/admin/dashboard/${user.data._id}`, { headers })
+        const res = await axios.get(`${BASE_URL_}/admin/dashboard/${user.data._id}`, { headers })
         if (res.status === 200) {
             setChartData(res.data)
         }

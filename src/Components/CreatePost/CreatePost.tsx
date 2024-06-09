@@ -54,7 +54,7 @@ function CreatePostDialog(props: any) {
     }
 
 
-    let loading: boolean = useSelector((e: any) => e.loading);
+    const loading: boolean = useSelector((e: any) => e.loading);
     const dispatch = useDispatch()
     const category = [
         { label: 'Scientific', icon: 'science' },
@@ -65,7 +65,7 @@ function CreatePostDialog(props: any) {
         { label: "Music", icon: 'audioTrack' },
         { label: 'Information', icon: 'lightBulbCircle' },
     ];
-    let user = useSelector((e: any) => e.auth.data);
+    const user = useSelector((e: any) => e.auth.data);
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         const postBody = { ...data, authorName: user.name, category: values.map((category: any) => category.label) }

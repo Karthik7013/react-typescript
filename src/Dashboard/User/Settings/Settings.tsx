@@ -38,7 +38,7 @@ const Settings = () => {
   }
 
   const handleOnChange = (e: any) => {
-    let { name, value } = e.target
+    const { name, value } = e.target
     switch (name) {
       case 'old':
         setUpdatePsw({ ...updatePsw, oldPsw: value })

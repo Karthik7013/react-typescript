@@ -4,15 +4,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import {BASE_URL_} from '../../../config';
+import { BASE_URL_ } from '../../../config';
 import { dateFormatter } from '../../../Utils/utils';
 import { Link } from 'react-router-dom';
 const MyPosts = () => {
     const [alertBox, setAlertBox] = useState(false)
-    let userId = useSelector((e: any) => e.auth.data?._id);
-    let dispatch = useDispatch()
-    let loading = useSelector((e: any) => e.loading);
-    let [myPost, setMyPost] = useState<any>();
+    const userId = useSelector((e: any) => e.auth.data?._id);
+    const dispatch = useDispatch()
+    const loading = useSelector((e: any) => e.loading);
+    const [myPost, setMyPost] = useState<any>();
 
     const deletePost = async (id: string) => {
         const token = localStorage.getItem('token');
@@ -20,7 +20,7 @@ const MyPosts = () => {
             const headers = {
                 'x-auth-token': token
             }
-            let res = await axios.delete(`${BASE_URL_}/admin/deletepost/${id}`, { headers });
+            const res = await axios.delete(`${BASE_URL_}/admin/deletepost/${id}`, { headers });
             if (res.status === 200) {
                 setMyPost(myPost.filter((e: any) => e._id !== id))
             }
@@ -33,7 +33,7 @@ const MyPosts = () => {
                 'x-auth-token': token
             }
             dispatch({ type: 'LOADING', payload: true });
-            let res = await axios.get(`${BASE_URL_}/admin/post/all/${userId}`, { headers });
+            const res = await axios.get(`${BASE_URL_}/admin/post/all/${userId}`, { headers });
             if (res.status === 200) {
                 setMyPost(res.data)
             }
@@ -97,7 +97,7 @@ const MyPosts = () => {
                                 <DialogActions>
                                     <Button autoFocus onClick={() => { setAlertBox(false) }}>Cancel</Button>
                                     <Button
-                                        onClick={() => { deletePost(post._id);setAlertBox(false) }}
+                                        onClick={() => { deletePost(post._id); setAlertBox(false) }}
                                         color='error' variant='contained' >
                                         Delete
                                     </Button>
