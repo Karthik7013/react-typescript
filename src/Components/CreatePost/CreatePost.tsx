@@ -2,7 +2,7 @@ import { Autocomplete, Button, CircularProgress, FormControlLabel, IconButton, S
 import axios from 'axios';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useDispatch, useSelector } from 'react-redux';
-import {BASE_URL_} from '../../config';
+import { BASE_URL_ } from '../../config';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -18,9 +18,9 @@ import { useState } from 'react';
 
 
 
-function CreatePostDialog(props:any) {
-    let [values, setValues] = useState([])
-    let [data, setData] = useState<any>({
+function CreatePostDialog(props: any) {
+    const [values, setValues] = useState([])
+    const [data, setData] = useState<any>({
         title: "",
         subtitle: "",
         // authorName: user.name,
@@ -68,8 +68,8 @@ function CreatePostDialog(props:any) {
     let user = useSelector((e: any) => e.auth.data);
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const postBody = { ...data, authorName: user.name,category: values.map((category:any)=> category.label) }
-        console.log(postBody,"postbody");
+        const postBody = { ...data, authorName: user.name, category: values.map((category: any) => category.label) }
+        console.log(postBody, "postbody");
         const token = localStorage.getItem('token');
         const headers = {
             "x-auth-token": token
@@ -78,7 +78,7 @@ function CreatePostDialog(props:any) {
         if (token) {
             try {
                 dispatch({ type: 'LOADING', payload: true })
-                let res = await axios.post(`${BASE_URL_}/admin/createpost`, postBody, { headers })
+                const res = await axios.post(`${BASE_URL_}/admin/createpost`, postBody, { headers })
                 if (res.status === 201) {
                     dispatch({ type: 'ADD_POST', payload: res.data.post });
                     props.toggle(false)

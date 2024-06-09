@@ -53,13 +53,13 @@ export default function SignIn() {
     const [remember, setRemeber] = useState(false)
 
     const handleSubmitForm = async (data: any) => {
-        let userSignInData = {
+        const userSignInData = {
             ...data,
             remember
         };
         try {
             dispatch({ type: 'LOADING', payload: true })
-            let res = await axios.post(`${BASE_URL_}/user/login`, userSignInData)
+            const res = await axios.post(`${BASE_URL_}/user/login`, userSignInData)
             if (res.status === 200) {
                 if (res.data?.token) {
                     localStorage.setItem('token', res.data?.token);

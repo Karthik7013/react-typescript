@@ -1,5 +1,5 @@
 import { Box, Button, Card, Grid, InputAdornment, Stack, TextField, Typography } from '@mui/material'
-import {  useState } from 'react'
+import { useState } from 'react'
 import PasswordRoundedIcon from '@mui/icons-material/PasswordRounded';
 import HttpsRoundedIcon from '@mui/icons-material/HttpsRounded';
 import PersonIcon from '@mui/icons-material/Person';
@@ -27,7 +27,7 @@ const Settings = () => {
       newPassword: updatePsw.cmfPsw
     }
     try {
-      let res = await axios.post(`${BASE_URL_}/user/rest/password`, postdata, { headers });
+      const res = await axios.post(`${BASE_URL_}/user/rest/password`, postdata, { headers });
       if (res.status === 200) {
         alert('updated successfully !')
       }

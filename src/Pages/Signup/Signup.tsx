@@ -43,13 +43,13 @@ export default function SignUp() {
         formState: { errors },
     } = useForm();
     const dispatch = useDispatch();
-    let loading = useSelector((e: any) => e.loading);
+    const loading = useSelector((e: any) => e.loading);
     const [show, setShow] = React.useState(false)
     const navigate = useNavigate()
     const handleSubmitForm = async (data: any) => {
         try {
             dispatch({ type: 'LOADING', payload: true })
-            let res = await axios.post('https://blog-post-api-dsam.onrender.com/api/v1/user/register', data)
+            const res = await axios.post('https://blog-post-api-dsam.onrender.com/api/v1/user/register', data)
             console.log(res.status)
             if (res.status === 201) {
                 navigate('/signin')
@@ -74,8 +74,8 @@ export default function SignUp() {
                 }}
             >
                 <Avatar sx={{ m: 1 }} src={logo} />
-                   
-              
+
+
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
