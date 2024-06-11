@@ -5,8 +5,7 @@ import {
   Route,
   Routes,
   BrowserRouter,
-  Outlet,
-  useNavigate,
+  Outlet
 } from "react-router-dom";
 import DashboardHome from "./Dashboard/User/Home/Home";
 import SignIn from "./Pages/Signin/Signin";
@@ -19,7 +18,7 @@ import Analytics from "./Dashboard/User/Analytics/Analytics";
 import { store } from "./Redux/Store";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { AppBar, Box, CssBaseline, ThemeProvider, Toolbar, Typography } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { lightTheme, darkTheme } from "./Theme/theme";
 import PageNotFound from "./Pages/PageNotFound/PageNotFound";
 import Profile from "./Dashboard/User/Profile/Profile";
@@ -36,8 +35,24 @@ const root = ReactDOM.createRoot(
 );
 
 const Root = () => {
-  const isAdmin = useSelector((e: any) => e.auth.data.isAdmin);
-  const data = useSelector((e: any) => e.auth.data);
+  type dataprops = {
+    data: {
+      profile: { connect: [] },
+      _id: string,
+      userName: string,
+      name: string,
+      email: string,
+      password: string,
+      isAdmin: boolean,
+      saved: [],
+      createdAt: string,
+      updatedAt: string,
+      __v: number,
+      dark: boolean
+    }
+  }
+  // const isAdmin = useSelector((e: { auth: dataprops }) => e.auth.data.isAdmin);
+  const data = useSelector((e: { auth: dataprops }) => e.auth.data);
   const dispatch = useDispatch();
 
   const getProfile = async (token: string) => {
@@ -68,50 +83,28 @@ const Root = () => {
       getProfile(token);
     }
   }, [dispatch]);
-  // data?.dark ? darkTheme : lightTheme
 
-  const UserRoutes = () => {
-    return (
-      <Routes>
-        <Route path="/" element={<><Header /><Outlet /></>}>
-          <Route index element={<App />} />
-          <Route path='postdetails/:id' element={<PostDetails />} />
-          <Route path='messages' element={<MessageBox />} />
-          <Route path='notifications' element={<NotificationBox />} />
-        </Route>
-      </Routes>
-    );
-  };
+  // const UserRoutes = () => {
+  //   return (
+  //     <Routes>
+  //       <Route path="/" element={<><Header /><Outlet /></>}>
+  //         <Route index element={<App />} />
+  //         <Route path='postdetails/:id' element={<PostDetails />} />
+  //         <Route path='messages' element={<MessageBox />} />
+  //         <Route path='notifications' element={<NotificationBox />} />
+  //       </Route>
+  //     </Routes>
+  //   );
+  // };
 
-  const AdminRoutes = () => {
-    return <Box><AppBar color="info"><Toolbar>ADMIN</Toolbar></AppBar></Box>;
-  };
-  const useLater = () => {
-    return <Routes>
-      <Route path='/' element={<><Header /><Outlet /></>}>
-        <Route index element={<App />}></Route>
-        <Route path='postdetails/:id' element={<PostDetails />}></Route>
-        <Route path='messages' element={<MessageBox />}></Route>
-        <Route path='notifications' element={<NotificationBox />}></Route>
-      </Route>
-      <Route path='/signin' element={<SignIn />}></Route>
-      <Route path='/signup' element={<SignUp />}></Route>
-      <Route path="dashboard" element={<DashboardHome />} >
-        <Route index element={<Analytics />}></Route>
-        <Route path='post' element={<MyPosts />}></Route>
-        <Route path='profile' element={<Profile />}></Route>
-        <Route path='save' element={<SavedPost />}></Route>
-        <Route path='settings' element={<Settings />}></Route>
-      </Route>
-      <Route path='*' element={<PageNotFound />}></Route>
-    </Routes>
-  }
+  // const AdminRoutes = () => {
+  //   return <Box><AppBar color="info"><Toolbar>ADMIN</Toolbar></AppBar></Box>;
+  // };
 
 
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={data?.dark ? darkTheme : lightTheme}>
       <CssBaseline />
-
       {/* <Routes>
         <Route path="/" element={isAdmin ? <AdminRoutes /> : <UserRoutes />} />
         <Route path='/signin' element={<SignIn />} />

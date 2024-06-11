@@ -15,7 +15,7 @@ const initialState = {
     }
 }
 
-const reducer = (state = initialState, action: any) => {
+const reducer = (state = initialState, action: { type: string, payload: any }) => {
     const { type, payload } = action;
     switch (type) {
         case 'SET_THEME':
