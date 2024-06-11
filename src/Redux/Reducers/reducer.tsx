@@ -19,6 +19,7 @@ const reducer = (state = initialState, action: { type: string, payload: any }) =
     const { type, payload } = action;
     switch (type) {
         case 'SET_THEME':
+
             if (state.auth.status) {
                 const newData = { ...state.auth.data, dark: !state.auth.data.dark }
                 return { ...state, auth: { data: newData, status: true } }
