@@ -24,7 +24,7 @@ function CreatePostDialog(props: any) {
         title: "",
         subtitle: "",
         // authorName: user.name,
-        imgUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS648NVi2-QaglnIqsI2zMthGTQz8avHaol9ytKHOjFyA&s",
+        imgUrl: "",
         description: "",
         category: []
     })
@@ -43,6 +43,9 @@ function CreatePostDialog(props: any) {
                 break;
             case 'description':
                 setData({ ...data, description: value })
+                break;
+            case 'img':
+                setData({ ...data, imgUrl: value })
                 break;
             default:
                 break;
@@ -103,7 +106,7 @@ function CreatePostDialog(props: any) {
                 aria-labelledby="scroll-dialog-title"
                 aria-describedby="scroll-dialog-description"
             >
-                <DialogContent dividers={!false}>
+                <DialogContent sx={{ minWidth: '390px' }} dividers={!false}>
                     <DialogContentText
                         id="scroll-dialog-description"
                         tabIndex={-1}
@@ -114,12 +117,14 @@ function CreatePostDialog(props: any) {
                             </IconButton>
                             <Typography color='GrayText' variant='h5'>Create Post</Typography>
                             <Stack py={2} spacing={2}>
-                                <TextField value={data?.title} name='title' variant='outlined' onChange={handleOnChange} label="Title">
 
-                                </TextField>
+                                <TextField value={data?.title} name='title' onChange={handleOnChange} label="Title"
+                                />
 
-                                <TextField value={data?.subtitle} name='subtitle' variant='outlined' label="Subtitle" onChange={handleOnChange}></TextField>
-                                <TextField name='file' type='file' onChange={handleOnChange}></TextField>
+                                <TextField value={data?.subtitle} name='subtitle' label="Subtitle" onChange={handleOnChange} />
+
+                                <TextField placeholder='url' name='img' onChange={handleOnChange} />
+
                                 <Autocomplete
                                     value={values}
                                     onChange={handleSelect}
@@ -128,9 +133,14 @@ function CreatePostDialog(props: any) {
                                     options={category}
                                     renderInput={(params) => <TextField {...params} label="Category" />}
                                 />
+
                                 <FormControlLabel value={data?.private} onChange={handleOnChange} name='private' control={<Switch />} label={<Typography variant='caption'>{"Make as Private Post"}</Typography>} />
-                                <TextField value={data?.description} name='description' onChange={handleOnChange} multiline rows={4} placeholder='Description'></TextField>
-                                <Button disabled={loading} type='submit' variant='contained'>{loading ? <CircularProgress /> : "Submit"}</Button>
+
+                                <TextField value={data?.description} name='description' onChange={handleOnChange} multiline rows={4} placeholder='Description' />
+
+                                <Button disabled={loading} type='submit' variant='contained'>
+                                    {loading ? <CircularProgress /> : "Submit"}
+                                </Button>
                             </Stack>
                         </form>
                     </DialogContentText>

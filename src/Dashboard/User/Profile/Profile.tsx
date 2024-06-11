@@ -1,4 +1,4 @@
-import { Box, Card, Typography, CardMedia, Avatar, Stack, List, ListItem, ListItemIcon, ListItemText, Chip, Button, Divider, IconButton, Grid, ListItemAvatar } from '@mui/material'
+import { Box, Card, Typography, CardMedia, Avatar, Stack, List, ListItem, ListItemIcon, ListItemText, Chip, Button, Divider, IconButton, Grid, ListItemAvatar, Toolbar } from '@mui/material'
 import React from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import MailIcon from '@mui/icons-material/Mail';
@@ -7,30 +7,37 @@ import LanguageIcon from '@mui/icons-material/Language';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useSelector } from 'react-redux';
+import WorkRoundedIcon from '@mui/icons-material/WorkRounded';
 const Profile = () => {
     const data = useSelector((e: any) => e.auth.data);
+    const work = ["ReactJS Developer","Frontend Developer","JavaScript Developer"];
+    // <Chip size='small' label="Frontend Developer" />
+    // const WorkChip =  (work)=>{
+    //     return 
+    // }
+  
     return (
         <Grid container spacing={2}>
-            <Grid item xs={9}>
+            <Grid item xs={12} lg={9}>
                 <Stack spacing={3}>
-                    <Card sx={{ borderRadius: "1.2em", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px" }}>
+                    <Card sx={{ borderRadius: "1.2em" }}>
                         <Box sx={{ position: 'relative' }}>
                             <Card sx={{ borderRadius: 0, position: 'relative' }}>
                                 <CardMedia
                                     component="img"
                                     height={200}
-                                    image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuNThI2lPZtfb92ADWF8butsM3Nlgf4uPYe4GwUSu1mWF6W2XlDEbLhmjG&s=10"
+                                    image="https://4kwallpapers.com/images/walls/thumbs_3t/1455.jpg"
                                     alt="Live from space album cover"
                                 />
                             </Card>
-                            <Box position="absolute" bottom={-50} left={50}>
-                                <Avatar sx={{ width: 100, height: 100, fontSize: '3em', fontWeight: 700, textTransform: 'capitalize' }} src='' alt='l'>{data?.name[0]}
+                            <Box sx={{ display: { xs: 'none', md: 'block' }, backgroundColor: "inherit", borderRadius: 999 }} position="absolute" bottom={-50} left={50}>
+                                <Avatar sx={{ width: 100, height: 100 }} src='https://img.freepik.com/free-photo/androgynous-avatar-non-binary-queer-person_23-2151100226.jpg?t=st=1718108124~exp=1718111724~hmac=dcff80501b7b1dc4eed6e354b101835b3299b5abf724de46b25712af2f5a5d9f&w=826' alt='l'><Typography variant='h4' sx={{ textTransform: 'capitalize', fontSize: '2em', fontWeight: 600 }}>{data?.name[0]}</Typography>
                                 </Avatar>
                             </Box>
                         </Box>
                         <Box>
-                            <Stack sx={{ pl: 25, my: 2, position: 'relative' }}>
-                                <Typography sx={{ textTransform: 'capitalize' }} variant='h4' fontWeight={600} color="GrayText">{data?.name}</Typography>
+                            <Stack sx={{ pl: { xs: 2, md: 25 }, my: 2, position: 'relative' }}>
+                                <Typography sx={{ textTransform: 'capitalize' }} variant='h4' fontWeight={600}>{data?.name}</Typography>
                                 <List dense={true}>
                                     <ListItem sx={{ px: 0 }}>
                                         <ListItemIcon sx={{ minWidth: '36px' }}>
@@ -48,10 +55,14 @@ const Profile = () => {
                                             primary="Visakhapatname, Andhrapradesh 530024."
                                         />
                                     </ListItem>
-                                    <ListItem sx={{ px: 0, gap: 2, flexWrap: 'wrap' }}>
-                                        <Chip size='small' label="Frontend Developer" />
-                                        <Chip size='small' label="ReactJS Developer" />
-                                        <Chip size='small' label="JavaScript Developer" />
+                                    <ListItem sx={{ px: 0 }}>
+                                        <ListItemIcon sx={{ minWidth: '36px' }}>
+                                            < WorkRoundedIcon />
+                                        </ListItemIcon>
+                                        <ListItemText primary={
+                                            work.map((e:string)=> <Chip sx={{mr:1,mb:1}} key={e} size='small' label={e} />)
+                                        }>
+                                        </ListItemText>
                                     </ListItem>
                                 </List>
                                 <Button endIcon={<NotificationsIcon />} sx={{ position: 'absolute', right: 16 }} variant="contained" >Follow</Button>
@@ -59,7 +70,7 @@ const Profile = () => {
                         </Box>
                     </Card>
 
-                    <Card sx={{ borderRadius: "1.2em", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px", padding: 2, position: 'relative' }}>
+                    <Card sx={{ borderRadius: "1.2em", padding: 2, position: 'relative' }}>
                         <Box>
                             <IconButton sx={{ position: "absolute", top: 10, right: 10 }}><EditIcon /></IconButton>
                             <Typography variant='body1' color="GrayText" fontWeight={600}>About</Typography>
@@ -72,10 +83,10 @@ const Profile = () => {
                     </Card>
                 </Stack>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={3} sx={{ display: { xs: 'none', lg: 'block' } }}>
                 <Stack spacing={3}>
-                    <Card sx={{ borderRadius: "1.2em", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px", padding: 2 }}>
-                        <Typography variant='body1' fontWeight={600} color="GrayText">Connect</Typography>
+                    <Card sx={{ borderRadius: "1.2em", padding: 2 }}>
+                        <Typography variant='body1' fontWeight={600} >Connect</Typography>
                         <Divider variant='fullWidth' />
                         <List dense={true}>
                             <ListItem sx={{ px: 0 }}>
@@ -104,10 +115,10 @@ const Profile = () => {
                             </ListItem>
                         </List>
                     </Card>
-                    <Card sx={{ borderRadius: "1.2em", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px", padding: 2 }}>
-                        <Typography variant='body1' fontWeight={600} color="GrayText">Friends</Typography>
+                    <Card sx={{ borderRadius: "1.2em", padding: 2 }}>
+                        <Typography variant='body1' fontWeight={600} >Friends</Typography>
                         <Divider variant='fullWidth' />
-                        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                        <List sx={{ width: '100%', maxWidth: 360 }}>
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
                                     <Avatar alt="Remy Sharp" src="https://mui.com/static/images/avatar/3.jpg" />

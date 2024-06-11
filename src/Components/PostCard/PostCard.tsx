@@ -50,7 +50,7 @@ export default function Cardx(props: CardxProps) {
                 </IconButton>
             }
             title={<Typography textTransform="capitalize">{props.author}</Typography>}
-            subheader={dateFormatter(props.subheader)}
+            subheader={`${dateFormatter(props.subheader)}`}
         />
         <CardMedia
             sx={{ borderRadius: "8px" }}
@@ -64,15 +64,13 @@ export default function Cardx(props: CardxProps) {
             <Typography variant="h6" color="text.secondary">
                 {props.title}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography sx={{maxWidth:'70%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} noWrap variant="body2" color="text.secondary">
                 {props.content}
             </Typography>
         </CardContent>
         <CardActions disableSpacing>
             <Stack direction="row" justifyContent='space-between' sx={{ width: '100%' }}>
                 <Box>
-                    {/* <Checkbox checkedIcon={<FavoriteIcon color='error' />} icon={<FavoriteBorderIcon />}></Checkbox> */}
-
                     <Checkbox checkedIcon={<ThumbUpRoundedIcon color='primary' />} icon={<ThumbUpOffAltIcon />}></Checkbox>
                     <IconButton>
                         <ShareRoundedIcon />

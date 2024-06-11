@@ -24,6 +24,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
+import { BASE_URL_ } from '../../config';
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -212,11 +213,9 @@ export default function Header() {
         const headers = {
             "x-auth-token": token
         }
+        dispatch({ type: "SET_THEME" })
         if (token) {
-            const res = await axios.put('https://blog-post-api-dsam.onrender.com/api/v1/user/profile/dark', {}, { headers });
-            if (res.status === 200) {
-                dispatch({ type: "SET_THEME" })
-            }
+         await axios.put(`${BASE_URL_}/user/profile/dark`, {}, { headers });
         } else {
             console.log('failed to toggle')
         }
@@ -254,8 +253,6 @@ export default function Header() {
                             />
                         </Search>
                     </Box>
-                    <Link to="/messages">messages</Link>
-
                     {isLoggedIn ? <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton size="large" href='/messages' aria-label="show 4 new mails" color="inherit">
                             <Badge badgeContent={4} color="error">

@@ -20,7 +20,7 @@ import SimilarCard from '../PostCard/SimilarCard';
 const PostDetails = () => {
     const navigate = useNavigate();
     const [postDetails, setPostDetails] = useState<any>();
-    const params: any = useParams();
+    const params:any = useParams();
     const postID = atob(params.id);
 
     useEffect(() => {
@@ -113,15 +113,9 @@ const PostDetails = () => {
                             <Grid component={Stack} direction='row' justifyContent='space-between' alignItems='center' item xs={12}>
                                 <Typography variant='h6'>Similar Posts</Typography> <Typography variant='caption' component={'a'} href='/'>more</Typography>
                             </Grid>
-                            <Grid item xs={12} md={4}>
+                            {[1, 2, 3].map((e) => <Grid key={e} item xs={12} md={4}>
                                 <SimilarCard image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS648NVi2-QaglnIqsI2zMthGTQz8avHaol9ytKHOjFyA&s' content='lorem5000' title='Lizard' />
-                            </Grid>
-                            <Grid item xs={12} md={4}>
-                                <SimilarCard image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS648NVi2-QaglnIqsI2zMthGTQz8avHaol9ytKHOjFyA&s' content='lorem5000' title='Lizard' />
-                            </Grid>
-                            <Grid item xs={12} md={4}>
-                                <SimilarCard image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS648NVi2-QaglnIqsI2zMthGTQz8avHaol9ytKHOjFyA&s' content='lorem5000' title='Lizard' />
-                            </Grid>
+                            </Grid>)}
                         </Grid>
 
 

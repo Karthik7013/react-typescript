@@ -65,7 +65,6 @@ const Root = () => {
       dispatch({ type: "LOADING", payload: true });
       const res = await axios.get(`${BASE_URL_}/user/profile`, { headers });
       if (res.status === 200) {
-        console.log(res.data.user);
         dispatch({ type: "LOGIN", payload: res.data.user });
       } else {
         console.log("invalid/expired login");

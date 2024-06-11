@@ -31,8 +31,8 @@ const App = () => {
     type posts = {
         title: string,
         subtitle: string,
-
     }
+    const isLoggedIn = useSelector((e: {auth:{status:boolean}}) => e.auth.status);
     const limit = useSelector((e: { pagination: { limit: number } }) => e.pagination.limit)
     const page = useSelector((e: { pagination: { page: number } }) => e.pagination.page)
     const topRatedPosts = useSelector((e: { posts: posts[] }) => e.posts);
@@ -76,6 +76,14 @@ const App = () => {
         dispatch({ type: 'PAGE_CHANGE', payload: value })
     }
 
+    const createPostButtonProps = {
+        onClick: handleCreateModal
+    }
+
+    const createPostLinkProps = {
+        href: '/signin'
+    }
+
     return (
         <Box>
             <Grid container columns={18}>
@@ -93,12 +101,14 @@ const App = () => {
                         <Box p={2}>
                             <Tooltip title={"New Post"}>
                                 <Button
+                                  {...(isLoggedIn ? createPostButtonProps : createPostLinkProps)}
                                     fullWidth
                                     sx={{ borderRadius: 999 }}
                                     startIcon={<AddRoundedIcon
                                         sx={{ width: '32px', height: '32px' }}
                                         color='inherit' />}
-                                    variant='contained' onClick={handleCreateModal}>
+                                    variant='contained'
+                                >
                                     <Typography variant='subtitle2' noWrap fontWeight={600}>Create Post</Typography>
                                 </Button>
 
@@ -159,17 +169,12 @@ const App = () => {
                         </Box>
                         <Divider variant='middle' />
                     </Box>
-
                     <Box p={2}>
-
                         <Card sx={{ width: '100%', borderRadius: '14px' }}>
                             <Stack alignItems='center' p={1} direction='row' gap={1} px={2}>
-
-
                                 <Avatar>
                                     K
                                 </Avatar>
-
                                 <Box flex={1} component={Stack}>
                                     <Typography variant='body1'>User</Typography>
                                     <Typography variant='caption'>

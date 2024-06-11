@@ -75,7 +75,7 @@ const MyPosts = () => {
                                     </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
-                                    primary={<Link to={`/postdetails/${post._id}`}>{post.title}</Link>}
+                                    primary={<Link to={`/postdetails/${btoa(post._id)}`}>{post.title}</Link>}
                                     secondary={dateFormatter(post.createdAt
                                     )}
                                 />
