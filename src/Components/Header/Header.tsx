@@ -19,11 +19,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import logo from "../../assets/logo.png"
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
-import { useEffect } from 'react';
-import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 import { BASE_URL_ } from '../../config';
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -215,7 +213,7 @@ export default function Header() {
         }
         dispatch({ type: "SET_THEME" })
         if (token) {
-         await axios.put(`${BASE_URL_}/user/profile/dark`, {}, { headers });
+            await axios.put(`${BASE_URL_}/user/profile/dark`, {}, { headers });
         } else {
             console.log('failed to toggle')
         }
@@ -228,7 +226,7 @@ export default function Header() {
         <Box sx={{ position: 'sticky', top: 0, zIndex: 999 }}>
             <AppBar position="relative">
                 <Toolbar>
-                    {<IconButton
+                    <IconButton
                         sx={{ display: { xs: 'block', sm: 'none', mr: 2 } }}
                         onClick={toggleDrawer(true)}
                         size="large"
@@ -237,11 +235,17 @@ export default function Header() {
                         aria-label="open drawer"
                     >
                         <MenuIcon />
-                    </IconButton>}
+                    </IconButton>
                     <a href='/' >
                         <Avatar alt="Remy Sharp" src={logo} sx={{ display: { xs: 'none', sm: 'block' } }} />
                     </a>
-                    <Box sx={{ flexGrow: 1 }} />
+                    <Typography variant='h6' fontWeight={600} sx={{
+                        ml: 2, display: {
+                            xs: "none", md: 'block'
+                        }
+                    }}>Blogger Blog</Typography>
+                    <Box sx={{ flexGrow: 1 }
+                    } />
                     <Box>
                         <Search>
                             <SearchIconWrapper>

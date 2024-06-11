@@ -5,21 +5,18 @@ const lightTheme = createTheme({
     palette: {
         mode: "light"
     },
+    typography: {
+        fontFamily: 'Montserrat',
+    },
 
-    components: {
-        MuiCard: {
-            styleOverrides: {
-                root: {
-                    boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-                }
-            }
-        }
-    }
 })
 
 const darkTheme = createTheme({
     palette: {
         mode: 'dark',
+    },
+    typography: {
+        fontFamily: 'Montserrat',
     }
 })
 export { lightTheme, darkTheme };

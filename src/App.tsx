@@ -32,7 +32,7 @@ const App = () => {
         title: string,
         subtitle: string,
     }
-    const isLoggedIn = useSelector((e: {auth:{status:boolean}}) => e.auth.status);
+    const isLoggedIn = useSelector((e: { auth: { status: boolean } }) => e.auth.status);
     const limit = useSelector((e: { pagination: { limit: number } }) => e.pagination.limit)
     const page = useSelector((e: { pagination: { page: number } }) => e.pagination.page)
     const topRatedPosts = useSelector((e: { posts: posts[] }) => e.posts);
@@ -101,7 +101,7 @@ const App = () => {
                         <Box p={2}>
                             <Tooltip title={"New Post"}>
                                 <Button
-                                  {...(isLoggedIn ? createPostButtonProps : createPostLinkProps)}
+                                    {...(isLoggedIn ? createPostButtonProps : createPostLinkProps)}
                                     fullWidth
                                     sx={{ borderRadius: 999 }}
                                     startIcon={<AddRoundedIcon
@@ -117,7 +117,7 @@ const App = () => {
                         <Divider variant='middle' />
                         <Box>
                             <List >
-                                <ListItem disablePadding>
+                                <ListItem disablePadding >
                                     <ListItemButton>
                                         <ListItemIcon>
                                             <HomeRoundedIcon />

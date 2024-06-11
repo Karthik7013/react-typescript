@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardContent, CardMedia, Typography, Button } from '@mui/material'
+import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material'
 
 type SimilarCardProps = {
   image: string,

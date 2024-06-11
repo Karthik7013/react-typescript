@@ -1,5 +1,4 @@
-import { Box, Card, Typography, CardMedia, Avatar, Stack, List, ListItem, ListItemIcon, ListItemText, Chip, Button, Divider, IconButton, Grid, ListItemAvatar, Toolbar } from '@mui/material'
-import React from 'react';
+import { Box, Card, Typography, CardMedia, Avatar, Stack, List, ListItem, ListItemIcon, ListItemText, Chip, Button, Divider, IconButton, Grid, ListItemAvatar } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit';
 import MailIcon from '@mui/icons-material/Mail';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -10,12 +9,12 @@ import { useSelector } from 'react-redux';
 import WorkRoundedIcon from '@mui/icons-material/WorkRounded';
 const Profile = () => {
     const data = useSelector((e: any) => e.auth.data);
-    const work = ["ReactJS Developer","Frontend Developer","JavaScript Developer"];
+    const work = ["ReactJS Developer", "Frontend Developer", "JavaScript Developer"];
     // <Chip size='small' label="Frontend Developer" />
     // const WorkChip =  (work)=>{
     //     return 
     // }
-  
+
     return (
         <Grid container spacing={2}>
             <Grid item xs={12} lg={9}>
@@ -60,7 +59,7 @@ const Profile = () => {
                                             < WorkRoundedIcon />
                                         </ListItemIcon>
                                         <ListItemText primary={
-                                            work.map((e:string)=> <Chip sx={{mr:1,mb:1}} key={e} size='small' label={e} />)
+                                            work.map((e: string) => <Chip sx={{ mr: 1, mb: 1 }} key={e} size='small' label={e} />)
                                         }>
                                         </ListItemText>
                                     </ListItem>

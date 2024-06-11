@@ -1,11 +1,30 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-* {
-    margin: 0;
-    font-family: 'Montserrat';
+/* Define the font family */
+body {
+    font-family: Montserrat, sans-serif;
+    /* Replace "Your Font" with the name of your chosen font */
 }
 
-::-webkit-scrollbar{
+/* Optionally, you can define different font families for specific elements */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Montserrat, sans-serif;
+    /* Replace "Your Heading Font" with the name of your chosen font */
+}
+
+p,
+a,
+span,
+div {
+    font-family: Montserrat, sans-serif;
+    /* Replace "Your Body Font" with the name of your chosen font */
+}
+
+::-webkit-scrollbar {
     display: none;
 }

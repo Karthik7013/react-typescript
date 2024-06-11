@@ -1,20 +1,16 @@
-import * as React from 'react';
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { CircularProgress, Snackbar, Alert, InputAdornment, Stack, FormHelperText, Card } from '@mui/material';
+import { CircularProgress, Snackbar, Alert, InputAdornment, Stack } from '@mui/material';
 import { GoogleLogin } from '@react-oauth/google';
 import EmailIcon from '@mui/icons-material/Email';
 import PasswordIcon from '@mui/icons-material/Password';
@@ -46,11 +42,10 @@ export default function SignIn() {
 
 
     const [err, setErr] = useState(false);
-    // const [success,setSuccess] = useState(false)
     const loading = useSelector((e: any) => e.loading)
     const dispatch = useDispatch()
-    const navigate = useNavigate()
-    const [remember, setRemeber] = useState(false)
+    const [remember, setRemeber] = useState(false);
+    console.log(setRemeber);
 
     const handleSubmitForm = async (data: any) => {
         const userSignInData = {
