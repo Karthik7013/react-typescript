@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b800fd56.css",
+    "main.js": "/static/js/main.0758d741.js",
+    "static/media/404 error with portals-amico.svg": "/static/media/404 error with portals-amico.2d09654514630d5021182da5bd5323cc.svg",
+    "static/media/logo.png": "/static/media/logo.9856f6505c00da7e42e7.png",
+    "index.html": "/index.html",
+    "main.b800fd56.css.map": "/static/css/main.b800fd56.css.map",
+    "main.0758d741.js.map": "/static/js/main.0758d741.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b800fd56.css",
+    "static/js/main.0758d741.js"
+  ]
+}
