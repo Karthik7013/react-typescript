@@ -1,4 +1,4 @@
-import { Box, Card, Typography, CardMedia, Avatar, Stack, List, ListItem, ListItemIcon, ListItemText, Chip, Button, Divider, IconButton, Grid, ListItemAvatar } from '@mui/material'
+import { Box, Card, Typography, CardMedia, Avatar, Stack, List, ListItem, ListItemIcon, ListItemText, Chip, Button, Divider, IconButton, Grid, ListItemAvatar, ListItemButton } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit';
 import MailIcon from '@mui/icons-material/Mail';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -7,13 +7,11 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useSelector } from 'react-redux';
 import WorkRoundedIcon from '@mui/icons-material/WorkRounded';
+
 const Profile = () => {
     const data = useSelector((e: any) => e.auth.data);
     const work = ["ReactJS Developer", "Frontend Developer", "JavaScript Developer"];
-    // <Chip size='small' label="Frontend Developer" />
-    // const WorkChip =  (work)=>{
-    //     return 
-    // }
+
 
     return (
         <Grid container spacing={2}>
@@ -59,10 +57,11 @@ const Profile = () => {
                                             < WorkRoundedIcon />
                                         </ListItemIcon>
                                         <ListItemText primary={
-                                            work.map((e: string) => <Chip sx={{ mr: 1, mb: 1 }} key={e} size='small' label={e} />)
+                                            work.map((e: string) => <Chip sx={{ mr: 1 }} key={e} size='small' label={e} />)
                                         }>
                                         </ListItemText>
                                     </ListItem>
+
                                 </List>
                                 <Button endIcon={<NotificationsIcon />} sx={{ position: 'absolute', right: 16 }} variant="contained" >Follow</Button>
                             </Stack>
@@ -84,11 +83,11 @@ const Profile = () => {
             </Grid>
             <Grid item xs={3} sx={{ display: { xs: 'none', lg: 'block' } }}>
                 <Stack spacing={3}>
-                    <Card sx={{ borderRadius: "1.2em", padding: 2 }}>
-                        <Typography variant='body1' fontWeight={600} >Connect</Typography>
+                    <Card sx={{ borderRadius: "1.2em"}}>
+                        <Typography sx={{pl:2,py:2}} variant='body1' fontWeight={600} >Connect</Typography>
                         <Divider variant='fullWidth' />
                         <List dense={true}>
-                            <ListItem sx={{ px: 0 }}>
+                            <ListItem>
                                 <ListItemIcon sx={{ minWidth: '36px' }}>
                                     <MailIcon />
                                 </ListItemIcon>
@@ -96,7 +95,7 @@ const Profile = () => {
                                     primary="karthiktumala143@gmail.com"
                                 />
                             </ListItem>
-                            <ListItem sx={{ px: 0 }}>
+                            <ListItem>
                                 <ListItemIcon sx={{ minWidth: '36px' }}>
                                     <LanguageIcon />
                                 </ListItemIcon>
@@ -104,7 +103,7 @@ const Profile = () => {
                                     primary="www.google.com"
                                 />
                             </ListItem>
-                            <ListItem sx={{ px: 0 }}>
+                            <ListItem>
                                 <ListItemIcon sx={{ minWidth: '36px' }}>
                                     <LinkedInIcon />
                                 </ListItemIcon>
@@ -114,75 +113,81 @@ const Profile = () => {
                             </ListItem>
                         </List>
                     </Card>
-                    <Card sx={{ borderRadius: "1.2em", padding: 2 }}>
-                        <Typography variant='body1' fontWeight={600} >Friends</Typography>
+                    <Card sx={{ borderRadius: "1.2em" }}>
+                        <Typography sx={{pl:2,py:2}} variant='body1' fontWeight={600} >Friends</Typography>
                         <Divider variant='fullWidth' />
-                        <List sx={{ width: '100%', maxWidth: 360 }}>
-                            <ListItem alignItems="flex-start">
-                                <ListItemAvatar>
-                                    <Avatar alt="Remy Sharp" src="https://mui.com/static/images/avatar/3.jpg" />
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary="Brunch this weekend?"
-                                    secondary={
+                        <List sx={{ width: '100%', maxWidth: 360 }} dense>
+                            <ListItem alignItems="flex-start" sx={{ px: 0 }}>
+                                <ListItemButton>
+                                    <ListItemAvatar>
+                                        <Avatar alt="Remy Sharp" src="https://mui.com/static/images/avatar/3.jpg" />
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        primary="Brunch this weekend?"
+                                        secondary={
+                                            <Typography
+                                                sx={{ display: 'inline' }}
+                                                component="span"
+                                                variant="body2"
+                                                color="text.primary"
+                                            >
+                                                Ali Connors
+                                            </Typography>
 
-                                        <Typography
-                                            sx={{ display: 'inline' }}
-                                            component="span"
-                                            variant="body2"
-                                            color="text.primary"
-                                        >
-                                            Ali Connors
-                                        </Typography>
-
-                                    }
-                                />
+                                        }
+                                    />
+                                </ListItemButton>
                             </ListItem>
 
-                            <ListItem alignItems="flex-start">
-                                <ListItemAvatar>
-                                    <Avatar alt="Travis Howard" src="https://mui.com/static/images/avatar/2.jpg" />
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary="Summer BBQ"
-                                    secondary={
+                            <ListItem alignItems="flex-start" sx={{ px: 0 }}>
+                                <ListItemButton>
+                                    <ListItemAvatar>
+                                        <Avatar alt="Travis Howard" src="https://mui.com/static/images/avatar/2.jpg" />
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        primary="Summer BBQ"
+                                        secondary={
 
-                                        <Typography
-                                            sx={{ display: 'inline' }}
-                                            component="span"
-                                            variant="body2"
-                                            color="text.primary"
-                                        >
-                                            to Scott, Alex, Jennifer
-                                        </Typography>
+                                            <Typography
+                                                sx={{ display: 'inline' }}
+                                                component="span"
+                                                variant="body2"
+                                                color="text.primary"
+                                            >
+                                                to Scott, Alex, Jennifer
+                                            </Typography>
 
 
-                                    }
-                                />
+                                        }
+                                    />
+                                </ListItemButton>
                             </ListItem>
 
-                            <ListItem alignItems="flex-start">
-                                <ListItemAvatar>
-                                    <Avatar alt="Cindy Baker" src="https://mui.com/static/images/avatar/1.jpg" />
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary="Oui Oui"
-                                    secondary={
+                            <ListItem alignItems="flex-start" sx={{ px: 0 }}>
+                                <ListItemButton>
+                                    <ListItemAvatar>
+                                        <Avatar alt="Cindy Baker" src="https://mui.com/static/images/avatar/1.jpg" />
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        primary="Oui Oui"
+                                        secondary={
 
-                                        <Typography
-                                            sx={{ display: 'inline' }}
-                                            component="span"
-                                            variant="body2"
-                                            color="text.primary"
-                                        >
-                                            Sandra Adams
-                                        </Typography>
+                                            <Typography
+                                                sx={{ display: 'inline' }}
+                                                component="span"
+                                                variant="body2"
+                                                color="text.primary"
+                                            >
+                                                Sandra Adams
+                                            </Typography>
 
 
-                                    }
-                                />
+                                        }
+                                    />
+                                </ListItemButton>
                             </ListItem>
                         </List>
+                        <Typography textAlign='center' variant='body2' component="a" href='/'>more</Typography>
                     </Card>
                 </Stack>
             </Grid>
