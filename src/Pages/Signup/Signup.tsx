@@ -18,7 +18,7 @@ import PasswordIcon from '@mui/icons-material/Password';
 import PersonIcon from '@mui/icons-material/Person';
 import { useForm } from 'react-hook-form';
 import logo from "../../assets/logo.png"
-import { BASE_URL_, LOCAL_URL } from '../../config';
+import { BASE_URL_ } from '../../config';
 function Copyright() {
     return (
         <Typography variant="body2" color="text.secondary" align="center" >
