@@ -1,5 +1,10 @@
-import { } from "../../"
+
 const initialState = {
+    alert:{
+        state:false,
+        message:'',
+        type:undefined
+    },
     success: false,
     error: false,
     loading: false,

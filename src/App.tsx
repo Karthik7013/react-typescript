@@ -1,13 +1,13 @@
-import { Avatar, Box, Button, Card, Chip, Divider, Grid, IconButton, LinearProgress, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Modal, Pagination, Stack, styled, Tooltip, Typography } from '@mui/material'
+import { Avatar, Box, Button, Card, Divider, Grid, IconButton, LinearProgress, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Modal, Pagination, Stack, styled, Tooltip, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import PostCard from './Components/PostCard/PostCard';
-import ScienceIcon from '@mui/icons-material/Science';
-import FastfoodIcon from '@mui/icons-material/Fastfood';
-import LightbulbCircleIcon from '@mui/icons-material/LightbulbCircle';
-import LocalAirportIcon from '@mui/icons-material/LocalAirport';
-import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
-import NewspaperIcon from '@mui/icons-material/Newspaper';
-import AudiotrackIcon from '@mui/icons-material/Audiotrack';
+// import ScienceIcon from '@mui/icons-material/Science';
+// import FastfoodIcon from '@mui/icons-material/Fastfood';
+// import LightbulbCircleIcon from '@mui/icons-material/LightbulbCircle';
+// import LocalAirportIcon from '@mui/icons-material/LocalAirport';
+// import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
+// import NewspaperIcon from '@mui/icons-material/Newspaper';
+// import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
 import CreatePost from './Components/CreatePost/CreatePost';
@@ -197,7 +197,7 @@ const App = () => {
                                 }
                             }}
                         >
-                            <Stack direction={'row'} spacing={2} flexWrap="wrap">
+                            {/* <Stack direction={'row'} spacing={2} flexWrap="wrap">
                                 <Chip clickable label='Scientific' icon={<ScienceIcon fontSize='small' />} />
                                 <Chip clickable label='Information' icon={<LightbulbCircleIcon fontSize='small' />} />
                                 <Chip clickable label='Food' icon={<FastfoodIcon fontSize='small' />} />
@@ -205,7 +205,7 @@ const App = () => {
                                 <Chip clickable label='Movie' icon={<TheaterComedyIcon fontSize='small' />} />
                                 <Chip clickable label='News' icon={<NewspaperIcon fontSize='small' />} />
                                 <Chip clickable label='Music' icon={<AudiotrackIcon fontSize='small' />} />
-                            </Stack>
+                            </Stack> */}
                         </Grid>
                         <Grid item xs={12}>
                             <Typography variant='h6'>Top rated Posts</Typography>
