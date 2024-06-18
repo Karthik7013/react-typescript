@@ -1,36 +1,67 @@
 import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography } from '@mui/material';
-import React from 'react'
-
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { LOCAL_URL } from '../../../config';
+import { getToken } from '../../../Utils/utils';
+import { Link } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const SavedPost = () => {
+    const [savedPosts,setSavedPosts] = useState([])
+
+
+    const getSavedPosts = async () => {
+        const headers = {
+            'x-auth-token': getToken()
+        }
+        const res = await axios.get(`${LOCAL_URL}/user/all/savedpost`, {
+            headers
+        });
+        if(res.status === 200){
+            setSavedPosts(res.data)
+        }
+    }
+    useEffect(() => {
+        getSavedPosts()
+    }, [])
+//     useEffect(()=>{
+// console.log(savedPosts)
+//     },[savedPosts])
+
     return (
         <Box>
             <Typography variant="h6">Saved Posts | Dashboard</Typography>
             <>
                 <List dense={true}>
                     <Stack divider={<Divider component="linearGradient" />}>
-                        <ListItemButton disableRipple>
+                    {
+                        savedPosts.map((post:any,_)=>{
+                          return  <ListItemButton key={_} disableRipple>
                             <ListItem
                                 sx={{ px: 0 }}
                                 secondaryAction={
-                                    <Stack direction='row' spacing={2}>
                                         <IconButton edge="end" aria-label="delete">
-                                            {/* <DeleteIcon color='error' /> */}
+                                            <DeleteIcon color='error' />
                                         </IconButton>
-                                    </Stack>
                                 }
                             >
                                 <ListItemAvatar>
-                                    <Avatar variant='rounded' src={""}>
+                                    <Avatar variant='rounded' src={post.imgUrl}>
                                     </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
-                                    primary={""}
-                                    secondary={""
-                                    }
+                                    primary={<Link to={`/postdetails/${btoa(post._id)}`}>{post.title}</Link>}
+                                    secondary={'saved date'}
                                 />
                             </ListItem>
+                           
                         </ListItemButton>
+                        })
+                    }
+                   
+
+                   
+                        
                     </Stack>
                 </List>
             </>

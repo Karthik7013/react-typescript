@@ -7,7 +7,7 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -16,7 +16,7 @@ import { Box, Checkbox, Stack } from '@mui/material';
 import ThumbUpRoundedIcon from '@mui/icons-material/ThumbUpRounded';
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
-import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
+
 type CardxProps = {
     image: string
     id: string,
@@ -75,7 +75,7 @@ export default function Cardx(props: CardxProps) {
                     </IconButton>
                 </Box>
                 <Box>
-                    <Checkbox icon={<BookmarkBorderIcon />} checkedIcon={<BookmarkRoundedIcon color='action' />}></Checkbox>
+                    
                 </Box>
             </Stack>
         </CardActions>

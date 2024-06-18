@@ -10,8 +10,19 @@ const dateFormatter = (date: string): string => {
     return `${month} ${day}, ${year}`;
 }
 
-const getToken = ()=> localStorage.getItem('token')
+const getToken = () => localStorage.getItem('token');
+
+const getHeaders = () => {
+    if (getToken()) {
+        return {
+            
+        }
+    } else {
+        return null
+    }
+    return
+}
 
 
 
-export {dateFormatter,getToken}
+export { dateFormatter, getToken, getHeaders }

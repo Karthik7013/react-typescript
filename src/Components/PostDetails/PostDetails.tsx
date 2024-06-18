@@ -1,16 +1,16 @@
-import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, IconButton, Stack, Typography, Button, TextField, ListItem, ListItemAvatar, ListItemText, LinearProgress } from '@mui/material'
+import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, IconButton, Stack, Typography, Button, TextField, ListItem, ListItemAvatar, ListItemText, LinearProgress, Checkbox, Snackbar, Alert } from '@mui/material'
 import { red } from '@mui/material/colors';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import SendIcon from '@mui/icons-material/Send';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { BASE_URL_ } from '../../config';
+import { BASE_URL_, LOCAL_URL } from '../../config';
 import axios from 'axios';
 import { dateFormatter, getToken } from '../../Utils/utils';
 import { useNavigate } from 'react-router-dom';
 import SimilarCard from '../PostCard/SimilarCard';
-
-
+import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
+import Slide from '@mui/material/Slide';
 
 
 
@@ -18,10 +18,20 @@ import SimilarCard from '../PostCard/SimilarCard';
 
 
 const PostDetails = () => {
+
+
+    type alertProps = {
+        state: boolean,
+        message: string,
+        action: 'error' | 'success' | 'info' | 'warning' | 'error' | undefined
+    }
+
+    const [alert, setAlert] = useState<alertProps>({ state: false, message: '', action: 'error' });
     const navigate = useNavigate();
     const [postDetails, setPostDetails] = useState<any>();
-    const params:any = useParams();
+    const params: any = useParams();
     const postID = atob(params.id);
+    const [savePost, setSavedPost] = useState(false);
 
     useEffect(() => {
         const token = getToken();
@@ -48,6 +58,7 @@ const PostDetails = () => {
     }, [postID, navigate])
 
 
+
     const UserComment = (props: any) => {
         return <ListItem alignItems="flex-start" sx={{ p: 0 }}>
             <ListItemAvatar>
@@ -66,6 +77,20 @@ const PostDetails = () => {
             />
         </ListItem>
     }
+    const handleSaveChange = async (id: string) => {
+        const token = getToken();
+        const headers = {
+            'x-auth-token': token
+        }
+        setSavedPost((prev) => !prev)
+        const res = await axios.post(`${LOCAL_URL}/user/save/${id}`, {}, { headers });
+        if (res.status === 200) {
+            setAlert({ state: true, message: res.data.message, action: 'success' })
+        }
+    }
+    useEffect(() => {
+        console.log(postDetails)
+    }, [postDetails])
 
     return (
         <Box>
@@ -80,9 +105,7 @@ const PostDetails = () => {
                                 </Avatar>
                             }
                             action={
-                                <IconButton aria-label="settings">
-                                    <BookmarkBorderIcon />
-                                </IconButton>
+                                <Checkbox checked={savePost} onChange={(e) => { handleSaveChange(postDetails._id) }} icon={<BookmarkBorderIcon />} checkedIcon={<BookmarkRoundedIcon color='primary' />}></Checkbox>
                             }
                             title={postDetails.authorName}
                             subheader={dateFormatter(postDetails.createdAt)}
@@ -143,13 +166,21 @@ const PostDetails = () => {
                         </Stack>
                     </Stack>
                 </Container> : <LinearProgress />}
+            <Snackbar
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                open={alert.state}
+                autoHideDuration={2000}
+                onClose={() => { setAlert((prev) => ({ ...prev, state: false, message: '',action:undefined })) }}
+                TransitionComponent={Slide}
+            ><Alert sx={{ width: '100%' }} variant='filled' severity={alert.action}>{alert.message}</Alert>
+            </Snackbar>
         </Box>
     )
 }
 
 export default PostDetails;
 
-
+// error success info warning
 
 
 
