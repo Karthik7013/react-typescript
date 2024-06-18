@@ -28,7 +28,9 @@ const Profile = () => {
                                 />
                             </Card>
                             <Box sx={{ display: { xs: 'none', md: 'block' }, backgroundColor: "inherit", borderRadius: 999 }} position="absolute" bottom={-50} left={50}>
-                                <Avatar sx={{ width: 100, height: 100 }} src='https://img.freepik.com/free-photo/androgynous-avatar-non-binary-queer-person_23-2151100226.jpg?t=st=1718108124~exp=1718111724~hmac=dcff80501b7b1dc4eed6e354b101835b3299b5abf724de46b25712af2f5a5d9f&w=826' alt='l'><Typography variant='h4' sx={{ textTransform: 'capitalize', fontSize: '2em', fontWeight: 600 }}>{data?.name[0]}</Typography>
+                                <Avatar sx={{ width: 100, height: 100 }} src='https://img.freepik.com/free-photo/androgynous-avatar-non-binary-queer-person_23-2151100226.jpg?t=st=1718108124~exp=1718111724~hmac=dcff80501b7b1dc4eed6e354b101835b3299b5abf724de46b25712af2f5a5d9f&w=826' alt='l'><Typography variant='h4' sx={{ textTransform: 'capitalize', fontSize: '2em', fontWeight: 600 }}>
+                                    {/* {data?.name[0]} */}
+                                </Typography>
                                 </Avatar>
                             </Box>
                         </Box>
@@ -83,8 +85,8 @@ const Profile = () => {
             </Grid>
             <Grid item xs={3} sx={{ display: { xs: 'none', lg: 'block' } }}>
                 <Stack spacing={3}>
-                    <Card sx={{ borderRadius: "1.2em"}}>
-                        <Typography sx={{pl:2,py:2}} variant='body1' fontWeight={600} >Connect</Typography>
+                    <Card sx={{ borderRadius: "1.2em" }}>
+                        <Typography sx={{ pl: 2, py: 2 }} variant='body1' fontWeight={600} >Connect</Typography>
                         <Divider variant='fullWidth' />
                         <List dense={true}>
                             <ListItem>
@@ -114,7 +116,7 @@ const Profile = () => {
                         </List>
                     </Card>
                     <Card sx={{ borderRadius: "1.2em" }}>
-                        <Typography sx={{pl:2,py:2}} variant='body1' fontWeight={600} >Friends</Typography>
+                        <Typography sx={{ pl: 2, py: 2 }} variant='body1' fontWeight={600} >Friends</Typography>
                         <Divider variant='fullWidth' />
                         <List sx={{ width: '100%', maxWidth: 360 }} dense>
                             <ListItem alignItems="flex-start" sx={{ px: 0 }}>

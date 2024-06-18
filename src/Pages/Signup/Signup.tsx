@@ -11,14 +11,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { CircularProgress, InputAdornment } from '@mui/material';
+import { Alert, CircularProgress, InputAdornment, Snackbar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import EmailIcon from '@mui/icons-material/Email';
 import PasswordIcon from '@mui/icons-material/Password';
 import PersonIcon from '@mui/icons-material/Person';
 import { useForm } from 'react-hook-form';
 import logo from "../../assets/logo.png"
-import { BASE_URL_ } from '../../config';
+import { BASE_URL_, LOCAL_URL } from '../../config';
 function Copyright() {
     return (
         <Typography variant="body2" color="text.secondary" align="center" >
@@ -39,18 +39,21 @@ export default function SignUp() {
         handleSubmit,
         formState: { errors },
     } = useForm();
+    const [err, setErr] = React.useState(false);
     const dispatch = useDispatch();
     const loading = useSelector((e: { loading: boolean }) => e.loading);
     const navigate = useNavigate()
     const handleSubmitForm = async (data: any) => {
         try {
             dispatch({ type: 'LOADING', payload: true })
-            const res = await axios.post(`${BASE_URL_}/v1/user/register`, data)
-            console.log(res.status)
+            console.log(data)
+            const res = await axios.post(`${BASE_URL_}/user/register`, data)
+            console.log(res)
             if (res.status === 201) {
                 navigate('/signin')
             }
         } catch (error) {
+            setErr(true)
             console.log({ message: error })
         } finally {
             dispatch({ type: 'LOADING', payload: false })
@@ -173,6 +176,13 @@ export default function SignUp() {
                 </Box>
             </Box>
             <Copyright />
+            <Snackbar
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                open={err}
+                autoHideDuration={2000}
+                onClose={() => { setErr(false) }}
+            ><Alert sx={{ width: '100%' }} variant='filled' severity='error'>Something Went Wrong </Alert>
+            </Snackbar>
 
         </Container>
     );

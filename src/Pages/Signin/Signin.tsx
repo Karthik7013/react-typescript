@@ -45,7 +45,6 @@ export default function SignIn() {
     const loading = useSelector((e: any) => e.loading)
     const dispatch = useDispatch()
     const [remember, setRemeber] = useState(false);
-    console.log(setRemeber);
 
     const handleSubmitForm = async (data: any) => {
         const userSignInData = {
