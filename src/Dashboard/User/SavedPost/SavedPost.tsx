@@ -1,7 +1,7 @@
 import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { LOCAL_URL } from '../../../config';
+import { BASE_URL_ } from '../../../config';
 import { getToken } from '../../../Utils/utils';
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -14,7 +14,7 @@ const SavedPost = () => {
         const headers = {
             'x-auth-token': getToken()
         }
-        const res = await axios.get(`${LOCAL_URL}/user/all/savedpost`, {
+        const res = await axios.get(`${BASE_URL_}/user/all/savedpost`, {
             headers
         });
         if(res.status === 200){

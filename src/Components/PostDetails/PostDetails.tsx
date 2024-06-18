@@ -1,10 +1,10 @@
-import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, IconButton, Stack, Typography, Button, TextField, ListItem, ListItemAvatar, ListItemText, LinearProgress, Checkbox, Snackbar, Alert } from '@mui/material'
+import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, Stack, Typography, Button, TextField, ListItem, ListItemAvatar, ListItemText, LinearProgress, Checkbox, Snackbar, Alert } from '@mui/material'
 import { red } from '@mui/material/colors';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import SendIcon from '@mui/icons-material/Send';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { BASE_URL_, LOCAL_URL } from '../../config';
+import { BASE_URL_ } from '../../config';
 import axios from 'axios';
 import { dateFormatter, getToken } from '../../Utils/utils';
 import { useNavigate } from 'react-router-dom';
@@ -83,7 +83,7 @@ const PostDetails = () => {
             'x-auth-token': token
         }
         setSavedPost((prev) => !prev)
-        const res = await axios.post(`${LOCAL_URL}/user/save/${id}`, {}, { headers });
+        const res = await axios.post(`${BASE_URL_}/user/save/${id}`, {}, { headers });
         if (res.status === 200) {
             setAlert({ state: true, message: res.data.message, action: 'success' })
         }
@@ -105,7 +105,7 @@ const PostDetails = () => {
                                 </Avatar>
                             }
                             action={
-                                <Checkbox checked={savePost} onChange={(e) => { handleSaveChange(postDetails._id) }} icon={<BookmarkBorderIcon />} checkedIcon={<BookmarkRoundedIcon color='primary' />}></Checkbox>
+                                <Checkbox checked={savePost} onChange={() => { handleSaveChange(postDetails._id) }} icon={<BookmarkBorderIcon />} checkedIcon={<BookmarkRoundedIcon color='primary' />}></Checkbox>
                             }
                             title={postDetails.authorName}
                             subheader={dateFormatter(postDetails.createdAt)}
