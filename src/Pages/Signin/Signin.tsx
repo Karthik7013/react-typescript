@@ -44,12 +44,10 @@ export default function SignIn() {
     const [err, setErr] = useState(false);
     const loading = useSelector((e: any) => e.loading)
     const dispatch = useDispatch()
-    const [remember, setRemeber] = useState(false);
 
     const handleSubmitForm = async (data: any) => {
         const userSignInData = {
-            ...data,
-            remember
+            ...data
         };
         try {
             dispatch({ type: 'LOADING', payload: true })
