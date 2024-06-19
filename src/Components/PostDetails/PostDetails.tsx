@@ -32,7 +32,7 @@ const PostDetails = () => {
     const params: any = useParams();
     const postID = atob(params.id);
     const [savePost, setSavedPost] = useState(false);
-    const userData = useSelector((e:any)=>e.auth.data)
+    const userData = useSelector((e: any) => e.auth.data)
 
     useEffect(() => {
         const token = getToken();
@@ -96,6 +96,7 @@ const PostDetails = () => {
         const headers = {
             'x-auth-token': token
         }
+        console.log(userData, "userData");
         const commentBody = {
             commenter: {
                 id: userData._id,
@@ -106,9 +107,8 @@ const PostDetails = () => {
             comment: comment,
             date: new Date()
         };
-        console.log(commentBody)
         const res = await axios.post(`${BASE_URL_}/user/comment/${postID}`, commentBody, { headers });
-        console.log(res.data)
+        console.log(res)
         setComment('')
     }
 
@@ -116,9 +116,6 @@ const PostDetails = () => {
         setComment(e.target.value)
     }
 
-    useEffect(() => {
-        console.log(postDetails)
-    }, [postDetails])
     type commentProps = {
         comment: string,
         commenter: {
@@ -187,7 +184,7 @@ const PostDetails = () => {
                         <Divider />
                         <Stack my={2} spacing={2}>
                             <Typography variant='h6'>Comments</Typography>
-                            {postDetails.comments.map((comment: commentProps,_:number) => {
+                            {postDetails.comments.map((comment: commentProps, _: number) => {
                                 return <UserComment key={_} image={'https://mui.com/static/images/avatar/4.jpg'} name={comment.commenter
                                     .name} message={comment.comment} date={comment.date} />
                             })}
@@ -197,7 +194,8 @@ const PostDetails = () => {
 
 
                             <Box component={Stack} direction='row' spacing={2}>
-                                <Avatar>{postDetails.authorName[0]}</Avatar>
+                                <Avatar><Typography textTransform="capitalize">{userData.userName[0]
+                                }</Typography></Avatar>
                                 <Typography variant='h6'>Add a comment</Typography>
                             </Box>
 
