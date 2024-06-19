@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { BASE_URL_ } from '../../config';
 import axios from 'axios';
-import { dateFormatter, getHeaders, getToken } from '../../Utils/utils';
+import { dateFormatter, getToken } from '../../Utils/utils';
 import { useNavigate } from 'react-router-dom';
 import SimilarCard from '../PostCard/SimilarCard';
 import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
