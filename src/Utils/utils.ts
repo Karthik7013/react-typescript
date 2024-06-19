@@ -15,12 +15,11 @@ const getToken = () => localStorage.getItem('token');
 const getHeaders = () => {
     if (getToken()) {
         return {
-            
+            'x-auth-token': getToken()
         }
     } else {
         return null
     }
-    return
 }
 
 

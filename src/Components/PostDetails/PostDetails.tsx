@@ -6,11 +6,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { BASE_URL_ } from '../../config';
 import axios from 'axios';
-import { dateFormatter, getToken } from '../../Utils/utils';
+import { dateFormatter, getHeaders, getToken } from '../../Utils/utils';
 import { useNavigate } from 'react-router-dom';
 import SimilarCard from '../PostCard/SimilarCard';
 import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
 import Slide from '@mui/material/Slide';
+import { useSelector } from 'react-redux';
 
 
 
@@ -19,19 +20,19 @@ import Slide from '@mui/material/Slide';
 
 const PostDetails = () => {
 
-
     type alertProps = {
         state: boolean,
         message: string,
         action: 'error' | 'success' | 'info' | 'warning' | 'error' | undefined
     }
-
+    const [comment, setComment] = useState('')
     const [alert, setAlert] = useState<alertProps>({ state: false, message: '', action: 'error' });
     const navigate = useNavigate();
     const [postDetails, setPostDetails] = useState<any>();
     const params: any = useParams();
     const postID = atob(params.id);
     const [savePost, setSavedPost] = useState(false);
+    const userData = useSelector((e:any)=>e.auth.data)
 
     useEffect(() => {
         const token = getToken();
@@ -77,6 +78,7 @@ const PostDetails = () => {
             />
         </ListItem>
     }
+
     const handleSaveChange = async (id: string) => {
         const token = getToken();
         const headers = {
@@ -88,9 +90,47 @@ const PostDetails = () => {
             setAlert({ state: true, message: res.data.message, action: 'success' })
         }
     }
+
+    const handleCommentSubmit = async () => {
+        const token = getToken();
+        const headers = {
+            'x-auth-token': token
+        }
+        const commentBody = {
+            commenter: {
+                id: userData._id,
+                avatarUrl: "dummy.img",
+                name: userData.name,
+                email: userData.email,
+            },
+            comment: comment,
+            date: new Date()
+        };
+        console.log(commentBody)
+        const res = await axios.post(`${BASE_URL_}/user/comment/${postID}`, commentBody, { headers });
+        console.log(res.data)
+        setComment('')
+    }
+
+    const handleCommentChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined = (e) => {
+        setComment(e.target.value)
+    }
+
     useEffect(() => {
         console.log(postDetails)
     }, [postDetails])
+    type commentProps = {
+        comment: string,
+        commenter: {
+            id: string,
+            avatarUrl: string,
+            name: string,
+            email: "dummy@gmail.com"
+        }
+        date: Date
+    }
+
+
 
     return (
         <Box>
@@ -134,34 +174,46 @@ const PostDetails = () => {
                         <Divider />
                         <Grid my={2} container rowGap={2} columnSpacing={5}>
                             <Grid component={Stack} direction='row' justifyContent='space-between' alignItems='center' item xs={12}>
-                                <Typography variant='h6'>Similar Posts</Typography> <Typography variant='caption' component={'a'} href='/'>more</Typography>
+                                <Typography variant='h6'>Similar Posts</Typography>
+                                <Typography variant='caption' component={'a'} href='/'>more</Typography>
                             </Grid>
+
                             {[1, 2, 3].map((e) => <Grid key={e} item xs={12} md={4}>
                                 <SimilarCard image='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS648NVi2-QaglnIqsI2zMthGTQz8avHaol9ytKHOjFyA&s' content='lorem5000' title='Lizard' />
                             </Grid>)}
-                        </Grid>
 
+                        </Grid>
 
                         <Divider />
                         <Stack my={2} spacing={2}>
                             <Typography variant='h6'>Comments</Typography>
-                            <UserComment image={'https://mui.com/static/images/avatar/4.jpg'} name={'karthik'} message={'hellow world this is the message'} date={'Nov 26 1999'} />
-                            <UserComment image={'https://mui.com/static/images/avatar/3.jpg'} name={'karthik'} message={'hellow world this is the message'} date={'Nov 26 1999'} />
+                            {postDetails.comments.map((comment: commentProps,_:number) => {
+                                return <UserComment key={_} image={'https://mui.com/static/images/avatar/4.jpg'} name={comment.commenter
+                                    .name} message={comment.comment} date={comment.date} />
+                            })}
+
+
+
+
 
                             <Box component={Stack} direction='row' spacing={2}>
                                 <Avatar>{postDetails.authorName[0]}</Avatar>
                                 <Typography variant='h6'>Add a comment</Typography>
                             </Box>
+
                             <Box>
                                 <TextField
+                                    value={comment}
+                                    onChange={handleCommentChange}
                                     placeholder='Comment'
                                     multiline
                                     rows={6}
-                                    fullWidth></TextField>
+                                    fullWidth>
+                                </TextField>
                             </Box>
                             <Stack justifyContent='flex-end' direction='row' columnGap={3}>
                                 <Button variant='outlined'>clear</Button>
-                                <Button variant='contained' color='success' endIcon={<SendIcon />}>Submit</Button>
+                                <Button onClick={handleCommentSubmit} variant='contained' color='success' endIcon={<SendIcon />}>Submit</Button>
                             </Stack>
                         </Stack>
                     </Stack>
@@ -170,7 +222,7 @@ const PostDetails = () => {
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                 open={alert.state}
                 autoHideDuration={2000}
-                onClose={() => { setAlert((prev) => ({ ...prev, state: false, message: '',action:undefined })) }}
+                onClose={() => { setAlert((prev) => ({ ...prev, state: false, message: '', action: undefined })) }}
                 TransitionComponent={Slide}
             ><Alert sx={{ width: '100%' }} variant='filled' severity={alert.action}>{alert.message}</Alert>
             </Snackbar>
@@ -179,8 +231,6 @@ const PostDetails = () => {
 }
 
 export default PostDetails;
-
-// error success info warning
 
 
 
