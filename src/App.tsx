@@ -189,27 +189,10 @@ const App = () => {
                 </Grid>
                 <Grid sx={{ height: 'calc(100dvh - 64px)', overflowY: 'scroll' }} item xs={18} md={12} >
                     <Grid container spacing={2} px={{ xs: 1, md: 2 }} py={2}>
-                        <Grid item xs={12}
-                            sx={{
-                                display: {
-                                    md: 'block',
-                                    xs: 'none'
-                                }
-                            }}
-                        >
-                            {/* <Stack direction={'row'} spacing={2} flexWrap="wrap">
-                                <Chip clickable label='Scientific' icon={<ScienceIcon fontSize='small' />} />
-                                <Chip clickable label='Information' icon={<LightbulbCircleIcon fontSize='small' />} />
-                                <Chip clickable label='Food' icon={<FastfoodIcon fontSize='small' />} />
-                                <Chip clickable label='Travel' icon={<LocalAirportIcon fontSize='small' />} />
-                                <Chip clickable label='Movie' icon={<TheaterComedyIcon fontSize='small' />} />
-                                <Chip clickable label='News' icon={<NewspaperIcon fontSize='small' />} />
-                                <Chip clickable label='Music' icon={<AudiotrackIcon fontSize='small' />} />
-                            </Stack> */}
-                        </Grid>
                         <Grid item xs={12}>
                             <Typography variant='h6'>Top rated Posts</Typography>
                         </Grid>
+
                         {loading && <>
                             {[1, 2, 3].map((e) => {
                                 return <Grid key={e} item xs={12}>
@@ -233,7 +216,7 @@ const App = () => {
                         })}
 
                         <Grid item xs={12} component={Stack} justifyContent='center' mt={2}>
-                            <Pagination count={3}
+                            <Pagination count={10}
                                 page={page}
                                 onChange={handlePagination}
                                 variant="text" shape="circular" />

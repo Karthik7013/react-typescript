@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import logo from "../../assets/logo.png"
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import { BASE_URL_ } from '../../config';
@@ -117,7 +117,7 @@ export default function Header() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={() => { navigate('/dashboard') }}>
+            <MenuItem dense onClick={() => { navigate('/dashboard') }}>
                 <IconButton
                     size="large"
                     color="inherit"
@@ -126,7 +126,7 @@ export default function Header() {
                 </IconButton>
                 <p>Dashboard</p>
             </MenuItem>
-            <MenuItem
+            <MenuItem dense
                 onClick={() => {
                     localStorage.removeItem('token');
                     window.location.reload()
@@ -159,7 +159,7 @@ export default function Header() {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem href='/messages'>
+            <MenuItem dense href='/messages'>
                 <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                     <Badge badgeContent={4} color="error">
                         <MailIcon />
@@ -167,7 +167,7 @@ export default function Header() {
                 </IconButton>
                 <p>Messages</p>
             </MenuItem>
-            <MenuItem href='/notifications'>
+            <MenuItem dense href='/notifications'>
                 <IconButton
                     size="large"
                     aria-label="show 17 new notifications"
@@ -179,7 +179,7 @@ export default function Header() {
                 </IconButton>
                 <p>Notifications</p>
             </MenuItem>
-            <MenuItem onClick={() => { navigate('/dashboard') }}>
+            <MenuItem dense onClick={() => { navigate('/dashboard') }}>
                 <IconButton
                     size="large"
                     color="inherit"
@@ -188,7 +188,7 @@ export default function Header() {
                 </IconButton>
                 <p>Dashboard</p>
             </MenuItem>
-            <MenuItem
+            <MenuItem dense
                 onClick={() => {
                     localStorage.removeItem('token');
                     window.location.reload()
