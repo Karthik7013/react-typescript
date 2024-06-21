@@ -26,6 +26,7 @@ import WhatshotIcon from '@mui/icons-material/Whatshot';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import MovieCreationRoundedIcon from '@mui/icons-material/MovieCreationRounded';
 import MusicNoteRoundedIcon from '@mui/icons-material/MusicNoteRounded';
+import { handleLoading } from './Redux/Actions/actions';
 
 const App = () => {
     type posts = {
@@ -46,17 +47,17 @@ const App = () => {
     useEffect(() => {
         const getPosts = async () => {
             try {
-                dispatch({ type: 'LOADING', payload: true })
-                const res = await axios.get(`${BASE_URL_}/admin/post/all?limit=${limit}&page=${page}`);
+                dispatch(handleLoading(true))
+                const res = await axios.get(`${BASE_URL_}/admin/post/all`);
                 dispatch({ type: 'FETCH_POST', payload: res.data });
             } catch (error) {
                 console.log(error)
             } finally {
-                dispatch({ type: 'LOADING', payload: false })
+                dispatch(handleLoading(false))
             }
         };
         getPosts();
-    }, [dispatch, page, limit]);
+    }, []);
 
 
 
@@ -243,7 +244,6 @@ const App = () => {
                         </Stack>
                         <Divider />
                         <Stack direction='row' spacing={1} alignItems='center'>
-
                             <UserAvatar url='https://mui.com/static/images/avatar/3.jpg' />
                             <UserAvatar url='https://mui.com/static/images/avatar/4.jpg' />
                         </Stack>

@@ -51,11 +51,10 @@ const Root = () => {
       dark: boolean
     }
   }
-  // const isAdmin = useSelector((e: { auth: dataprops }) => e.auth.data.isAdmin);
   const data = useSelector((e: { auth: dataprops }) => e.auth.data);
   const dispatch = useDispatch();
-
   const getProfile = async (token: string) => {
+
     const headers = {
       Authorization: "Bearer YourAccessToken",
       "Content-Type": "application/json",
@@ -64,12 +63,14 @@ const Root = () => {
     try {
       dispatch({ type: "LOADING", payload: true });
       const res = await axios.get(`${BASE_URL_}/user/profile`, { headers });
+      console.log(res, 'res')
       if (res.status === 200) {
         dispatch({ type: "LOGIN", payload: res.data.user });
       } else {
         console.log("invalid/expired login");
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.log(error);
     } finally {
       dispatch({ type: "LOADING", payload: false });
@@ -81,8 +82,7 @@ const Root = () => {
     if (token) {
       getProfile(token);
     }
-  }, [dispatch]);
-
+  }, []);
   // const UserRoutes = () => {
   //   return (
   //     <Routes>
@@ -100,7 +100,6 @@ const Root = () => {
   //   return <Box><AppBar color="info"><Toolbar>ADMIN</Toolbar></AppBar></Box>;
   // };
 
-
   return (
     <ThemeProvider theme={data?.dark ? darkTheme : lightTheme}>
       <CssBaseline />
@@ -110,27 +109,25 @@ const Root = () => {
         <Route path='/signup' element={<SignUp />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes> */}
-
-
+      {/*  */}
       <Routes>
         <Route path='/' element={<><Header /><Outlet /></>}>
           <Route index element={<App />}></Route>
-          <Route path='postdetails/:id' element={<PostDetails />}></Route>
-          <Route path='messages' element={<MessageBox />}></Route>
-          <Route path='notifications' element={<NotificationBox />}></Route>
+          {/* <Route path='postdetails/:id' element={<PostDetails />}></Route> */}
+          {/* <Route path='messages' element={<MessageBox />}></Route> */}
+          {/* <Route path='notifications' element={<NotificationBox />}></Route> */}
         </Route>
         <Route path='/signin' element={<SignIn />}></Route>
         <Route path='/signup' element={<SignUp />}></Route>
-        <Route path="dashboard" element={<DashboardHome />} >
+        {/* <Route path="dashboard" element={<DashboardHome />} >
           <Route index element={<Analytics />}></Route>
           <Route path='post' element={<MyPosts />}></Route>
           <Route path='profile' element={<Profile />}></Route>
           <Route path='save' element={<SavedPost />}></Route>
           <Route path='settings' element={<Settings />}></Route>
-        </Route>
+        </Route> */}
         <Route path='*' element={<PageNotFound />}></Route>
       </Routes>
-
     </ThemeProvider>
   );
 };

@@ -12,16 +12,8 @@ const dateFormatter = (date: string): string => {
 
 const getToken = () => localStorage.getItem('token');
 
-const getHeaders = () => {
-    if (getToken()) {
-        return {
-            'x-auth-token': getToken()
-        }
-    } else {
-        return null
-    }
-}
 
 
 
-export { dateFormatter, getToken, getHeaders }
+
+export { dateFormatter, getToken }
