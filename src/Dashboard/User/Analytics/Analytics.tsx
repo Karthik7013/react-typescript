@@ -1,4 +1,4 @@
-import { Box, Card, Grid, MenuItem, Stack, TextField, Typography } from '@mui/material';
+import { Box, Card, CardMedia, Grid, MenuItem, Stack, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react'
 import { BarChart } from '@mui/x-charts';
 // import { LineChart } from '@mui/x-charts';
@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { getToken } from '../../../Utils/utils';
 import {BASE_URL_} from '../../../config';
-
+import cardBg from "../../../assets/wave-haikei.svg"
 
 const Main = () => {
 
@@ -60,8 +60,10 @@ const Main = () => {
                 <Grid item xs={12} md={5}>
                     <Grid spacing={3} container >
                         <Grid item xs={12} md={6}>
-                            <Card elevation={4} sx={{ borderRadius: '1em' }}>
-                                <Stack p={'1em 12px'}>
+                            <Card elevation={4} sx={{ borderRadius: '1em',position:'relative'}}>
+                                <img width="100%" src={cardBg} alt="123" />
+
+                                <Stack p={'1em 12px'} sx={{position:'absolute',zIndex:999,top:0,left:0}}>
                                     <Typography variant='caption' fontWeight={600} color={'GrayText'}>Total Posts</Typography>
                                     <Typography variant='h2' fontWeight={600}>{chartData?.totalPosts}</Typography>
                                 </Stack>

@@ -29,30 +29,19 @@ import axios from "axios";
 import { BASE_URL_ } from "./config";
 import { getToken } from "./Utils/utils";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { handleLoading, handleLogin } from "./Redux/Actions/actions";
+import { initialStateProps } from "./Types/Types";
+import AlertBox from "./Components/AlertBox/AlertBox";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
 const Root = () => {
-  type dataprops = {
-    data: {
-      profile: { connect: [] },
-      _id: string,
-      userName: string,
-      name: string,
-      email: string,
-      password: string,
-      isAdmin: boolean,
-      saved: [],
-      createdAt: string,
-      updatedAt: string,
-      __v: number,
-      dark: boolean
-    }
-  }
-  const data = useSelector((e: { auth: dataprops }) => e.auth.data);
+
+  const mode = useSelector((e: initialStateProps) => e.theme);
   const dispatch = useDispatch();
+
   const getProfile = async (token: string) => {
 
     const headers = {
@@ -60,12 +49,13 @@ const Root = () => {
       "Content-Type": "application/json",
       "x-auth-token": token,
     };
+
     try {
-      dispatch({ type: "LOADING", payload: true });
+      dispatch(handleLoading(true));
       const res = await axios.get(`${BASE_URL_}/user/profile`, { headers });
-      console.log(res, 'res')
       if (res.status === 200) {
-        dispatch({ type: "LOGIN", payload: res.data.user });
+        dispatch(handleLogin(res.data.user));
+        
       } else {
         console.log("invalid/expired login");
       }
@@ -73,7 +63,7 @@ const Root = () => {
     catch (error) {
       console.log(error);
     } finally {
-      dispatch({ type: "LOADING", payload: false });
+      dispatch(handleLoading(false));
     }
   };
 
@@ -83,6 +73,8 @@ const Root = () => {
       getProfile(token);
     }
   }, []);
+
+
   // const UserRoutes = () => {
   //   return (
   //     <Routes>
@@ -101,7 +93,7 @@ const Root = () => {
   // };
 
   return (
-    <ThemeProvider theme={data?.dark ? darkTheme : lightTheme}>
+    <ThemeProvider theme={(mode === 'light') ? lightTheme : darkTheme}>
       <CssBaseline />
       {/* <Routes>
         <Route path="/" element={isAdmin ? <AdminRoutes /> : <UserRoutes />} />
@@ -113,21 +105,22 @@ const Root = () => {
       <Routes>
         <Route path='/' element={<><Header /><Outlet /></>}>
           <Route index element={<App />}></Route>
-          {/* <Route path='postdetails/:id' element={<PostDetails />}></Route> */}
-          {/* <Route path='messages' element={<MessageBox />}></Route> */}
-          {/* <Route path='notifications' element={<NotificationBox />}></Route> */}
+          <Route path='postdetails/:id' element={<PostDetails />}></Route>
+          <Route path='messages' element={<MessageBox />}></Route>
+          <Route path='notifications' element={<NotificationBox />}></Route>
         </Route>
         <Route path='/signin' element={<SignIn />}></Route>
         <Route path='/signup' element={<SignUp />}></Route>
-        {/* <Route path="dashboard" element={<DashboardHome />} >
+        <Route path="dashboard" element={<DashboardHome />} >
           <Route index element={<Analytics />}></Route>
           <Route path='post' element={<MyPosts />}></Route>
           <Route path='profile' element={<Profile />}></Route>
           <Route path='save' element={<SavedPost />}></Route>
           <Route path='settings' element={<Settings />}></Route>
-        </Route> */}
+        </Route>
         <Route path='*' element={<PageNotFound />}></Route>
       </Routes>
+      <AlertBox />
     </ThemeProvider>
   );
 };

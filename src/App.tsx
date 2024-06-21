@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Card, Divider, Grid, IconButton, LinearProgress, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Modal, Pagination, Stack, styled, Tooltip, Typography } from '@mui/material'
+import { Avatar, Box, Button, Card, CircularProgress, Divider, Grid, IconButton, LinearProgress, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Modal, Pagination, Stack, styled, Toolbar, Tooltip, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import PostCard from './Components/PostCard/PostCard';
 // import ScienceIcon from '@mui/icons-material/Science';
@@ -26,16 +26,18 @@ import WhatshotIcon from '@mui/icons-material/Whatshot';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import MovieCreationRoundedIcon from '@mui/icons-material/MovieCreationRounded';
 import MusicNoteRoundedIcon from '@mui/icons-material/MusicNoteRounded';
-import { handleLoading } from './Redux/Actions/actions';
+import { handleAlert, handleLoading, handlePosts } from './Redux/Actions/actions';
+import { initialStateProps } from './Types/Types';
+import AlertBox from './Components/AlertBox/AlertBox';
 
 const App = () => {
     type posts = {
         title: string,
         subtitle: string,
     }
-    const isLoggedIn = useSelector((e: { auth: { status: boolean } }) => e.auth.status);
-    const limit = useSelector((e: { pagination: { limit: number } }) => e.pagination.limit)
-    const page = useSelector((e: { pagination: { page: number } }) => e.pagination.page)
+    const isLoggedIn = useSelector((e: initialStateProps) => e.auth.status);
+
+
     const topRatedPosts = useSelector((e: { posts: posts[] }) => e.posts);
     const dispatch = useDispatch();
     const loading = useSelector((e: { loading: boolean }) => e.loading);
@@ -49,13 +51,13 @@ const App = () => {
             try {
                 dispatch(handleLoading(true))
                 const res = await axios.get(`${BASE_URL_}/admin/post/all`);
-                dispatch({ type: 'FETCH_POST', payload: res.data });
+                dispatch(handlePosts(res.data));
             } catch (error) {
                 console.log(error)
             } finally {
-                dispatch(handleLoading(false))
+                dispatch(handleLoading(false));
             }
-        };
+        }
         getPosts();
     }, []);
 
@@ -87,6 +89,7 @@ const App = () => {
 
     return (
         <Box>
+            <Toolbar />
             <Grid container columns={18}>
                 <Grid item md={3} sx={{
                     flexDirection: 'column',
@@ -189,6 +192,21 @@ const App = () => {
                     </Box>
                 </Grid>
                 <Grid sx={{ height: 'calc(100dvh - 64px)', overflowY: 'scroll' }} item xs={18} md={12} >
+                    <Box p={2} pb={0}>
+                        <Typography gutterBottom variant='h6'>Recent Posts</Typography>
+                        <Stack direction='row' spacing={2} alignItems='center'>
+                            <UserAvatar url='https://mui.com/static/images/avatar/3.jpg' />
+                            <UserAvatar url='https://mui.com/static/images/avatar/4.jpg' />
+                            <UserAvatar url='https://mui.com/static/images/avatar/4.jpg' />
+                            <UserAvatar url='https://mui.com/static/images/avatar/4.jpg' />
+                            <UserAvatar url='https://mui.com/static/images/avatar/3.jpg' />
+                            <UserAvatar url='https://mui.com/static/images/avatar/4.jpg' />
+                            <UserAvatar url='https://mui.com/static/images/avatar/4.jpg' />
+                            <UserAvatar url='https://mui.com/static/images/avatar/4.jpg' />
+                        </Stack>
+                    </Box>
+
+
                     <Grid container spacing={2} px={{ xs: 1, md: 2 }} py={2}>
                         <Grid item xs={12}>
                             <Typography variant='h6'>Top rated Posts</Typography>
@@ -215,13 +233,15 @@ const App = () => {
                                 />
                             </Grid>
                         })}
+                        <Toolbar sx={{width:'100%'}}>
+                            <Box sx={{margin:'auto'}}>
+                                <CircularProgress size={20} />
+                            </Box>
 
-                        <Grid item xs={12} component={Stack} justifyContent='center' mt={2}>
-                            <Pagination count={10}
-                                page={page}
-                                onChange={handlePagination}
-                                variant="text" shape="circular" />
-                        </Grid>
+                        </Toolbar>
+
+
+
                     </Grid>
                 </Grid>
                 <Grid item md={3} sx={{
@@ -250,15 +270,6 @@ const App = () => {
                     </Stack>
                 </Grid>
             </Grid>
-            <Modal
-                open={loading}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box>
-                    <LinearProgress />
-                </Box>
-            </Modal>
             <CreatePost open={createPostModal} toggle={setCreatePostModal} />
         </Box>
     )

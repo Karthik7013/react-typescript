@@ -1,21 +1,23 @@
 type initialStateProps = {
-    alert: {
-        state: false,
-        message: '',
-        type: 'success' | 'warning' | 'success' | 'info' | undefined
-    },
-    loading: boolean
+    alert: alert,
+    loading: boolean,
+    theme: 'light' | 'dark',
     auth: {
         data: user | null,
         status: boolean
     },
     posts: post[],
     similarPosts: post[],
-    postDetails: post | undefined,
+    postDetails: post | null,
     pagination: {
         page: number,
         limit: number
     }
+}
+type alert = {
+    state: boolean,
+    message?: string,
+    type?: undefined | 'success' | 'warning' |'error' | 'success' | 'info'
 }
 
 type comment = {
@@ -26,7 +28,7 @@ type comment = {
         email: string
     },
     comment: string,
-    date: string,
+    date: Date,
     _id: string
 }
 
@@ -63,4 +65,4 @@ type user = {
 }
 
 
-export type { initialStateProps, post }
+export type { initialStateProps, post, user,alert,comment }

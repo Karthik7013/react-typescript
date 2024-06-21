@@ -3,10 +3,12 @@ import React from 'react'
 const PostCardSkeleton = () => {
     return (
         <Card sx={{
+            px:3,
             width: '100%',
             margin: 'auto', borderRadius: '0.9em',
         }}>
             <CardHeader
+            sx={{px:0}}
                 avatar={
                     <Skeleton animation="wave" variant="circular" width={40} height={40} />
                 }
@@ -22,7 +24,7 @@ const PostCardSkeleton = () => {
                     <Skeleton animation="wave" height={10} width="40%" />
                 }
             />
-            <Skeleton sx={{ height:240 }} animation="wave" variant="rectangular" />
+            <Skeleton sx={{ height:240,borderRadius:'8px' }} animation="wave" variant="rectangular" />
             <CardContent>
                 <>
                     <Skeleton animation="wave" height={10} style={{ marginBottom: 6 }} />

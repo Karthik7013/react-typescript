@@ -1,4 +1,4 @@
-import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, Stack, Typography, Button, TextField, ListItem, ListItemAvatar, ListItemText, LinearProgress, Checkbox, Snackbar, Alert } from '@mui/material'
+import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, Stack, Typography, Button, TextField, ListItem, ListItemAvatar, ListItemText, LinearProgress, Checkbox, Snackbar, Alert, Toolbar } from '@mui/material'
 import { red } from '@mui/material/colors';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import SendIcon from '@mui/icons-material/Send';
@@ -11,7 +11,9 @@ import { useNavigate } from 'react-router-dom';
 import SimilarCard from '../PostCard/SimilarCard';
 import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
 import Slide from '@mui/material/Slide';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { initialStateProps, comment } from '../../Types/Types';
+import { handleAddComment, handleAlert, handleLoading, handlePostDetails } from '../../Redux/Actions/actions';
 
 
 
@@ -19,20 +21,18 @@ import { useSelector } from 'react-redux';
 
 
 const PostDetails = () => {
+    const dispatch = useDispatch()
 
-    type alertProps = {
-        state: boolean,
-        message: string,
-        action: 'error' | 'success' | 'info' | 'warning' | 'error' | undefined
-    }
+
     const [comment, setComment] = useState('')
-    const [alert, setAlert] = useState<alertProps>({ state: false, message: '', action: 'error' });
+
     const navigate = useNavigate();
-    const [postDetails, setPostDetails] = useState<any>();
+    // const [postDetails, setPostDetails] = useState<any>();
+    const postDetails = useSelector((e: initialStateProps) => e.postDetails)
     const params: any = useParams();
     const postID = atob(params.id);
     const [savePost, setSavedPost] = useState(false);
-    const userData = useSelector((e: any) => e.auth.data)
+    const userData = useSelector((e: initialStateProps) => e.auth.data)
 
     useEffect(() => {
         const token = getToken();
@@ -44,19 +44,21 @@ const PostDetails = () => {
                 const getPostDetails = async () => {
                     const res = await axios.get(`${BASE_URL_}/admin/post/${postID}`, { headers });
                     if (res.status === 200) {
-                        setPostDetails(res.data?.post);
+                        dispatch(handlePostDetails(res.data.post))
                     } else {
                         navigate('/signin');
                     }
                 }
+                dispatch(handleLoading(true))
                 getPostDetails()
+                dispatch(handleLoading(false))
             } catch (error) {
                 navigate('/signin')
             }
         } else {
             navigate('/signin')
         }
-    }, [postID, navigate])
+    }, [])
 
 
 
@@ -87,51 +89,54 @@ const PostDetails = () => {
         setSavedPost((prev) => !prev)
         const res = await axios.post(`${BASE_URL_}/user/save/${id}`, {}, { headers });
         if (res.status === 200) {
-            setAlert({ state: true, message: res.data.message, action: 'success' })
+            dispatch(handleAlert({ state: true, message: res.data.message, type: 'success' }))
         }
     }
 
     const handleCommentSubmit = async () => {
-        const token = getToken();
-        const headers = {
-            'x-auth-token': token
+        try {
+            const token = getToken();
+            const headers = {
+                'x-auth-token': token
+            }
+            const commentBody = {
+                commenter: {
+                    id: userData?._id,
+                    avatarUrl: "dummy.img",
+                    name: userData?.name,
+                    email: userData?.email,
+                },
+                comment: comment,
+                date: new Date()
+            };
+            dispatch(handleLoading(true))
+            const res = await axios.post(`${BASE_URL_}/user/comment/${postID}`, commentBody, { headers });
+            if(res.status === 200){
+                dispatch(handleAddComment(res.data))
+                setComment('')
+                dispatch(handleAlert({ type: 'success', message: 'added comment', state: true }))
+            }else{
+                dispatch(handleAlert({ type: 'error', message: 'falied to Upload', state: true }))
+            }
+        } catch (error) {
+            dispatch(handleAlert({ type: 'error', message: 'internal error', state: true }))
+        } finally {
+            dispatch(handleLoading(false))
         }
-        console.log(userData, "userData");
-        const commentBody = {
-            commenter: {
-                id: userData._id,
-                avatarUrl: "dummy.img",
-                name: userData.name,
-                email: userData.email,
-            },
-            comment: comment,
-            date: new Date()
-        };
-        const res = await axios.post(`${BASE_URL_}/user/comment/${postID}`, commentBody, { headers });
-        console.log(res)
-        setComment('')
     }
 
     const handleCommentChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined = (e) => {
         setComment(e.target.value)
     }
 
-    type commentProps = {
-        comment: string,
-        commenter: {
-            id: string,
-            avatarUrl: string,
-            name: string,
-            email: "dummy@gmail.com"
-        }
-        date: Date
-    }
+
 
 
 
     return (
         <Box>
-            {postDetails ?
+            <Toolbar />
+            {postDetails &&
                 <Container maxWidth={'lg'}>
                     <Stack>
                         <CardHeader
@@ -184,7 +189,7 @@ const PostDetails = () => {
                         <Divider />
                         <Stack my={2} spacing={2}>
                             <Typography variant='h6'>Comments</Typography>
-                            {postDetails.comments.map((comment: commentProps, _: number) => {
+                            {postDetails.comments.map((comment: comment, _: number) => {
                                 return <UserComment key={_} image={'https://mui.com/static/images/avatar/4.jpg'} name={comment.commenter
                                     .name} message={comment.comment} date={comment.date} />
                             })}
@@ -194,7 +199,7 @@ const PostDetails = () => {
 
 
                             <Box component={Stack} direction='row' spacing={2}>
-                                <Avatar><Typography textTransform="capitalize">{userData.userName[0]
+                                <Avatar><Typography textTransform="capitalize">{userData?.userName[0]
                                 }</Typography></Avatar>
                                 <Typography variant='h6'>Add a comment</Typography>
                             </Box>
@@ -215,15 +220,7 @@ const PostDetails = () => {
                             </Stack>
                         </Stack>
                     </Stack>
-                </Container> : <LinearProgress />}
-            <Snackbar
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                open={alert.state}
-                autoHideDuration={2000}
-                onClose={() => { setAlert((prev) => ({ ...prev, state: false, message: '', action: undefined })) }}
-                TransitionComponent={Slide}
-            ><Alert sx={{ width: '100%' }} variant='filled' severity={alert.action}>{alert.message}</Alert>
-            </Snackbar>
+                </Container>}
         </Box>
     )
 }

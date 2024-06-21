@@ -1,28 +1,23 @@
 import { Alert, Slide, Snackbar } from '@mui/material'
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { initialStateProps } from '../../Types/Types';
+import { handleAlert } from '../../Redux/Actions/actions';
 
-type alertProps = {
-  state: boolean,
-  message: string,
-  type: 'error' | 'info' | 'success' | 'warning' | undefined
-}
+
 const AlertBox = () => {
-  const alertAlternateVar = useSelector((e)=> e);
-  console.log(alertAlternateVar)
+  const dispatch = useDispatch();
+  const alert = useSelector((e:initialStateProps) => e.alert);
 
-  const [alert, setAlert] = useState<alertProps>({
-    state: false,
-    message: '',
-    type: undefined
-  })
+  const handleClose = ()=>{
+    dispatch(handleAlert({state:false}))
+  }
 
   return (
     <Snackbar
       anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       open={alert.state}
       autoHideDuration={2000}
-      onClose={() => { setAlert((prev) => ({ ...prev, state: false, message: '', action: undefined })) }}
+      onClose={handleClose}
       TransitionComponent={Slide}
     ><Alert sx={{ width: '100%' }} variant='filled' severity={alert.type}>{alert.message}</Alert>
     </Snackbar>

@@ -1,81 +1,35 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
+// import SearchIcon from '@mui/icons-material/Search';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import SideDrawer from '../SideDrawer/SideDrawer';
-import { Avatar, Stack, Switch, Typography } from '@mui/material';
+import { Avatar, LinearProgress, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Switch, Typography } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import logo from "../../assets/logo.png"
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import axios from 'axios';
-import { BASE_URL_ } from '../../config';
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
-        width: 'auto',
-    },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '20ch',
-        },
-    },
-}));
+import { initialStateProps } from '../../Types/Types';
 
 export default function Header() {
-    const dispatch = useDispatch();
-    const holdDark = useSelector((e: any) => e.auth.data);
-
-    const auth = useSelector((e: any) => e.auth);
-
+    const loading = useSelector((e: initialStateProps) => e.loading);
+    const auth = useSelector((e: initialStateProps) => e.auth);
     const isLoggedIn = auth.status;
     const user = auth.data;
     const navigate = useNavigate();
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
-
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -117,28 +71,25 @@ export default function Header() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem dense onClick={() => { navigate('/dashboard') }}>
-                <IconButton
-                    size="large"
-                    color="inherit"
-                >
-                    <DashboardIcon />
-                </IconButton>
-                <p>Dashboard</p>
-            </MenuItem>
-            <MenuItem dense
-                onClick={() => {
-                    localStorage.removeItem('token');
-                    window.location.reload()
-                }}>
-                <IconButton
-                    size="large"
-                    color="inherit"
-                >
-                    <LogoutIcon />
-                </IconButton>
-                <p>Logout</p>
-            </MenuItem>
+            <List dense>
+                <ListItem dense>
+                    <ListItemButton dense onClick={() => { navigate('/dashboard') }}>
+                        <ListItemIcon><DashboardIcon /></ListItemIcon>
+                        <ListItemText><Typography>Dashboard</Typography></ListItemText>
+                    </ListItemButton>
+
+                </ListItem>
+                <ListItem dense>
+                    <ListItemButton dense onClick={() => {
+                        localStorage.removeItem('token');
+                        window.location.reload()
+                    }}>
+                        <ListItemIcon><LogoutIcon /></ListItemIcon>
+                        <ListItemText><Typography>Logout</Typography></ListItemText>
+                    </ListItemButton>
+
+                </ListItem>
+            </List>
         </Menu>
     );
 
@@ -205,26 +156,23 @@ export default function Header() {
     );
 
 
-    const handleDarkMode = async () => {
+    // const handleDarkMode = async () => {
 
-        const token = localStorage.getItem('token');
-        const headers = {
-            "x-auth-token": token
-        }
-        dispatch({ type: "SET_THEME" })
-        if (token) {
-            await axios.put(`${BASE_URL_}/user/profile/dark`, {}, { headers });
-        } else {
-            console.log('failed to toggle')
-        }
-    }
-
-
-
+    //     const token = localStorage.getItem('token');
+    //     const headers = {
+    //         "x-auth-token": token
+    //     }
+    //     dispatch({ type: "SET_THEME" })
+    //     if (token) {
+    //         await axios.put(`${BASE_URL_}/user/profile/dark`, {}, { headers });
+    //     } else {
+    //         console.log('failed to toggle')
+    //     }
+    // }
 
     return (
-        <Box sx={{ position: 'sticky', top: 0, zIndex: 999 }}>
-            <AppBar position="relative">
+        <Box >
+            <AppBar>
                 <Toolbar>
                     <IconButton
                         sx={{ display: { xs: 'block', sm: 'none', mr: 2 } }}
@@ -244,48 +192,39 @@ export default function Header() {
                             xs: "none", md: 'block'
                         }
                     }}>Blogger Blog</Typography>
-                    <Box sx={{ flexGrow: 1 }
-                    } />
-                    <Box>
-                        <Search>
-                            <SearchIconWrapper>
-                                <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Search…"
-                                inputProps={{ 'aria-label': 'search' }}
-                            />
-                        </Search>
-                    </Box>
-                    {isLoggedIn ? <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton size="large" href='/messages' aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="error">
-                                <MailIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            href='/notifications'
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={17} color="error">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            size="small"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <Avatar sx={{ width: 38, height: 38 }} > {user.userName[0]}</Avatar>
-                        </IconButton>
-                        <Switch color='default' checked={holdDark?.dark} onChange={handleDarkMode} />
-                    </Box> :
+                    <Box sx={{ flexGrow: 1 }} />
+
+                    {isLoggedIn ?
+                        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                            <IconButton size="large" href='/messages' aria-label="show 4 new mails" color="inherit">
+                                <Badge badgeContent={4} color="error">
+                                    <MailIcon />
+                                </Badge>
+                            </IconButton>
+                            <IconButton
+                                href='/notifications'
+                                size="large"
+                                aria-label="show 17 new notifications"
+                                color="inherit"
+                            >
+                                <Badge badgeContent={17} color="error">
+                                    <NotificationsIcon />
+                                </Badge>
+                            </IconButton>
+                            <IconButton
+                                size="small"
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                                color="inherit"
+                            >
+                                <Avatar sx={{ width: 38, height: 38, textTransform: 'capitalize' }} >{user?.userName[0]}</Avatar>
+                            </IconButton>
+                            <Switch color='default' />
+
+                        </Box> :
                         <Stack direction='row' spacing={2}>
                             <a href="/signin">
                                 <IconButton >
@@ -296,7 +235,6 @@ export default function Header() {
                             </a>
                         </Stack>
                     }
-
                     {isLoggedIn && <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="small"
@@ -306,11 +244,13 @@ export default function Header() {
                             onClick={handleMobileMenuOpen}
                             color="inherit"
                         >
-                            <Avatar sx={{ width: 34, height: 34 }}>{user.userName[0]}</Avatar>
+                            <Avatar sx={{ width: 34, height: 34, textTransform: 'capitalize' }}>
+                                <Typography>{user?.userName[0]}</Typography>
+                            </Avatar>
                         </IconButton>
                     </Box>}
-
                 </Toolbar>
+                {loading && <LinearProgress sx={{ position: 'absolute', bottom: 0, width: '100%' }} color='primary' />}
             </AppBar>
             {renderMobileMenu}
             {renderMenu}

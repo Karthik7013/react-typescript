@@ -1,6 +1,8 @@
-import { LOADING } from "../ActionTypes/actionTypes";
-import { initialStateProps, post } from "../../Types/Types";
+import { FETCH_POST, LOADING, LOGIN, LOGOUT, SET_ALERT, SET_THEME, POST_DETAILS, ADD_COMMENT } from "../ActionTypes/actionTypes";
+import { initialStateProps } from "../../Types/Types";
+import { produce } from "immer";
 const initialState: initialStateProps = {
+    theme: 'light',
     loading: false,
     alert: {
         state: false,
@@ -13,7 +15,7 @@ const initialState: initialStateProps = {
     },
     posts: [],
     similarPosts: [],
-    postDetails: undefined,
+    postDetails: null,
     pagination: {
         page: 1,
         limit: 5
@@ -23,25 +25,28 @@ const initialState: initialStateProps = {
 const reducer = (state = initialState, action: { type: string, payload: any }): initialStateProps => {
     const { type, payload } = action;
     switch (type) {
-        // case 'SET_THEME':
-        //     if (state.auth.status) {
-        //         const newData = { ...state.auth.data, dark: !state.auth.data.dark }
-        //         return { ...state, auth: { data: newData, status: true } }
-        //     }
-        //     return state;
+        case SET_THEME:
+            return { ...state, theme: payload };
+        case SET_ALERT:
+            return { ...state, alert: payload }
         case LOADING:
             return { ...state, loading: payload }
-        case 'LOGIN':
+        case LOGIN:
             return { ...state, auth: { data: payload, status: true } }
-        case 'LOGOUT':
+        case LOGOUT:
             return { ...state, auth: { data: null, status: false } }
-        case 'FETCH_POST':
-            console.log(payload, "payload")
+        case FETCH_POST:
             return { ...state, posts: payload }
         // case 'ADD_POST':
         //     return { ...state, posts: [...state.posts, payload] }
         // case 'PAGE_CHANGE':
         //     return { ...state, pagination: { ...state.pagination, page: payload } }
+        case ADD_COMMENT:
+            return produce(state,(draft)=>{
+                draft.postDetails = payload
+            })
+        case POST_DETAILS:
+            return { ...state,postDetails:payload };
         default:
             return state
     }

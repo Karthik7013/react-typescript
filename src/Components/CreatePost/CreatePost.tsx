@@ -7,6 +7,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import { useState } from 'react';
+import { initialStateProps } from '../../Types/Types';
+import { handleAlert, handleLoading } from '../../Redux/Actions/actions';
 
 
 
@@ -57,7 +59,7 @@ function CreatePostDialog(props: any) {
     }
 
 
-    const loading: boolean = useSelector((e: any) => e.loading);
+    const loading = useSelector((e: initialStateProps) => e.loading);
     const dispatch = useDispatch()
     const category = [
         { label: 'Scientific', icon: 'science' },
@@ -68,10 +70,11 @@ function CreatePostDialog(props: any) {
         { label: "Music", icon: 'audioTrack' },
         { label: 'Information', icon: 'lightBulbCircle' },
     ];
-    const user = useSelector((e: any) => e.auth.data);
+    const user = useSelector((e: initialStateProps) => e.auth.data);
+    
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const postBody = { ...data, authorName: user.name, category: values.map((category: any) => category.label) }
+        const postBody = { ...data, authorName: user?.name, category: values.map((category: any) => category.label) }
         console.log(postBody, "postbody");
         const token = localStorage.getItem('token');
         const headers = {
@@ -80,17 +83,17 @@ function CreatePostDialog(props: any) {
 
         if (token) {
             try {
-                dispatch({ type: 'LOADING', payload: true })
+                dispatch(handleLoading(true))
                 const res = await axios.post(`${BASE_URL_}/admin/createpost`, postBody, { headers })
                 if (res.status === 201) {
-                    dispatch({ type: 'ADD_POST', payload: res.data.post });
+                    dispatch(handleAlert({type:'success',message:'post added success',state:true}));
                     props.toggle(false)
                 }
             } catch (error) {
                 console.log('failed to create')
             }
             finally {
-                dispatch({ type: 'LOADING', payload: false })
+                dispatch(handleLoading(false))
             }
         } else {
             console.log('token not found login again')
@@ -139,7 +142,7 @@ function CreatePostDialog(props: any) {
                                 <TextField value={data?.description} name='description' onChange={handleOnChange} multiline rows={4} placeholder='Description' />
 
                                 <Button disabled={loading} type='submit' variant='contained'>
-                                    {loading ? <CircularProgress /> : "Submit"}
+                                    {loading ? <CircularProgress size={30} /> : "Submit"}
                                 </Button>
                             </Stack>
                         </form>
