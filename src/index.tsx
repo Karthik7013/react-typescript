@@ -29,7 +29,7 @@ import axios from "axios";
 import { BASE_URL_ } from "./config";
 import { getToken } from "./Utils/utils";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { handleLoading, handleLogin } from "./Redux/Actions/actions";
+import { handleAlert, handleLoading, handleLogin } from "./Redux/Actions/actions";
 import { initialStateProps } from "./Types/Types";
 import AlertBox from "./Components/AlertBox/AlertBox";
 
@@ -55,13 +55,12 @@ const Root = () => {
       const res = await axios.get(`${BASE_URL_}/user/profile`, { headers });
       if (res.status === 200) {
         dispatch(handleLogin(res.data.user));
-        
       } else {
         console.log("invalid/expired login");
       }
     }
     catch (error) {
-      console.log(error);
+      dispatch(handleAlert({ type: 'error', message: 'Internal Error', state: true }))
     } finally {
       dispatch(handleLoading(false));
     }
@@ -93,7 +92,7 @@ const Root = () => {
   // };
 
   return (
-    <ThemeProvider theme={(mode === 'light') ? lightTheme : darkTheme}>
+    <ThemeProvider theme={!(mode === 'light') ? lightTheme : darkTheme}>
       <CssBaseline />
       {/* <Routes>
         <Route path="/" element={isAdmin ? <AdminRoutes /> : <UserRoutes />} />

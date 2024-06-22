@@ -17,7 +17,7 @@ const handleAlert = (payload: alert): { type: string, payload: alert } => {
     return { type: SET_ALERT, payload }
 }
 
-const handlePosts = (payload: any): { type: string, payload: post[] } => {
+const handlePosts = (payload: post[]): { type: string, payload: post[] } => {
     return { type: FETCH_POST, payload }
 }
 

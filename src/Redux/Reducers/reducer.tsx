@@ -39,14 +39,12 @@ const reducer = (state = initialState, action: { type: string, payload: any }): 
             return { ...state, posts: payload }
         // case 'ADD_POST':
         //     return { ...state, posts: [...state.posts, payload] }
-        // case 'PAGE_CHANGE':
-        //     return { ...state, pagination: { ...state.pagination, page: payload } }
         case ADD_COMMENT:
-            return produce(state,(draft)=>{
+            return produce(state, (draft) => {
                 draft.postDetails = payload
             })
         case POST_DETAILS:
-            return { ...state,postDetails:payload };
+            return { ...state, postDetails: payload };
         default:
             return state
     }

@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Alert, CircularProgress, InputAdornment, Snackbar } from '@mui/material';
+import { CircularProgress, InputAdornment } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import EmailIcon from '@mui/icons-material/Email';
 import PasswordIcon from '@mui/icons-material/Password';
@@ -19,6 +19,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useForm } from 'react-hook-form';
 import logo from "../../assets/logo.png"
 import { BASE_URL_ } from '../../config';
+import { handleAlert, handleLoading } from '../../Redux/Actions/actions';
+import { initialStateProps } from '../../Types/Types';
 function Copyright() {
     return (
         <Typography variant="body2" color="text.secondary" align="center" >
@@ -41,22 +43,19 @@ export default function SignUp() {
     } = useForm();
     const [err, setErr] = React.useState(false);
     const dispatch = useDispatch();
-    const loading = useSelector((e: { loading: boolean }) => e.loading);
+    const loading = useSelector((e: initialStateProps) => e.loading);
     const navigate = useNavigate()
     const handleSubmitForm = async (data: any) => {
         try {
-            dispatch({ type: 'LOADING', payload: true })
-            console.log(data)
-            const res = await axios.post(`${BASE_URL_}/user/register`, data)
-            console.log(res)
+            dispatch(handleLoading(true))
+            const res = await axios.post(`${BASE_URL_}/user/registe`, data)
             if (res.status === 201) {
                 navigate('/signin')
             }
         } catch (error) {
-            setErr(true)
-            console.log({ message: error })
+            dispatch(handleAlert({ type: "error", message: 'Internal Error', state: true }))
         } finally {
-            dispatch({ type: 'LOADING', payload: false })
+            dispatch(handleLoading(false))
         }
     };
     return (
@@ -176,13 +175,6 @@ export default function SignUp() {
                 </Box>
             </Box>
             <Copyright />
-            <Snackbar
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                open={err}
-                autoHideDuration={2000}
-                onClose={() => { setErr(false) }}
-            ><Alert sx={{ width: '100%' }} variant='filled' severity='error'>Something Went Wrong </Alert>
-            </Snackbar>
 
         </Container>
     );

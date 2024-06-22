@@ -8,9 +8,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from 'axios';
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CircularProgress, Snackbar, Alert, InputAdornment, Stack } from '@mui/material';
+import { CircularProgress, InputAdornment, Stack } from '@mui/material';
 import { GoogleLogin } from '@react-oauth/google';
 import EmailIcon from '@mui/icons-material/Email';
 import PasswordIcon from '@mui/icons-material/Password';
@@ -18,6 +17,8 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { useForm } from 'react-hook-form';
 import { BASE_URL_ } from '../../config';
 import logo from "../../assets/logo.png"
+import { handleAlert, handleLoading } from '../../Redux/Actions/actions';
+import { initialStateProps } from '../../Types/Types';
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -41,8 +42,7 @@ export default function SignIn() {
 
 
 
-    const [err, setErr] = useState(false);
-    const loading = useSelector((e: any) => e.loading)
+    const loading = useSelector((e: initialStateProps) => e.loading)
     const dispatch = useDispatch()
 
     const handleSubmitForm = async (data: any) => {
@@ -50,7 +50,7 @@ export default function SignIn() {
             ...data
         };
         try {
-            dispatch({ type: 'LOADING', payload: true })
+            dispatch(handleLoading(true))
             const res = await axios.post(`${BASE_URL_}/user/login`, userSignInData)
             if (res.status === 200) {
                 if (res.data?.token) {
@@ -59,9 +59,9 @@ export default function SignIn() {
                 }
             }
         } catch (error) {
-            setErr(true)
-            dispatch({ type: 'LOADING', payload: false })
-            console.log('failed to authenticated')
+            dispatch(handleAlert({ type: 'error', message: 'Internal Error', state: true }))
+        } finally {
+            dispatch(handleLoading(false))
         }
     };
 
@@ -156,13 +156,6 @@ export default function SignIn() {
                 </Stack>
             </Box>
             <Copyright sx={{ mt: 8, mb: 4 }} />
-            <Snackbar
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                open={err}
-                autoHideDuration={2000}
-                onClose={() => { setErr(false) }}
-            ><Alert sx={{ width: '100%' }} variant='filled' severity='error'>Invalid Login Details</Alert>
-            </Snackbar>
         </Container>
     );
 }

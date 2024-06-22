@@ -7,17 +7,14 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
-import SendIcon from '@mui/icons-material/Send';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { dateFormatter } from '.././../Utils/utils';
-import { AvatarGroup, Box, Checkbox, Chip, Divider, ListItem, ListItemIcon, ListItemText, Stack, styled, TextField } from '@mui/material';
+import {  Box, Checkbox, Stack, styled } from '@mui/material';
 import ThumbUpRoundedIcon from '@mui/icons-material/ThumbUpRounded';
-import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import { initialStateProps } from '../../Types/Types';
-
 type CardxProps = {
     image: string
     id: string,
