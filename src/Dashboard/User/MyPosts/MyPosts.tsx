@@ -7,6 +7,7 @@ import axios from 'axios';
 import { BASE_URL_ } from '../../../config';
 import { dateFormatter } from '../../../Utils/utils';
 import { Link } from 'react-router-dom';
+import { handleLoading } from '../../../Redux/Actions/actions';
 const MyPosts = () => {
     const [alertBox, setAlertBox] = useState(false)
     const userId = useSelector((e: any) => e.auth.data?._id);
@@ -32,12 +33,12 @@ const MyPosts = () => {
             const headers = {
                 'x-auth-token': token
             }
-            dispatch({ type: 'LOADING', payload: true });
+            dispatch(handleLoading(true));
             const res = await axios.get(`${BASE_URL_}/admin/post/all/${userId}`, { headers });
             if (res.status === 200) {
                 setMyPost(res.data)
             }
-            dispatch({ type: 'LOADING', payload: false });
+            dispatch(handleLoading(false));
         }
 
         const token = localStorage.getItem('token');
@@ -54,7 +55,8 @@ const MyPosts = () => {
         <Box>
             <Typography variant="h6">MyPosts | Dashboard</Typography>
             <>
-                {loading ? <><LinearProgress /><>loading...</></> : <List dense={true}>
+
+                <List dense={true}>
                     <Stack divider={<Divider />}>
                         {myPost && myPost.map((post: any) => <ListItemButton key={post._id} disableRipple>
                             <ListItem
@@ -75,7 +77,8 @@ const MyPosts = () => {
                                     </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
-                                    primary={<Link to={`/postdetails/${btoa(post._id)}`}>{post.title}</Link>}
+                                    primary={<Link to={`/postdetails/${btoa(post._id)}`}>
+                                        <Typography maxWidth={'60%'} noWrap>{post.title}</Typography></Link>}
                                     secondary={dateFormatter(post.createdAt
                                     )}
                                 />
@@ -106,7 +109,7 @@ const MyPosts = () => {
                         </ListItemButton>)
                         }
                     </Stack>
-                </List>}
+                </List>
             </>
 
         </Box>

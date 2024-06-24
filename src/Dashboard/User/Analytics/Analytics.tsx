@@ -1,4 +1,4 @@
-import { Box, Card, CardMedia, Grid, MenuItem, Stack, TextField, Typography } from '@mui/material';
+import { Box, Card, CardMedia, Grid, MenuItem, Stack, TextField, Toolbar, Typography } from '@mui/material';
 import React, { useState } from 'react'
 import { BarChart } from '@mui/x-charts';
 // import { LineChart } from '@mui/x-charts';
@@ -6,12 +6,14 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { PieChart } from '@mui/x-charts/PieChart';
 import axios from 'axios';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getToken } from '../../../Utils/utils';
-import {BASE_URL_} from '../../../config';
+import { BASE_URL_ } from '../../../config';
 import cardBg from "../../../assets/wave-haikei.svg"
+import { handleLoading } from '../../../Redux/Actions/actions';
 
 const Main = () => {
+    const dispatch = useDispatch();
 
     const user = useSelector((e: any) => e.auth);
     const [chartData, setChartData] = useState<any>();
@@ -20,11 +22,12 @@ const Main = () => {
         const headers = {
             'x-auth-token': getToken()
         }
-
+        dispatch(handleLoading(true))
         const res = await axios.get(`${BASE_URL_}/admin/dashboard/${user.data._id}`, { headers })
         if (res.status === 200) {
             setChartData(res.data)
         }
+        dispatch(handleLoading(false))
     }
 
     useEffect(() => {
@@ -36,34 +39,36 @@ const Main = () => {
     return (
         <Box>
             <Grid container spacing={1}>
-                <Grid item xs={12} md={7} px={3}>
-                    <Card elevation={5} sx={{ p: 5, borderRadius: '1em', position: 'relative' }}>
-                        <BarChart
-                            height={300}
-                            series={[
-                                { data: chartData ? Object.values(chartData?.categoryWisePosts) : [], label: 'No of posts', id: 'pvId', stack: 'total' },
-                            ]}
-                            xAxis={[{ data: chartData ? Object.keys(chartData.categoryWisePosts) : [], scaleType: 'band' }]}
-                        />
-                        <Stack direction={'row'} position={'absolute'}
-                            top={16} right={16} spacing={2}>
-                            <TextField select value="week" size='small'>
-                                <MenuItem value="week">This Week</MenuItem>
-                                <MenuItem value="">This Month</MenuItem>
-                                <MenuItem value="">This Year</MenuItem>
-                                <MenuItem value="">Yearly</MenuItem>
-                            </TextField>
-                        </Stack>
+                <Grid item xs={12} md={7}>
+                    <BarChart
+                        height={200}
+                        borderRadius={5}
+                        series={[
+                            { data: chartData ? Object.values(chartData?.categoryWisePosts) : [], label: 'No of posts', id: 'pvId', stack: 'total' },
+                        ]}
+                        xAxis={
+                            [{
+                                data: chartData ? Object.keys(chartData.categoryWisePosts) : [], scaleType: 'band'
+                            }]
+                        }
+                    />
+                    <Stack direction={'row'} position={'absolute'}
+                        top={16} right={16} spacing={2}>
+                        <TextField select value="week" size='small'>
+                            <MenuItem value="week">This Week</MenuItem>
+                            <MenuItem value="">This Month</MenuItem>
+                            <MenuItem value="">This Year</MenuItem>
+                            <MenuItem value="">Yearly</MenuItem>
+                        </TextField>
+                    </Stack>
 
-                    </Card>
+
                 </Grid>
                 <Grid item xs={12} md={5}>
                     <Grid spacing={3} container >
                         <Grid item xs={12} md={6}>
-                            <Card elevation={4} sx={{ borderRadius: '1em',position:'relative'}}>
-                                <img width="100%" src={cardBg} alt="123" />
-
-                                <Stack p={'1em 12px'} sx={{position:'absolute',zIndex:999,top:0,left:0}}>
+                            <Card elevation={4} sx={{ borderRadius: '1em', position: 'relative' }}>
+                                <Stack p={'1em 12px'} >
                                     <Typography variant='caption' fontWeight={600} color={'GrayText'}>Total Posts</Typography>
                                     <Typography variant='h2' fontWeight={600}>{chartData?.totalPosts}</Typography>
                                 </Stack>
@@ -74,7 +79,7 @@ const Main = () => {
                                 <Stack p={'1em 12px'}>
                                     <Typography variant='caption' fontWeight={600} color={'GrayText'}>Posts Like</Typography>
                                     <Typography variant='h2' fontWeight={600}>{chartData?.totalLikes
-}<FavoriteIcon htmlColor='red' sx={{ fontSize: '0.8em' }} />
+                                    }<FavoriteIcon htmlColor='red' sx={{ fontSize: '0.8em' }} />
                                     </Typography>
                                 </Stack>
                             </Card>
@@ -100,20 +105,7 @@ const Main = () => {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={12} md={7}>
-                    {/* <LineChart
-                        xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
-                        series={[
-                            {
-                                data: [2, 5.5, 2, 8.5, 1.5, 5],
-                            },
-                        ]}
-                        width={500}
-                        height={300}
-                    /> */}
-                </Grid>
-                <Grid item xs={12} md={5}>
-
+                <Grid item xs={12}>
                     <PieChart
                         series={[
                             {
@@ -135,8 +127,6 @@ const Main = () => {
                             }
                         ]}
                     />
-
-
                 </Grid>
             </Grid>
         </Box>
