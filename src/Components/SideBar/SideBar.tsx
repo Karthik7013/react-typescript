@@ -9,12 +9,24 @@ import MovieCreationRoundedIcon from '@mui/icons-material/MovieCreationRounded';
 import MusicNoteRoundedIcon from '@mui/icons-material/MusicNoteRounded';
 import { useSelector } from 'react-redux';
 import { initialStateProps } from '../../Types/Types';
+import { useState } from 'react';
+import CreatePost from '../CreatePost/CreatePost';
 
 const SideBar = () => {
+    const [createPostModal, setCreatePostModal] = useState(false);
+
+    const handleCreateModal = () => setCreatePostModal((prev) => !prev)
+
     const isLoggedIn = useSelector((e: initialStateProps) => e.auth.status);
-    // const createPostButtonProps = {
-    //     onClick: handleCreateModal
-    // }
+
+    const createPostButtonProps = {
+        onClick: handleCreateModal
+    }
+
+    const createPostLinkProps = {
+        href: '/signin'
+    }
+
     const navItems = [
         {
             name: 'Home',
@@ -48,17 +60,13 @@ const SideBar = () => {
         }
     ]
 
-    const createPostLinkProps = {
-        href: '/signin'
-    }
     return (
         <Box width='100%'>
             <Box>
                 <Box p={2}>
                     <Tooltip title={"New Post"}>
                         <Button
-                            {...createPostLinkProps}
-                            // {...(isLoggedIn ? createPostButtonProps : createPostLinkProps)}
+                            {...(isLoggedIn ? createPostButtonProps : createPostLinkProps)}
                             fullWidth
                             sx={{ borderRadius: 999 }}
                             startIcon={<AddRoundedIcon
@@ -104,6 +112,7 @@ const SideBar = () => {
                     </Stack>
                 </Card>
             </Box>
+            <CreatePost open={createPostModal} toggle={setCreatePostModal} />
         </Box>
     )
 }

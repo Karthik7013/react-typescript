@@ -1,6 +1,7 @@
-import { FETCH_POST, LOADING, LOGIN, LOGOUT, SET_ALERT, SET_THEME, POST_DETAILS, ADD_COMMENT } from "../ActionTypes/actionTypes";
+import { FETCH_POST, LOADING, LOGIN, LOGOUT, SET_ALERT, SET_THEME, POST_DETAILS, ADD_COMMENT, ADD_POST } from "../ActionTypes/actionTypes";
 import { initialStateProps } from "../../Types/Types";
 import { produce } from "immer";
+
 const initialState: initialStateProps = {
     theme: 'light',
     loading: false,
@@ -36,9 +37,9 @@ const reducer = (state = initialState, action: { type: string, payload: any }): 
         case LOGOUT:
             return { ...state, auth: { data: null, status: false } }
         case FETCH_POST:
-            return { ...state, posts: payload }
-        // case 'ADD_POST':
-        //     return { ...state, posts: [...state.posts, payload] }
+            return { ...state, posts: payload.reverse() }
+        case ADD_POST:
+            return { ...state, posts: [payload, ...state.posts,] }
         case ADD_COMMENT:
             return produce(state, (draft) => {
                 draft.postDetails = payload

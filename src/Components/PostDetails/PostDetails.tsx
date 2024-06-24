@@ -24,7 +24,8 @@ const PostDetails = () => {
     const dispatch = useDispatch()
 
 
-    const [comment, setComment] = useState('')
+    const [comment, setComment] = useState('');
+    const loading = useSelector((state:initialStateProps)=> state.loading);
 
     const navigate = useNavigate();
     // const [postDetails, setPostDetails] = useState<any>();
@@ -216,7 +217,7 @@ const PostDetails = () => {
                             </Box>
                             <Stack justifyContent='flex-end' direction='row' columnGap={3}>
                                 <Button variant='outlined'>clear</Button>
-                                <Button onClick={handleCommentSubmit} variant='contained' color='success' endIcon={<SendIcon />}>Submit</Button>
+                                <Button disabled={loading} onClick={handleCommentSubmit} variant='contained' color='success' endIcon={<SendIcon />}>Submit</Button>
                             </Stack>
                         </Stack>
                     </Stack>
