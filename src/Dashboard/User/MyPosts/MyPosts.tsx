@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, IconButton, LinearProgress, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography } from '@mui/material'
+import { Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Stack, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -12,7 +12,7 @@ const MyPosts = () => {
     const [alertBox, setAlertBox] = useState(false)
     const userId = useSelector((e: any) => e.auth.data?._id);
     const dispatch = useDispatch()
-    const loading = useSelector((e: any) => e.loading);
+    // const loading = useSelector((e: any) => e.loading);
     const [myPost, setMyPost] = useState<any>();
 
     const deletePost = async (id: string) => {

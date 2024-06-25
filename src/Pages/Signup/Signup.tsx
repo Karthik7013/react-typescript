@@ -41,7 +41,6 @@ export default function SignUp() {
         handleSubmit,
         formState: { errors },
     } = useForm();
-    const [err, setErr] = React.useState(false);
     const dispatch = useDispatch();
     const loading = useSelector((e: initialStateProps) => e.loading);
     const navigate = useNavigate()

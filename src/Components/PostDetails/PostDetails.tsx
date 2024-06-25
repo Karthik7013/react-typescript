@@ -1,4 +1,4 @@
-import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, Stack, Typography, Button, TextField, ListItem, ListItemAvatar, ListItemText, LinearProgress, Checkbox, Snackbar, Alert, Toolbar } from '@mui/material'
+import { Avatar, Box, CardHeader, CardMedia, Chip, Container, Divider, Grid, Stack, Typography, Button, TextField, ListItem, ListItemAvatar, ListItemText, Checkbox,  Toolbar } from '@mui/material'
 import { red } from '@mui/material/colors';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import SendIcon from '@mui/icons-material/Send';
@@ -10,7 +10,6 @@ import { dateFormatter, getToken } from '../../Utils/utils';
 import { useNavigate } from 'react-router-dom';
 import SimilarCard from '../PostCard/SimilarCard';
 import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
-import Slide from '@mui/material/Slide';
 import { useDispatch, useSelector } from 'react-redux';
 import { initialStateProps, comment } from '../../Types/Types';
 import { handleAddComment, handleAlert, handleLoading, handlePostDetails } from '../../Redux/Actions/actions';

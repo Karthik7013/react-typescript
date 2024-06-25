@@ -1,7 +1,6 @@
-import { Box, Card, CardMedia, Grid, MenuItem, Stack, TextField, Toolbar, Typography } from '@mui/material';
-import React, { useState } from 'react'
+import { Box, Card, Grid, MenuItem, Stack, TextField, Typography } from '@mui/material';
+import { useState } from 'react'
 import { BarChart } from '@mui/x-charts';
-// import { LineChart } from '@mui/x-charts';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { PieChart } from '@mui/x-charts/PieChart';
 import axios from 'axios';
@@ -9,7 +8,6 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getToken } from '../../../Utils/utils';
 import { BASE_URL_ } from '../../../config';
-import cardBg from "../../../assets/wave-haikei.svg"
 import { handleLoading } from '../../../Redux/Actions/actions';
 
 const Main = () => {

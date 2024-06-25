@@ -1,18 +1,14 @@
-import { AppBar, Autocomplete, Button, CardMedia, CircularProgress, Divider, FormControlLabel, Grid, IconButton, List, ListItemButton, ListItemText, Slide, Stack, Switch, TextField, Toolbar, Typography } from '@mui/material'
+import { AppBar, Autocomplete, Button, CardMedia, CircularProgress, FormControlLabel, Grid, IconButton,  Slide, Stack, Switch, TextField, Toolbar, Typography } from '@mui/material'
 import axios from 'axios';
-import CancelIcon from '@mui/icons-material/Cancel';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { BASE_URL_ } from '../../config';
 import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
+
 import React, { useState } from 'react';
 import { initialStateProps } from '../../Types/Types';
 import { handleAddPost, handleAlert, handleLoading } from '../../Redux/Actions/actions';
-import SaveIcon from '@mui/icons-material/Save';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
-import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
-
 
 
 
