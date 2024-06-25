@@ -32,6 +32,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { handleAlert, handleLoading, handleLogin } from "./Redux/Actions/actions";
 import { initialStateProps } from "./Types/Types";
 import AlertBox from "./Components/AlertBox/AlertBox";
+import "./index.css"
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

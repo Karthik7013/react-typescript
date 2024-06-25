@@ -139,7 +139,6 @@ function CreatePostDialog(props: any) {
                     <Grid container spacing={2} p={2}>
                         <Grid item xs={12} md={6}>
                             <CardMedia sx={{ borderRadius: '0.5em' }} component='img' src={data.imgUrl} />
-
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <Stack rowGap={2}>
