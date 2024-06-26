@@ -1,4 +1,4 @@
-import { AppBar, Autocomplete, Button, CardMedia, CircularProgress, FormControlLabel, Grid, IconButton,  Slide, Stack, Switch, TextField, Toolbar, Typography } from '@mui/material'
+import { AppBar, Autocomplete, Button, CardMedia, CircularProgress, FormControlLabel, Grid, IconButton, Slide, Stack, Switch, TextField, Toolbar, Typography } from '@mui/material'
 import axios from 'axios';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,7 +7,7 @@ import Dialog from '@mui/material/Dialog';
 
 import React, { useState } from 'react';
 import { initialStateProps } from '../../Types/Types';
-import { handleAddPost, handleAlert, handleLoading } from '../../Redux/Actions/actions';
+import { handleAddPost, handleAddPostModal, handleAlert, handleLoading } from '../../Redux/Actions/actions';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 
 
@@ -85,10 +85,10 @@ function CreatePostDialog(props: any) {
                 if (res.status === 201) {
                     dispatch(handleAddPost(res.data.post))
                     dispatch(handleAlert({ type: 'success', message: 'post added success', state: true }));
-                    props.toggle(false)
+                    handleClose()
                 }
             } catch (error) {
-                console.log('failed to create')
+                dispatch(handleAlert({state:true,message:'failed to add',type:'error'}))
             }
             finally {
                 dispatch(handleLoading(false))
@@ -97,10 +97,13 @@ function CreatePostDialog(props: any) {
             console.log('token not found login again')
         }
     }
+    const handleClose = () => {
+        dispatch(handleAddPostModal());
+    }
 
 
     return (
- 
+
         <>
 
             <Dialog
@@ -121,9 +124,7 @@ function CreatePostDialog(props: any) {
                         <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                             Create Post
                         </Typography>
-                        <Button onClick={() => {
-                            props.toggle(false)
-                        }}
+                        <Button onClick={handleClose}
 
                         >
                             {/* <CancelIcon /> */}

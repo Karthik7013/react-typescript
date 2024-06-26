@@ -1,17 +1,19 @@
 import { BottomNavigation, BottomNavigationAction, Box, Grid, Paper, Toolbar } from '@mui/material'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux';
 import { BASE_URL_ } from './config';
-import { handleAlert, handleLoading, handlePosts } from './Redux/Actions/actions';
-import SideBar from './Components/SideBar/SideBar';
-import RecentPosts from './Components/RecentPosts/RecentPosts';
+import { handleAddPostModal, handleAlert, handleLoading, handlePosts } from './Redux/Actions/actions';
+
+// import RecentPosts from './Components/RecentPosts/RecentPosts';
 import ForYou from './Components/ForYou/ForYou';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import WhatshotRoundedIcon from '@mui/icons-material/WhatshotRounded';
+import PostAddIcon from '@mui/icons-material/PostAdd';
+import SideBar from "./Components/SideBar/SideBar";
 
 const App = () => {
+    const [tab, setTab] = useState('trend');
     const itemStyles = {
         display: {
             lg: 'flex',
@@ -40,6 +42,12 @@ const App = () => {
         getPosts();
     }, []);
 
+    const handleTabChange = (event: any, newValue: string) => {
+        setTab(newValue);
+        console.log(newValue)
+        newValue === 'post' && dispatch(handleAddPostModal())
+    }
+
     return (
         <Box>
             <Toolbar />
@@ -48,20 +56,33 @@ const App = () => {
                     <SideBar />
                 </Grid>
                 <Grid sx={{ height: 'calc(100dvh - 64px)', overflowY: 'scroll' }} item xs={18} lg={12} >
-                    <RecentPosts />
+                    {/* <RecentPosts /> */}
                     <ForYou />
                     <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-                        <BottomNavigation sx={{ display: { lg: 'none' } }}
-                            value={'trend'}
-                        >
-                            <BottomNavigationAction 
-                            value="trend" label="Trending" icon={<WhatshotRoundedIcon />} />
-                            <BottomNavigationAction 
-                            value="favourite" label="Favourite" icon={<FavoriteIcon />} />
 
-                            <BottomNavigationAction 
-                            value="save" label="Saved" icon={<ArchiveIcon />} />
+                        <BottomNavigation
+                            sx={{ display: { lg: 'none' } }}
+                            value={tab}
+                            onChange={handleTabChange}
+                            showLabels
+                        >
+                            <BottomNavigationAction
+                                value="trend"
+                                label="Trending"
+                                icon={<WhatshotRoundedIcon />}
+                            />
+                            <BottomNavigationAction
+                                value="post"
+                                label="New Post"
+                                icon={<PostAddIcon />}
+                            />
+                            <BottomNavigationAction
+                                value="save"
+                                label="Saved"
+                                icon={<ArchiveIcon />}
+                            />
                         </BottomNavigation>
+
                     </Paper>
                 </Grid>
                 <Grid item md={3} sx={itemStyles}>

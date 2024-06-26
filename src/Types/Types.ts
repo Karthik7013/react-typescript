@@ -12,7 +12,8 @@ type initialStateProps = {
     pagination: {
         page: number,
         limit: number
-    }
+    },
+    createPostModal:boolean
 }
 type alert = {
     state: boolean,

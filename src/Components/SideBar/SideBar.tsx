@@ -7,15 +7,19 @@ import WhatshotIcon from '@mui/icons-material/Whatshot';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import MovieCreationRoundedIcon from '@mui/icons-material/MovieCreationRounded';
 import MusicNoteRoundedIcon from '@mui/icons-material/MusicNoteRounded';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { initialStateProps } from '../../Types/Types';
-import { useState } from 'react';
 import CreatePost from '../CreatePost/CreatePost';
+import { handleAddPostModal } from '../../Redux/Actions/actions';
 
 const SideBar = () => {
-    const [createPostModal, setCreatePostModal] = useState(false);
+    const dispatch = useDispatch()
+    const createPostModal = useSelector((e: initialStateProps) => e.createPostModal);
 
-    const handleCreateModal = () => setCreatePostModal((prev) => !prev)
+
+    const handleCreateModal = () => {
+        dispatch(handleAddPostModal());
+    };
 
     const isLoggedIn = useSelector((e: initialStateProps) => e.auth.status);
 
@@ -112,7 +116,8 @@ const SideBar = () => {
                     </Stack>
                 </Card>
             </Box>
-            <CreatePost open={createPostModal} toggle={setCreatePostModal} />
+            <CreatePost open={createPostModal}
+            />
         </Box>
     )
 }

@@ -7,3 +7,4 @@ export const SET_ALERT = 'SET_ALERT';
 export const POST_DETAILS = 'POST_DETAILS';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const ADD_POST = 'ADD_POST';
+export const ADD_POST_MODAL = 'ADD_POST_MODAL';

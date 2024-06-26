@@ -1,5 +1,5 @@
 import { alert, post, user, comment } from "../../Types/Types"
-import { FETCH_POST, LOADING, LOGIN, LOGOUT, POST_DETAILS, SET_ALERT, SET_THEME, ADD_COMMENT, ADD_POST } from "../ActionTypes/actionTypes";
+import { FETCH_POST, LOADING, LOGIN, LOGOUT, POST_DETAILS, SET_ALERT, SET_THEME, ADD_COMMENT, ADD_POST, ADD_POST_MODAL } from "../ActionTypes/actionTypes";
 
 const handleLogin = (payload: user): { type: string, payload: user } => {
     return { type: LOGIN, payload }
@@ -36,4 +36,8 @@ const handleAddComment = (payload: comment): { type: string, payload: comment } 
     return { type: ADD_COMMENT, payload: payload }
 }
 
-export { handleLoading, handlePosts, handleLogin, handleLogout, handleTheme, handleAlert, handlePostDetails, handleAddComment, handleAddPost }
+const handleAddPostModal = () => {
+    return { type: ADD_POST_MODAL }
+}
+
+export { handleLoading, handlePosts, handleLogin, handleLogout, handleTheme, handleAlert, handlePostDetails, handleAddComment, handleAddPost, handleAddPostModal }

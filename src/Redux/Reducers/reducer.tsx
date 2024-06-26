@@ -1,4 +1,4 @@
-import { FETCH_POST, LOADING, LOGIN, LOGOUT, SET_ALERT, SET_THEME, POST_DETAILS, ADD_COMMENT, ADD_POST } from "../ActionTypes/actionTypes";
+import { FETCH_POST, LOADING, LOGIN, LOGOUT, SET_ALERT, SET_THEME, POST_DETAILS, ADD_COMMENT, ADD_POST,ADD_POST_MODAL } from "../ActionTypes/actionTypes";
 import { initialStateProps } from "../../Types/Types";
 import { produce } from "immer";
 
@@ -20,7 +20,8 @@ const initialState: initialStateProps = {
     pagination: {
         page: 1,
         limit: 5
-    }
+    },
+    createPostModal:false
 }
 
 const reducer = (state = initialState, action: { type: string, payload: any }): initialStateProps => {
@@ -46,6 +47,8 @@ const reducer = (state = initialState, action: { type: string, payload: any }): 
             })
         case POST_DETAILS:
             return { ...state, postDetails: payload };
+        case ADD_POST_MODAL:
+            return {...state,createPostModal: !state.createPostModal}
         default:
             return state
     }
