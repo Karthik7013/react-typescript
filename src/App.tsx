@@ -7,9 +7,10 @@ import { handleAlert, handleLoading, handlePosts } from './Redux/Actions/actions
 import SideBar from './Components/SideBar/SideBar';
 import RecentPosts from './Components/RecentPosts/RecentPosts';
 import ForYou from './Components/ForYou/ForYou';
-import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ArchiveIcon from '@mui/icons-material/Archive';
+import WhatshotRoundedIcon from '@mui/icons-material/WhatshotRounded';
+
 const App = () => {
     const itemStyles = {
         display: {
@@ -49,14 +50,17 @@ const App = () => {
                 <Grid sx={{ height: 'calc(100dvh - 64px)', overflowY: 'scroll' }} item xs={18} lg={12} >
                     <RecentPosts />
                     <ForYou />
-                    <Toolbar />
                     <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
                         <BottomNavigation sx={{ display: { lg: 'none' } }}
-                            showLabels
+                            value={'trend'}
                         >
-                            <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-                            <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-                            <BottomNavigationAction label="Archive" icon={<ArchiveIcon />} />
+                            <BottomNavigationAction 
+                            value="trend" label="Trending" icon={<WhatshotRoundedIcon />} />
+                            <BottomNavigationAction 
+                            value="favourite" label="Favourite" icon={<FavoriteIcon />} />
+
+                            <BottomNavigationAction 
+                            value="save" label="Saved" icon={<ArchiveIcon />} />
                         </BottomNavigation>
                     </Paper>
                 </Grid>
