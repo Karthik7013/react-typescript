@@ -33,7 +33,7 @@ import { handleAlert, handleLoading, handleLogin } from "./Redux/Actions/actions
 import { initialStateProps } from "./Types/Types";
 import AlertBox from "./Components/AlertBox/AlertBox";
 import "./index.css"
-import Home from "./Dashboard/Admin/AdminHome";
+// import Home from "./Dashboard/Admin/AdminHome";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
