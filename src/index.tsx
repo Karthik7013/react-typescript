@@ -19,7 +19,7 @@ import { store } from "./Redux/Store";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { lightTheme, darkTheme } from "./Theme/theme";
+import { theme } from "./Theme/theme";
 import PageNotFound from "./Pages/PageNotFound/PageNotFound";
 import Profile from "./Dashboard/User/Profile/Profile";
 import MyPosts from "./Dashboard/User/MyPosts/MyPosts";
@@ -33,6 +33,7 @@ import { handleAlert, handleLoading, handleLogin } from "./Redux/Actions/actions
 import { initialStateProps } from "./Types/Types";
 import AlertBox from "./Components/AlertBox/AlertBox";
 import "./index.css"
+import Home from "./Dashboard/Admin/AdminHome";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -41,6 +42,7 @@ const root = ReactDOM.createRoot(
 const Root = () => {
 
   const mode = useSelector((e: initialStateProps) => e.theme);
+
   const dispatch = useDispatch();
 
   const getProfile = async (token: string) => {
@@ -93,7 +95,8 @@ const Root = () => {
   // };
 
   return (
-    <ThemeProvider theme={!(mode === 'light') ? lightTheme : darkTheme}>
+    // !(mode === 'light') ? lightTheme : darkTheme
+    <ThemeProvider theme={theme(mode)}>
       <CssBaseline />
       {/* <Routes>
         <Route path="/" element={isAdmin ? <AdminRoutes /> : <UserRoutes />} />
@@ -120,6 +123,7 @@ const Root = () => {
         </Route>
         <Route path='*' element={<PageNotFound />}></Route>
       </Routes>
+      {/* <Home/> */}
       <AlertBox />
     </ThemeProvider>
   );
